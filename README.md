@@ -8,10 +8,9 @@ The Lury Programming Language
 
 ### Lury
 
-	[__MIT License__](../master/LICENSE.lury)
-
-	Copyright (C) 2014 Tomona Nanase
+[__MIT License__](../master/LICENSE.lury) /
+Copyright (C) 2014 Tomona Nanase
 
 ### Jay (jay.exe)
 
-	__New BSD License__
+__New BSD License__
