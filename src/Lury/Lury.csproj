@@ -77,6 +77,7 @@
     <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Lexer\TokenPairs.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -84,5 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lexer\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>
