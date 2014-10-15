@@ -95,12 +95,13 @@ namespace Lury.Compiling
                 Lexer lexer = new Lexer(this.errorOutputWriter, code);
                 parser.yyparse(lexer);
             }
-            catch (Exception ex)
+            catch
             {
-                this.errorOutputWriter.WriteLine(ex.Message);
-                this.errorOutputWriter.Flush();
-
                 return false;
+            }
+            finally
+            {
+                this.errorOutputWriter.Flush();
             }
 
             this.errorOutputWriter.Flush();
