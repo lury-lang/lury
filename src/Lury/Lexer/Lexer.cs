@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.IO;
+using Lury.Utils;
 
 namespace Lury.Compiling
 {
@@ -132,8 +133,7 @@ namespace Lury.Compiling
 
                                 if (this.indentStack.Count == 0)
                                 {
-                                    this.errorWriter.WriteLine("({0}) Error: Illiegal indent", index);
-                                    this.hasError = true;
+                                    this.ShowError("Can not tokenize", input, index);
                                     yield break;
                                 }
                             }
@@ -153,8 +153,7 @@ namespace Lury.Compiling
                         yield return token;
                     else
                     {
-                        this.errorWriter.WriteLine("({0}) Error: Can not tokenize", index);
-                        this.hasError = true;
+                        this.ShowError("Can not tokenize", input, index);
                         yield break;
                     }
                 }
@@ -171,8 +170,7 @@ namespace Lury.Compiling
 
             if (this.indentStack.Count == 0)
             {
-                this.errorWriter.WriteLine("({0}) Error: Illiegal indent", index);
-                this.hasError = true;
+                this.ShowError("Illiegal indent", input, index);
                 yield break;
             }
             else if (this.indentStack.Peek() != 0)
@@ -217,6 +215,23 @@ namespace Lury.Compiling
             }
 
             return null;
+        }
+
+        private void ShowError(string message, string code, int index)
+        {
+            int line, column;
+
+            var pointing = code.GeneratePointingStrings(index, out line, out column);
+
+            this.errorWriter.WriteLine("Error({0},{1}): {2}", line, column, message);
+
+            if (line > 1)
+                this.errorWriter.WriteLine("| " + code.GetLine(line - 1));
+
+            foreach (var s in pointing)
+                this.errorWriter.WriteLine("| " + s);
+
+            this.hasError = true;
         }
 
         #endregion
