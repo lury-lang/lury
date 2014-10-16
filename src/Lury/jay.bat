@@ -1,0 +1,1 @@
+..\..\tools\jay.exe -c %1 < skeleton.cs > %2
