@@ -120,14 +120,14 @@ namespace Lury.Compiling
                             if (this.indentStack.Peek() < indentSize)
                             {
                                 this.indentStack.Push(indentSize);
-                                yield return new TokenizedToken(input.Substring(index, indentSize), Token.Indent, this.indentStack.Count - 1);
+                                yield return new TokenizedToken(input.Substring(index, indentSize), Token.Indent, this.indentStack.Count - 1, index);
                             }
                             else
                             {
                                 do
                                 {
                                     this.indentStack.Pop();
-                                    yield return new TokenizedToken("", Token.Dedent, this.indentStack.Count - 1);
+                                    yield return new TokenizedToken("", Token.Dedent, this.indentStack.Count - 1, index);
                                 } while (this.indentStack.Count > 0 &&
                                          this.indentStack.Peek() != indentSize);
 
@@ -177,7 +177,7 @@ namespace Lury.Compiling
                 do
                 {
                     this.indentStack.Pop();
-                    yield return new TokenizedToken("", Token.Dedent, this.indentStack.Count - 1);
+                    yield return new TokenizedToken("", Token.Dedent, this.indentStack.Count - 1, index);
                 } while (this.indentStack.Peek() != 0);
         }
 
@@ -210,7 +210,7 @@ namespace Lury.Compiling
                 if (match.Success && match.Groups[1].Index == index)
                 {
                     length = match.Length;
-                    return new TokenizedToken(match.Groups[1].Value, pair.TokenNumber, this.indentStack.Count - 1);
+                    return new TokenizedToken(match.Groups[1].Value, pair.TokenNumber, this.indentStack.Count - 1, index);
                 }
             }
 

@@ -37,11 +37,14 @@ namespace Lury.Compiling
 
         public int IndentLevel { get; private set; }
 
-        public TokenizedToken(string text, int tokenNumber, int indentLevel)
+        public int Index { get; private set; }
+
+        public TokenizedToken(string text, int tokenNumber, int indentLevel, int index)
         {
             this.Text = text;
             this.TokenNumber = tokenNumber;
             this.IndentLevel = indentLevel;
+            this.Index = index;
         }
 
         public override string ToString()
