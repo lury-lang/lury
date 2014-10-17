@@ -235,28 +235,6 @@ namespace Lury.Compiling
         }
 
         #endregion
-
-    }
-
-    class TokenizedToken
-    {
-        public string Text { get; private set; }
-
-        public int TokenNumber { get; private set; }
-
-        public int IndentLevel { get; private set; }
-
-        public TokenizedToken(string text, int tokenNumber, int indentLevel)
-        {
-            this.Text = text;
-            this.TokenNumber = tokenNumber;
-            this.IndentLevel = indentLevel;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0}> {1} : \"{2}\"]", this.IndentLevel, this.TokenNumber, this.Text);
-        }
     }
 }
 
