@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Lury.Compiling;
+using Lury.SampleRunner.Resources;
 
 namespace Lury.SampleRunner
 {
@@ -39,7 +40,7 @@ namespace Lury.SampleRunner
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Usage: SampleRunner.exe DIRECTORY");
+                Console.WriteLine(Language.Program_Usage, GetExecuteFilePath());
                 Environment.Exit(1);
             }
 
@@ -73,6 +74,15 @@ namespace Lury.SampleRunner
                         }
                 } 
             }
+        }
+
+        private static string GetExecuteFilePath() {
+            var args = Environment.GetCommandLineArgs();
+
+            if (args.Length > 0 && !String.IsNullOrWhiteSpace(args[0]))
+                return args[0];
+            else
+                return System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
         }
     }
 
