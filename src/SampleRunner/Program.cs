@@ -28,8 +28,8 @@
 
 using System;
 using System.Collections.Generic;
-using Lury.Compiling;
 using System.IO;
+using Lury.Compiling;
 
 namespace Lury.SampleRunner
 {
