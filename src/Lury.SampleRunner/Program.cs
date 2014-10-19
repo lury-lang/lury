@@ -50,7 +50,8 @@ namespace Lury.SampleRunner
 
             foreach (var fi in EnumerateInputFiles(options.TargetFilePaths, searchOption))
             {
-                Console.WriteLine(fi.Name);
+                if (options.SilentMode)
+                    Console.WriteLine(fi.Name);
 
                 string input;
                 using (var textReader = fi.OpenText())

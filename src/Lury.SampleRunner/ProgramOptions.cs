@@ -39,6 +39,8 @@ namespace Lury.SampleRunner
 
         public bool NonStopMode { get; private set; }
 
+        public bool SilentMode { get; private set; }
+
         public ProgramOptions(string[] args)
         {
             List<string> targetDirectories = new List<string>();
@@ -71,6 +73,11 @@ namespace Lury.SampleRunner
 
                     case "--non-stop":
                         this.NonStopMode = true;
+                        break;
+
+                    case "-s":
+                    case "--silent":
+                        this.SilentMode = true;
                         break;
 
                     default:
