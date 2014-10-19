@@ -12,11 +12,13 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-
-    <!--
+	<!--
         Localization
     -->
 	<data name="Program_Usage">
-        <value>Usage</value>
-    </data>
+		<value>Usage</value>
+	</data>
+	<data name="Program_Usage_Or">
+		<value>OR   </value>
+	</data>
 </root>

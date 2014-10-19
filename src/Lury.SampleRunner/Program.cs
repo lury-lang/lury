@@ -43,7 +43,7 @@ namespace Lury.SampleRunner
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("{0}: {1} [OPTION]... DIRECTORY...", Language.Program_Usage, GetExecuteFilePath());
+                ShowUsage();
                 Environment.Exit(1);
             }
 
@@ -69,6 +69,13 @@ namespace Lury.SampleRunner
                             Environment.Exit(2);
                     }
             }
+        }
+
+        private static void ShowUsage()
+        {
+            var executeFilePath = GetExecuteFilePath();
+            Console.WriteLine("{0}: {1} [OPTION]... DIRECTORY...", Language.Program_Usage, executeFilePath);
+            Console.WriteLine("{0}: {1} [OPTION]... FILE...", Language.Program_Usage_Or, executeFilePath);
         }
 
         private static IEnumerable<FileInfo> EnumerateInputFiles(IEnumerable<string> filepaths)
