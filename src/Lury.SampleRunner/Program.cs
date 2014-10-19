@@ -77,12 +77,7 @@ namespace Lury.SampleRunner
         }
 
         private static string GetExecuteFilePath() {
-            var args = Environment.GetCommandLineArgs();
-
-            if (args.Length > 0 && !String.IsNullOrWhiteSpace(args[0]))
-                return args[0];
-            else
-                return System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            return System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName;
         }
     }
 
