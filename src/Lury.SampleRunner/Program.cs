@@ -40,7 +40,7 @@ namespace Lury.SampleRunner
         {
             if (args.Length == 0)
             {
-                Console.WriteLine(Language.Program_Usage, GetExecuteFilePath());
+                Console.WriteLine("{0}: {1} [OPTION]... DIRECTORY...", Language.Program_Usage, GetExecuteFilePath());
                 Environment.Exit(1);
             }
 
