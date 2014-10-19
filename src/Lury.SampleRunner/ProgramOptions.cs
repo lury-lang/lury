@@ -37,6 +37,8 @@ namespace Lury.SampleRunner
 
         public IEnumerable<string> TargetFilePaths { get; private set; }
 
+        public bool NonStopMode { get; private set; }
+
         public ProgramOptions(string[] args)
         {
             List<string> targetDirectories = new List<string>();
@@ -65,6 +67,10 @@ namespace Lury.SampleRunner
 
                     case "--":
                         commandSwitch = true;
+                        break;
+
+                    case "--non-stop":
+                        this.NonStopMode = true;
                         break;
 
                     default:

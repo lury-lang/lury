@@ -60,7 +60,9 @@ namespace Lury.SampleRunner
                     if (!compiler.Compile(input))
                     {
                         Console.WriteLine("コンパイル失敗: {0}", fi.Name);
-                        Environment.Exit(2);
+
+                        if (!options.NonStopMode)
+                            Environment.Exit(2);
                     }
             }
         }
