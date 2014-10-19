@@ -36,6 +36,9 @@ namespace Lury.SampleRunner
 {
     class Program
     {
+        private static ProgramOptions options;
+        private static SearchOption searchOption;
+
         public static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -44,11 +47,11 @@ namespace Lury.SampleRunner
                 Environment.Exit(1);
             }
 
-            ProgramOptions options = new ProgramOptions(args);
-            SearchOption searchOption = options.Recursive ? SearchOption.AllDirectories :
-                                                            SearchOption.TopDirectoryOnly;
+            options = new ProgramOptions(args);
+            searchOption = options.Recursive ? SearchOption.AllDirectories :
+                                               SearchOption.TopDirectoryOnly;
 
-            foreach (var fi in EnumerateInputFiles(options.TargetFilePaths, searchOption))
+            foreach (var fi in EnumerateInputFiles(options.TargetFilePaths))
             {
                 if (options.SilentMode)
                     Console.WriteLine(fi.Name);
@@ -68,7 +71,7 @@ namespace Lury.SampleRunner
             }
         }
 
-        private static IEnumerable<FileInfo> EnumerateInputFiles(IEnumerable<string> filepaths, SearchOption searchOption)
+        private static IEnumerable<FileInfo> EnumerateInputFiles(IEnumerable<string> filepaths)
         {
             foreach (var filepath in filepaths)
             {
