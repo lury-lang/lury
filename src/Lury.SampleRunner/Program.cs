@@ -48,7 +48,7 @@ namespace Lury.SampleRunner
             SearchOption searchOption = options.Recursive ? SearchOption.AllDirectories :
                                                             SearchOption.TopDirectoryOnly;
 
-            foreach (var fi in EnumerateInputFiles(options.TargetDirectories, searchOption))
+            foreach (var fi in EnumerateInputFiles(options.TargetFilePaths, searchOption))
             {
                 Console.WriteLine(fi.Name);
 
@@ -93,7 +93,7 @@ namespace Lury.SampleRunner
     {
         public bool Recursive { get; private set; }
 
-        public IEnumerable<string> TargetDirectories { get; private set; }
+        public IEnumerable<string> TargetFilePaths { get; private set; }
 
         public ProgramOptions(string[] args)
         {
@@ -131,7 +131,7 @@ namespace Lury.SampleRunner
                 }
             }
 
-            this.TargetDirectories = targetDirectories;
+            this.TargetFilePaths = targetDirectories;
         }
     }
 }
