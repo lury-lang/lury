@@ -17,6 +17,6 @@
         Localization
     -->
 	<data name="Program_Usage">
-        <value>Usage: {0} DIRECTORY</value>
+        <value>Usage</value>
     </data>
 </root>

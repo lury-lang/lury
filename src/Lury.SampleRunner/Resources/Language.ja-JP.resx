@@ -18,6 +18,6 @@
         Localization (ja-JP)
     -->
 	<data name="Program_Usage">
-        <value>使用法: {0} ディレクトリ</value>
+        <value>使用法</value>
     </data>
 </root>
