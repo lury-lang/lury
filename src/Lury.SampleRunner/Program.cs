@@ -48,35 +48,43 @@ namespace Lury.SampleRunner
             SearchOption searchOption = options.Recursive ? SearchOption.AllDirectories :
                                                             SearchOption.TopDirectoryOnly;
 
-            foreach (var directory in options.TargetDirectories)
+            foreach (var fi in EnumerateInputFiles(options.TargetDirectories, searchOption))
             {
-                DirectoryInfo di = new DirectoryInfo(directory);
+                Console.WriteLine(fi.Name);
 
-                if (!di.Exists)
-                {
-                    Console.WriteLine("ディレクトリ '{0}' は見つかりません.", di.Name);
-                    continue;
-                }
-
-                foreach (var fi in di.GetFiles("*.lr", searchOption))
-                {
-                    Console.WriteLine(fi.Name);
-
-                    string input;
-                    using (var textReader = fi.OpenText())
-                        input = textReader.ReadToEnd();
+                string input;
+                using (var textReader = fi.OpenText())
+                    input = textReader.ReadToEnd();
                     
-                    using (var compiler = new Compiler())
-                        if (!compiler.Compile(input))
-                        {
-                            Console.WriteLine("コンパイル失敗: {0}", fi.Name);
-                            Environment.Exit(2);
-                        }
-                } 
+                using (var compiler = new Compiler())
+                    if (!compiler.Compile(input))
+                    {
+                        Console.WriteLine("コンパイル失敗: {0}", fi.Name);
+                        Environment.Exit(2);
+                    }
             }
         }
 
-        private static string GetExecuteFilePath() {
+        private static IEnumerable<FileInfo> EnumerateInputFiles(IEnumerable<string> filepaths, SearchOption searchOption)
+        {
+            foreach (var filepath in filepaths)
+            {
+                if (File.Exists(filepath))
+                    yield return new FileInfo(filepath);
+                else if (Directory.Exists(filepath))
+                {
+                    foreach (var fi in Directory.GetFiles(filepath, "*.lr", searchOption))
+                        yield return new FileInfo(fi);
+                }
+                else
+                {
+                    Console.WriteLine("ディレクトリ '{0}' は見つかりません.", filepath);
+                }
+            }
+        }
+
+        private static string GetExecuteFilePath()
+        {
             return System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName;
         }
     }
