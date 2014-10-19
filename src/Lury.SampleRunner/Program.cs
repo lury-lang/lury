@@ -84,7 +84,8 @@ namespace Lury.SampleRunner
                 }
                 else
                 {
-                    Console.WriteLine("ディレクトリ '{0}' は見つかりません.", filepath);
+                    if (!options.SilentMode)
+                        Console.WriteLine("ディレクトリ '{0}' は見つかりません.", filepath);
                 }
             }
         }
