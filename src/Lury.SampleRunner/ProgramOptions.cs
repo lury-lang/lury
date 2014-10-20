@@ -64,6 +64,7 @@ namespace Lury.SampleRunner
                 switch (command)
                 {
                     case "-R":
+                    case "--recursive":
                         this.Recursive = true;
                         break;
 
