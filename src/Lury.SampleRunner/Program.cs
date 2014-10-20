@@ -63,7 +63,7 @@ namespace Lury.SampleRunner
                 using (var compiler = new Compiler())
                     if (!compiler.Compile(input))
                     {
-                        Console.WriteLine("コンパイル失敗: {0}", fi.Name);
+                        Console.WriteLine("{0}: {1}", Language.Program_Compilation_Failed, fi.Name);
 
                         if (!options.NonStopMode)
                             Environment.Exit(2);
@@ -92,7 +92,7 @@ namespace Lury.SampleRunner
                 else
                 {
                     if (!options.SilentMode)
-                        Console.WriteLine("ディレクトリ '{0}' は見つかりません.", filepath);
+                        Console.WriteLine(Language.Program_Directory_Not_Found, filepath);
                 }
             }
         }
