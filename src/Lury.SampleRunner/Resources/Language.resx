@@ -21,4 +21,10 @@
 	<data name="Program_Usage_Or">
 		<value>OR   </value>
 	</data>
+	<data name="Program_Compilation_Failed">
+		<value>Compilation Failed</value>
+	</data>
+	<data name="Program_Directory_Not_Found">
+		<value>Directory '{0}' not found.</value>
+	</data>
 </root>

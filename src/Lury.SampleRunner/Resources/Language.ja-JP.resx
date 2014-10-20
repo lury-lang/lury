@@ -21,4 +21,10 @@
 	<data name="Program_Usage_Or">
 		<value>または</value>
 	</data>
+	<data name="Program_Compilation_Failed">
+		<value>コンパイル失敗</value>
+	</data>
+	<data name="Program_Directory_Not_Found">
+		<value>ディレクトリ '{0}' は見つかりません.</value>
+	</data>
 </root>
