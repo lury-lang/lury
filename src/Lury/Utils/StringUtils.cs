@@ -39,7 +39,7 @@ namespace Lury
             return (text == null) ? 0 : NewLine.Matches(text).Count + 1;
         }
 
-        public static void GetIndexPosition(this string text, int index, out CharPosition position)
+        public static CharPosition GetIndexPosition(this string text, int index)
         {
             if (text == null)
                 throw new ArgumentNullException("text");
@@ -47,7 +47,7 @@ namespace Lury
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
-            position = CharPosition.BasePosition;
+            CharPosition　position = CharPosition.BasePosition;
             Match prevMatch = null;
 
             foreach (Match match in NewLine.Matches(text))
@@ -61,6 +61,8 @@ namespace Lury
 
             position.Column = (prevMatch == null) ? index + 1 :
                      index - prevMatch.Index - prevMatch.Length + 1;
+
+            return position;
         }
 
         public static string[] GeneratePointingStrings(this string text, int index, out CharPosition position)
@@ -71,7 +73,7 @@ namespace Lury
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
-            text.GetIndexPosition(index, out position);
+            position = text.GetIndexPosition(index);
 
             Match nextNewLine = NewLine.Match(text, index);
             int cursorLineIndex = index - (position.Column - 1);
