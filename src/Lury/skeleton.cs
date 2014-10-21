@@ -7,6 +7,7 @@
 #	other lines are interpreted to call jay procedures
 
 .// created by jay 0.7 (c) 1998 Axel.Schreiner@informatik.uni-osnabrueck.de
+.// edited by Tomona Nanase in 2014
 .
  prolog		## %{ ... %} prior to the first %%
 
@@ -103,9 +104,9 @@ t  }
 .      @return result of the last reduction, if any.
 .      @throws yyException on irrecoverable parse error.
 .    */
-.  internal Object yyparse (yyParser.yyInput yyLex, Object yyd)
+.  internal Object yyparse (yyParser.yyInput yyLex, yydebug.yyDebug yyd)
 .				 {
-t    this.debug = (yydebug.yyDebug)yyd;
+t    this.debug = yyd;
 .    return yyparse(yyLex);
 .  }
 .
@@ -134,6 +135,7 @@ t    this.debug = (yydebug.yyDebug)yyd;
 .	object yyVal;						// value stack ptr
 .	int yyToken;						// current input
 .	int yyTop;
+.   yyParser.IToken currentToken;
 .
 .  /** the generated parser.
 .      Maintains a state and a value stack, currently with fixed maximum size.
@@ -176,17 +178,18 @@ t      if (debug != null) debug.push(yyState, yyVal);
 .        int yyN;
 .        if ((yyN = yyDefRed[yyState]) == 0) {	// else [default] reduce (yyN)
 .          if (yyToken < 0) {
-.            yyToken = yyLex.advance() ? yyLex.token() : 0;
+.            currentToken = yyLex.Advance() ? yyLex.GetToken() : null;
+.            yyToken = (currentToken != null) ? currentToken.TokenNumber : 0;
 
 t            if (debug != null)
-t              debug.lex(yyState, yyToken, yyname(yyToken), yyLex.value());
+t              debug.lex(yyState, yyToken, yyname(yyToken), yyLex.GetValue());
 .          }
 .          if ((yyN = yySindex[yyState]) != 0 && ((yyN += yyToken) >= 0)
 .              && (yyN < yyTable.Length) && (yyCheck[yyN] == yyToken)) {
 t            if (debug != null)
 t              debug.shift(yyState, yyTable[yyN], yyErrorFlag-1);
 .            yyState = yyTable[yyN];		// shift to yyN
-.            yyVal = yyLex.value();
+.            yyVal = yyLex.GetValue();
 .            yyToken = -1;
 .            if (yyErrorFlag > 0) -- yyErrorFlag;
 .            goto continue_yyLoop;
@@ -201,7 +204,7 @@ t              debug.shift(yyState, yyTable[yyN], yyErrorFlag-1);
 .              yyExpectingState = yyState;
 .              // yyerror(String.Format ("syntax error, got token `{0}'", yyname (yyToken)), yyExpecting(yyState));
 t              if (debug != null) debug.error("syntax error");
-.              if (yyToken == 0 /*eof*/ || yyToken == eof_token) throw new yyParser.yyUnexpectedEof ();
+.              if (yyToken == 0 /*eof*/ || yyToken == eof_token) throw new yyParser.yyUnexpectedEof (currentToken);
 .              goto case 1;
 .            case 1: case 2:
 .              yyErrorFlag = 3;
@@ -212,22 +215,22 @@ t              if (debug != null) debug.error("syntax error");
 t                  if (debug != null)
 t                    debug.shift(yyStates[yyTop], yyTable[yyN], 3);
 .                  yyState = yyTable[yyN];
-.                  yyVal = yyLex.value();
+.                  yyVal = yyLex.GetValue();
 .                  goto continue_yyLoop;
 .                }
 t                if (debug != null) debug.pop(yyStates[yyTop]);
 .              } while (-- yyTop >= 0);
 t              if (debug != null) debug.reject();
-.              throw new yyParser.yyException("irrecoverable syntax error");
+.              throw new yyParser.yySyntaxError("irrecoverable syntax error", currentToken);
 .  
 .            case 3:
 .              if (yyToken == 0) {
 t                if (debug != null) debug.reject();
-.                throw new yyParser.yyException("irrecoverable syntax error at end-of-file");
+.                throw new yyParser.yySyntaxErrorAtEof("irrecoverable syntax error at end-of-file", currentToken);
 .              }
 t              if (debug != null)
 t                debug.discard(yyState, yyToken, yyname(yyToken),
-t  							yyLex.value());
+t  							yyLex.GetValue());
 .              yyToken = -1;
 .              goto continue_yyDiscarded;		// leave stack alone
 .            }
@@ -248,10 +251,11 @@ t          debug.reduce(yyState, yyStates[yyV-1], yyN, YYRules.getRule (yyN), yy
 t          if (debug != null) debug.shift(0, yyFinal);
 .          yyState = yyFinal;
 .          if (yyToken < 0) {
-.            yyToken = yyLex.advance() ? yyLex.token() : 0;
+.            currentToken = yyLex.Advance() ? yyLex.GetToken() : null;
+.            yyToken = (currentToken != null) ? currentToken.TokenNumber : 0;
 		
 t            if (debug != null)
-t               debug.lex(yyState, yyToken,yyname(yyToken), yyLex.value());
+t               debug.lex(yyState, yyToken,yyname(yyToken), yyLex.GetValue());
 .          }
 .          if (yyToken == 0) {
 t            if (debug != null) debug.accept(yyVal);
@@ -275,6 +279,7 @@ t        if (debug != null) debug.shift(yyStates[yyTop], yyState);
  tables			## tables for rules, default reduction, and action calls
 .
  epilog			## text following second %%
+.
 .namespace yydebug {
 .        using System;
 .	 internal interface yyDebug {
@@ -350,21 +355,30 @@ t        if (debug != null) debug.shift(yyStates[yyTop], yyState);
 .	 }
 .}
 .// %token constants
-. class Token {
+. internal class Token {
  tokens public const int
 . }
+.
 . namespace yyParser {
 .  using System;
 .  /** thrown for irrecoverable syntax errors and stack overflow.
 .    */
 .  internal class yyException : System.Exception {
-.    public yyException (string message) : base (message) {
+.    public IToken Token { get; private set; }
+.    public yyException (string message, IToken token) : base (message) {
+.      this.Token = token;
+.    }
+.  }
+.  internal class yySyntaxError : yyException {
+.    public yySyntaxError (string message, IToken token) : base (message, token) {
+.    }
+.  }
+.  internal class yySyntaxErrorAtEof : yyException {
+.    public yySyntaxErrorAtEof (string message, IToken token) : base (message, token) {
 .    }
 .  }
 .  internal class yyUnexpectedEof : yyException {
-.    public yyUnexpectedEof (string message) : base (message) {
-.    }
-.    public yyUnexpectedEof () : base ("") {
+.    public yyUnexpectedEof (IToken token) : base (null, token) {
 .    }
 .  }
 .
@@ -375,17 +389,24 @@ t        if (debug != null) debug.shift(yyStates[yyTop], yyState);
 .        @return false if positioned beyond tokens.
 .        @throws IOException on input error.
 .      */
-.    bool advance (); // throws java.io.IOException;
+.    bool Advance (); // throws java.io.IOException;
 .    /** classifies current token.
 .        Should not be called if advance() returned false.
 .        @return current %token or single character.
 .      */
-.    int token ();
+.    IToken GetToken ();
 .    /** associated with current token.
 .        Should not be called if advance() returned false.
 .        @return value for token().
 .      */
-.    Object value ();
+.    Object GetValue ();
+.  }
+.  
+.  internal interface IToken {
+.    string Text { get; }
+.    int TokenNumber { get; }
+.    int IndentLevel { get; }
+.    int Index { get; }
 .  }
 . }
 .} // close outermost namespace, that MUST HAVE BEEN opened in the prolog
