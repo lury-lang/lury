@@ -36,7 +36,6 @@ namespace Lury.Compiling
 {
     class Lexer : yyParser.yyInput
     {
-
         #region -- Private Fields --
 
         private TokenizedToken[] tokens;
@@ -65,7 +64,7 @@ namespace Lury.Compiling
 
         #region -- Public Methods --
 
-        public bool advance()
+        public bool Advance()
         {
             if (this.tokens.Length <= this.position + 1)
             {
@@ -78,12 +77,12 @@ namespace Lury.Compiling
             }
         }
 
-        public int token()
+        public yyParser.IToken GetToken()
         {
-            return this.tokens[this.position].TokenNumber;
+            return this.tokens[this.position];
         }
 
-        public object value()
+        public object GetValue()
         {
             return 0;
         }
