@@ -29,27 +29,32 @@ using System;
 
 namespace Lury.Compiling
 {
-    class TokenizedToken
+    class TokenizedToken : yyParser.IToken
     {
-        public string Text { get; private set; }
+        private string text;
+        private int tokenNumber;
+        private int indentLevel;
+        private int index;
 
-        public int TokenNumber { get; private set; }
+        public string Text { get { return this.text; } }
 
-        public int IndentLevel { get; private set; }
+        public int TokenNumber { get { return this.tokenNumber; } }
 
-        public int Index { get; private set; }
+        public int IndentLevel { get { return this.indentLevel; } }
+
+        public int Index { get { return this.index; } }
 
         public TokenizedToken(string text, int tokenNumber, int indentLevel, int index)
         {
-            this.Text = text;
-            this.TokenNumber = tokenNumber;
-            this.IndentLevel = indentLevel;
-            this.Index = index;
+            this.text = text;
+            this.tokenNumber = tokenNumber;
+            this.indentLevel = indentLevel;
+            this.index = index;
         }
 
         public override string ToString()
         {
-            return string.Format("{0}> {1} : \"{2}\"]", this.IndentLevel, this.TokenNumber, this.Text);
+            return string.Format("{0}> {1} : \"{2}\"]", this.indentLevel, this.tokenNumber, this.text);
         }
     }
 }
