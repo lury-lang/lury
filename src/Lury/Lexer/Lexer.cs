@@ -218,14 +218,14 @@ namespace Lury.Compiling
 
         private void ShowError(string message, string code, int index)
         {
-            int line, column;
+            CharPosition position;
 
-            var pointing = code.GeneratePointingStrings(index, out line, out column);
+            var pointing = code.GeneratePointingStrings(index, out position);
 
-            this.errorWriter.WriteLine("Error({0},{1}): {2}", line, column, message);
+            this.errorWriter.WriteLine("Error{0}: {1}", position, message);
 
-            if (line > 1)
-                this.errorWriter.WriteLine("| " + code.GetLine(line - 1));
+            if (position.Line > 1)
+                this.errorWriter.WriteLine("| " + code.GetLine(position.Line - 1));
 
             foreach (var s in pointing)
                 this.errorWriter.WriteLine("| " + s);

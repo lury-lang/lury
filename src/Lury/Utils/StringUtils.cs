@@ -39,7 +39,7 @@ namespace Lury
             return (text == null) ? 0 : NewLine.Matches(text).Count + 1;
         }
 
-        public static void GetIndexPosition(this string text, int index, out int line, out int column)
+        public static void GetIndexPosition(this string text, int index, out CharPosition position)
         {
             if (text == null)
                 throw new ArgumentNullException("text");
@@ -47,8 +47,7 @@ namespace Lury
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
-            line = 1;
-            column = 1;
+            position = CharPosition.BasePosition;
             Match prevMatch = null;
 
             foreach (Match match in NewLine.Matches(text))
@@ -57,14 +56,14 @@ namespace Lury
                     break;
 
                 prevMatch = match; 
-                line++;
+                position.Line++;
             }
 
-            column = (prevMatch == null) ? index + 1 :
+            position.Column = (prevMatch == null) ? index + 1 :
                      index - prevMatch.Index - prevMatch.Length + 1;
         }
 
-        public static string[] GeneratePointingStrings(this string text, int index, out int line, out int column)
+        public static string[] GeneratePointingStrings(this string text, int index, out CharPosition position)
         {
             if (text == null)
                 throw new ArgumentNullException("text");
@@ -72,10 +71,10 @@ namespace Lury
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
-            text.GetIndexPosition(index, out line, out column);
+            text.GetIndexPosition(index, out position);
 
             Match nextNewLine = NewLine.Match(text, index);
-            int cursorLineIndex = index - (column - 1);
+            int cursorLineIndex = index - (position.Column - 1);
             int cursorLineLength = (nextNewLine.Success ? nextNewLine.Index : text.Length) - cursorLineIndex;
 
             string cursorLine = text.Substring(cursorLineIndex, cursorLineLength)
@@ -85,7 +84,7 @@ namespace Lury
 
             return new string[] {
                 cursorLine,
-                new string(' ', column - 1) + "^"
+                new string(' ', position.Column - 1) + "^"
             };
         }
 
