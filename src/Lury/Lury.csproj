@@ -78,9 +78,34 @@
     <Compile Include="Compiler.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Lexer\TokenizedToken.cs" />
+    <Compile Include="Resources\Language.Designer.cs">
+      <DependentUpon>Language.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Language.ja-JP.Designer.cs">
+      <DependentUpon>Language.ja-JP.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Exceptions\LuryException.cs" />
+    <Compile Include="Utils\CharPosition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="Grammar.jay" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Language.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Lury.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Language.ja-JP.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.ja-JP.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Lury.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>
