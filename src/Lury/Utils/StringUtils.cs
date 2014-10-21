@@ -28,7 +28,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Lury.Utils
+namespace Lury
 {
     static class StringUtils
     {
