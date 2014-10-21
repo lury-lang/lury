@@ -15,4 +15,7 @@
 	<!--
         Localization
     -->
+	<data name="Compiler_Cannot_Write_To_Stream">
+		<value>Can not write to stream.</value>
+	</data>
 </root>

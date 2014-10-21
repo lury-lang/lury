@@ -15,4 +15,7 @@
 	<!--
         Localization (ja-JP)
     -->
+	<data name="Compiler_Cannot_Write_To_Stream">
+		<value>指定されたストリームは書き込めません.</value>
+	</data>
 </root>

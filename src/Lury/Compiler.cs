@@ -28,12 +28,12 @@
 
 using System;
 using System.IO;
+using Lury.Resources;
 
 namespace Lury.Compiling
 {
     public class Compiler : IDisposable
     {
-
         #region -- Private Fields --
 
         private Stream errorOutputStream;
@@ -56,7 +56,7 @@ namespace Lury.Compiling
                     throw new ArgumentNullException("value");
 
                 if (!value.CanWrite)
-                    throw new ArgumentException("Can not write to stream");
+                    throw new ArgumentException(Language.Compiler_Cannot_Write_To_Stream);
 
                 if (this.errorOutputStream == value)
                     return;
