@@ -30,6 +30,9 @@ using System;
 
 namespace Lury
 {
+    /// <summary>
+    /// 文字列中の行と列の位置を表すための構造体です。
+    /// </summary>
     public struct CharPosition
     {
         #region -- Private Static Fields --
@@ -50,6 +53,10 @@ namespace Lury
 
         #region -- Public Properties --
 
+        /// <summary>
+        /// 行位置を取得または設定します。
+        /// </summary>
+        /// <value>行を表す 1 以上の整数値。</value>
         public int Line
         { 
             get { return this.line; }
@@ -62,6 +69,10 @@ namespace Lury
             }
         }
 
+        /// <summary>
+        /// 列位置を取得または設定します。
+        /// </summary>
+        /// <value>列を表す 1 以上の整数値。</value>
         public int Column
         { 
             get { return this.column; }
@@ -74,6 +85,11 @@ namespace Lury
             }
         }
 
+        /// <summary>
+        /// この <see cref="Lury.CharPosition"/> オブジェクトが
+        /// 空（どの位置も指し示さない）であるかの真偽値を取得します。
+        /// </summary>
+        /// <value>true のときこのオブジェクトは空、それ以外のとき false。</value>
         public bool IsEmpty
         {
             get { return this == empty; }
@@ -83,14 +99,28 @@ namespace Lury
 
         #region -- Public Static Properties --
 
+        /// <summary>
+        /// 文字列中のどの位置も指し示さないような、
+        /// 空の C<see cref="Lury.CharPosition"/>harPosition オブジェクトを取得します。
+        /// </summary>
+        /// <value>空の <see cref="Lury.CharPosition"/> オブジェクト。</value>
         public static CharPosition Empty { get { return empty; } }
 
+        /// <summary>
+        /// 文字列の先頭を指し示す <see cref="Lury.CharPosition"/> オブジェクトを取得します。
+        /// </summary>
+        /// <value>先頭を指し示す <see cref="Lury.CharPosition"/> オブジェクト。</value>
         public static CharPosition BasePosition { get { return basePosition; } }
 
         #endregion
 
         #region -- Constructor --
 
+        /// <summary>
+        /// 行と列を指定して新しい <see cref="Lury.CharPosition"/> 構造体のインスタンスを初期化します。
+        /// </summary>
+        /// <param name="line">行位置。</param>
+        /// <param name="column">列位置。</param>
         public CharPosition(int line, int column)
         {
             if (line < 1)
