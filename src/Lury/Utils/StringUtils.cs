@@ -32,7 +32,13 @@ namespace Lury
 {
     static class StringUtils
     {
+        #region -- Private Static Fields --
+
         private static readonly Regex NewLine = new Regex(@"(\n|(:?\r\n)|\r)", RegexOptions.Compiled | RegexOptions.Singleline);
+
+        #endregion
+
+        #region -- Public Static Methods --
 
         public static int GetNumberOfLine(this string text)
         {
@@ -47,7 +53,7 @@ namespace Lury
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
-            CharPosition　position = CharPosition.BasePosition;
+            CharPosition 　position = CharPosition.BasePosition;
             Match prevMatch = null;
 
             foreach (Match match in NewLine.Matches(text))
@@ -84,7 +90,8 @@ namespace Lury
                 .Replace('\r', ' ')
                 .Replace('\n', ' ');
 
-            return new string[] {
+            return new string[]
+            {
                 cursorLine,
                 new string(' ', position.Column - 1) + "^"
             };
@@ -106,6 +113,8 @@ namespace Lury
 
             return text.Substring(lineIndex, lineLength);
         }
+
+        #endregion
     }
 }
 
