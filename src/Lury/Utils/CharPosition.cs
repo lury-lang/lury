@@ -37,7 +37,7 @@ namespace Lury
     {
         #region -- Private Static Fields --
 
-        private static readonly CharPosition empty = new CharPosition();
+        private static readonly CharPosition empty = default(CharPosition);
 
         private static readonly CharPosition basePosition = new CharPosition(1, 1);
 
