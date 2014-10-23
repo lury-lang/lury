@@ -88,6 +88,7 @@
     <Compile Include="Compiling\Parser.cs" />
     <Compile Include="Compiling\Logger\CompileOutput.cs" />
     <Compile Include="Compiling\Logger\OutputCategory.cs" />
+    <Compile Include="Compiling\Logger\OutputLogger.cs" />
     <Compile Include="Compiling\Logger\ErrorCategory.cs" />
     <Compile Include="Compiling\Logger\WarnCategory.cs" />
     <Compile Include="Compiling\Logger\InfoCategory.cs" />
