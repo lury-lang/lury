@@ -86,6 +86,7 @@
     <Compile Include="Compiling\Lexer\TokenPairs.cs" />
     <Compile Include="Compiling\Compiler.cs" />
     <Compile Include="Compiling\Parser.cs" />
+    <Compile Include="Compiling\Logger\InfoCategory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -109,5 +110,6 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Exceptions\Compiling\" />
     <Folder Include="Compiling\" />
+    <Folder Include="Compiling\Logger\" />
   </ItemGroup>
 </Project>
