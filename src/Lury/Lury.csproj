@@ -86,6 +86,7 @@
     <Compile Include="Compiling\Lexer\TokenPairs.cs" />
     <Compile Include="Compiling\Compiler.cs" />
     <Compile Include="Compiling\Parser.cs" />
+    <Compile Include="Compiling\Logger\CompileOutput.cs" />
     <Compile Include="Compiling\Logger\OutputCategory.cs" />
     <Compile Include="Compiling\Logger\ErrorCategory.cs" />
     <Compile Include="Compiling\Logger\WarnCategory.cs" />
