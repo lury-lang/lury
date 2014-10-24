@@ -30,22 +30,53 @@ using System;
 
 namespace Lury.Compiling.Logger
 {
+    /// <summary>
+    /// コンパイル時に発生した出力メッセージを提供します。
+    /// </summary>
     public class CompileOutput
     {
         #region -- Public Properties --
 
+        /// <summary>
+        /// 出力メッセージの番号を取得します。
+        /// </summary>
+        /// <value>出力メッセージ番号を表す整数値。</value>
         public int OutputNumber { get; private set; }
 
+        /// <summary>
+        /// 出力メッセージのカテゴリを取得します。
+        /// </summary>
+        /// <value>カテゴリを表す <see cref="Lury.Compiling.Logger.OutputCategoru"/> 列挙体。</value>
         public OutputCategory Category { get; private set; }
 
+        /// <summary>
+        /// ソースコード中の発生位置を取得します。
+        /// </summary>
+        /// <value>発生位置を表す <see cref="Lury.CharPosition"/> 構造体。</value>
         public CharPosition Position { get; private set; }
 
+        /// <summary>
+        /// ソースコード中の該当するコードを取得します。
+        /// </summary>
+        /// <value>該当するコードを表す文字列。</value>
         public string Code { get; private set; }
 
+        /// <summary>
+        /// コンパイル中のソースコードを取得します。
+        /// </summary>
+        /// <value>ソースコードを表す文字列。</value>
         public string SourceCode { get; private set; }
 
+        /// <summary>
+        /// 出力メッセージに付随するメッセージを取得します。
+        /// </summary>
+        /// <value>付随メッセージを表す文字列。</value>
         public string Appendix { get; private set; }
 
+        /// <summary>
+        /// カテゴリと出力メッセージ番号に対応したメッセージを取得します。
+        /// </summary>
+        /// <value>メッセージを表す文字列。</value>
         public string Message
         {
             get
@@ -55,6 +86,10 @@ namespace Lury.Compiling.Logger
             }
         }
 
+        /// <summary>
+        /// 出力メッセージに対処するための提案メッセージを取得します。
+        /// </summary>
+        /// <value>提案メッセージを表す文字列。</value>
         public string Suggestion
         {
             get
@@ -64,6 +99,10 @@ namespace Lury.Compiling.Logger
             }
         }
 
+        /// <summary>
+        /// 出力メッセージに対応するサイトへのリンクを取得します。
+        /// </summary>
+        /// <value>サイトへのリンクを表す文字列。</value>
         public string SiteLink
         {
             get
@@ -77,6 +116,17 @@ namespace Lury.Compiling.Logger
 
         #region -- Constructors --
 
+        /// <summary>
+        /// パラメータを指定して
+        /// 新しい <see cref="Lury.Compiling.Logger.CompileOutput"/> クラスのインスタンスを取得します。
+        /// </summary>
+        /// <param name="category">
+        ///     カテゴリを表す <see cref="Lury.Compiling.Logger.OutputCategoru"/> 列挙体。</param>
+        /// <param name="number">出力メッセージ番号を表す整数値。</param>
+        /// <param name="code">該当するコードを表す文字列。</param>
+        /// <param name="sourceCode">ソースコードを表す文字列。</param>
+        /// <param name="position">発生位置を表す <see cref="Lury.CharPosition"/> 構造体。</param>
+        /// <param name="appendix">付随メッセージを表す文字列。</param>
         internal CompileOutput(OutputCategory category,
                                int number,
                                string code = null,
