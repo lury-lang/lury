@@ -29,50 +29,15 @@
 using System;
 using System.IO;
 using Lury.Resources;
+using Lury.Compiling.Logger;
 
 namespace Lury.Compiling
 {
-    public class Compiler : IDisposable
+    public class Compiler
     {
-        #region -- Private Fields --
-
-        private Stream errorOutputStream;
-        private StreamWriter errorOutputWriter;
-        private bool isDisposed;
-
-        #endregion
-
         #region -- Public Properties --
 
-        public Stream ErrorOutputStream
-        { 
-            get
-            {
-                return this.errorOutputStream;
-            }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("value");
-
-                if (!value.CanWrite)
-                    throw new ArgumentException(Language.Compiler_Cannot_Write_To_Stream);
-
-                if (this.errorOutputStream == value)
-                    return;
-
-                if (this.errorOutputStream != null)
-                {
-                    this.errorOutputWriter.Flush();
-                    this.errorOutputWriter.Dispose();
-                    this.errorOutputStream.Dispose();
-                }
-
-                this.errorOutputStream = value;
-                this.errorOutputWriter = new StreamWriter(value);
-                this.errorOutputWriter.AutoFlush = true;
-            }
-        }
+        public OutputLogger OutputLogger { get; private set; }
 
         #endregion
 
@@ -80,7 +45,7 @@ namespace Lury.Compiling
 
         public Compiler()
         {
-            this.ErrorOutputStream = Console.OpenStandardOutput();
+            this.OutputLogger = new OutputLogger();
         }
 
         #endregion
@@ -92,70 +57,15 @@ namespace Lury.Compiling
             try
             {
                 Parser parser = new Parser();
-                Lexer lexer = new Lexer(this.errorOutputWriter, code);
+                Lexer lexer = new Lexer(this.OutputLogger, code);
                 parser.yyparse(lexer);
             }
             catch
             {
                 return false;
             }
-            finally
-            {
-                this.errorOutputWriter.Flush();
-            }
 
-            this.errorOutputWriter.Flush();
             return true;
-        }
-
-        /// <summary>
-        /// このオブジェクトで使用されているリソースを解放します。
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
-
-        #region -- Protected Methods --
-
-        /// <summary>
-        /// このオブジェクトによって使用されているアンマネージリソースを解放し、オプションでマネージリソースも解放します。
-        /// </summary>
-        /// <param name="disposing">
-        /// マネージリソースとアンマネージリソースの両方を解放する場合は true。アンマネージリソースだけを解放する場合は false。
-        /// </param>
-        protected void Dispose(bool disposing)
-        {
-            if (!this.isDisposed)
-            {
-                if (disposing)
-                {
-                    if (this.errorOutputWriter != null)
-                    {
-                        this.errorOutputWriter.Flush();
-                        this.errorOutputWriter.Dispose();
-                    }
-
-                    if (this.errorOutputStream != null)
-                        this.errorOutputStream.Dispose();
-                }
-
-                this.errorOutputWriter = null;
-                this.errorOutputStream = null;
-                this.isDisposed = true;
-            }
-        }
-
-        #endregion
-
-        #region -- Destructors --
-
-        ~Compiler()
-        {
-            this.Dispose(false);
         }
 
         #endregion
