@@ -60,14 +60,14 @@ namespace Lury.SampleRunner
                 using (var textReader = fi.OpenText())
                     input = textReader.ReadToEnd();
                     
-                using (var compiler = new Compiler())
-                    if (!compiler.Compile(input))
-                    {
-                        Console.WriteLine("{0}: {1}", Language.Program_Compilation_Failed, fi.Name);
+                var compiler = new Compiler();
+                if (!compiler.Compile(input))
+                {
+                    Console.WriteLine("{0}: {1}", Language.Program_Compilation_Failed, fi.Name);
 
-                        if (!options.NonStopMode)
-                            Environment.Exit(2);
-                    }
+                    if (!options.NonStopMode)
+                        Environment.Exit(2);
+                }
             }
         }
 
