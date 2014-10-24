@@ -40,6 +40,8 @@ namespace Lury.Compiling.Logger
 
         public string Code { get; private set; }
 
+        public string SourceCode { get; private set; }
+
         public string Appendix { get; private set; }
 
         public string Message
@@ -72,11 +74,13 @@ namespace Lury.Compiling.Logger
         internal CompileOutput(OutputCategory category,
                                int number,
                                string code = null,
+                               string sourceCode = null,
                                CharPosition position = default(CharPosition),
                                string appendix = null)
         {
             this.Category = category;
             this.OutputNumber = number;
+            this.SourceCode = sourceCode;
             this.Code = code;
             this.Position = position;
             this.Appendix = appendix;
