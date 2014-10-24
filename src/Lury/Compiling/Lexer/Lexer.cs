@@ -28,9 +28,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.IO;
+using Lury.Compiling.Logger;
 
 namespace Lury.Compiling
 {
@@ -42,15 +43,15 @@ namespace Lury.Compiling
         private int position = -1;
         private bool hasError;
         private Stack<int> indentStack;
-        private TextWriter errorWriter;
+        private OutputLogger logger;
 
         #endregion
 
         #region -- Constructor --
 
-        public Lexer(TextWriter errorWriter, string input)
+        public Lexer(OutputLogger logger, string input)
         {
-            this.errorWriter = errorWriter;
+            this.logger = logger;
             this.indentStack = new Stack<int>();
             this.indentStack.Push(0);
 
@@ -217,17 +218,7 @@ namespace Lury.Compiling
 
         private void ShowError(string message, string code, int index)
         {
-            CharPosition position;
-
-            var pointing = code.GeneratePointingStrings(index, out position);
-
-            this.errorWriter.WriteLine("Error{0}: {1}", position, message);
-
-            if (position.Line > 1)
-                this.errorWriter.WriteLine("| " + code.GetLine(position.Line - 1));
-
-            foreach (var s in pointing)
-                this.errorWriter.WriteLine("| " + s);
+            this.logger.Error(ErrorCategory.Unknown, code: code, position: code.GetIndexPosition(index));
 
             this.hasError = true;
         }
