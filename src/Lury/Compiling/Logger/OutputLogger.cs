@@ -45,26 +45,29 @@ namespace Lury.Compiling.Logger
 
         public void Error(ErrorCategory number,
                           string code = null,
+                          string sourceCode = null,
                           CharPosition position = default(CharPosition),
                           string appendix = null)
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Error, (int)number, code, position, appendix));
+            this.outputs.Add(new CompileOutput(OutputCategory.Error, (int)number, code, sourceCode, position, appendix));
         }
 
         public void Warn(WarnCategory number,
                          string code = null,
+                         string sourceCode = null,
                          CharPosition position = default(CharPosition),
                          string appendix = null)
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Warn, (int)number, code, position, appendix));
+            this.outputs.Add(new CompileOutput(OutputCategory.Warn, (int)number, code, sourceCode, position, appendix));
         }
 
         public void Info(InfoCategory number,
                          string code = null,
+                         string sourceCode = null,
                          CharPosition position = default(CharPosition),
                          string appendix = null)
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Info, (int)number, code, position, appendix));
+            this.outputs.Add(new CompileOutput(OutputCategory.Info, (int)number, code, sourceCode, position, appendix));
         }
 
         public void Clear()
