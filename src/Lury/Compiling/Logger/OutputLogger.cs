@@ -44,6 +44,21 @@ namespace Lury.Compiling.Logger
 
         public IEnumerable<CompileOutput> Outputs { get { return this.outputs; } }
 
+        public IEnumerable<CompileOutput> ErrorOutputs
+        { 
+            get { return this.outputs.Where(o => o.Category == OutputCategory.Error); }
+        }
+
+        public IEnumerable<CompileOutput> WarnOutputs
+        { 
+            get { return this.outputs.Where(o => o.Category == OutputCategory.Warn); }
+        }
+
+        public IEnumerable<CompileOutput> InfoOutputs
+        { 
+            get { return this.outputs.Where(o => o.Category == OutputCategory.Info); }
+        }
+
         #endregion
 
         #region -- Constructors --
