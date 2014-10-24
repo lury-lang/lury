@@ -30,12 +30,24 @@ using System;
 
 namespace Lury.Compiling.Logger
 {
+    /// <summary>
+    /// 出力メッセージをカテゴリ化するための列挙体です。
+    /// </summary>
     public enum OutputCategory
     {
+        /// <summary>
+        /// 情報カテゴリ。
+        /// </summary>
         Info = 0,
 
+        /// <summary>
+        /// 警告カテゴリ。
+        /// </summary>
         Warn,
 
+        /// <summary>
+        /// エラーカテゴリ。
+        /// </summary>
         Error
     }
 }
