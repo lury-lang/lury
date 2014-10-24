@@ -34,14 +34,28 @@ namespace Lury.Compiling.Logger
 {
     public class OutputLogger
     {
+        #region -- Private Fields --
+
         private readonly ICollection<CompileOutput> outputs;
 
+        #endregion
+
+        #region -- Public Properties --
+
         public IEnumerable<CompileOutput> Outputs { get { return this.outputs; } }
+
+        #endregion
+
+        #region -- Constructors --
 
         public OutputLogger()
         {
             this.outputs = new List<CompileOutput>();
         }
+
+        #endregion
+
+        #region -- Public Methods --
 
         public void Error(ErrorCategory number,
                           string code = null,
@@ -74,6 +88,8 @@ namespace Lury.Compiling.Logger
         {
             this.outputs.Clear();
         }
+
+        #endregion
     }
 }
 
