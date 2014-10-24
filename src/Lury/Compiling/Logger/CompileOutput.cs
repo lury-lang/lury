@@ -32,6 +32,8 @@ namespace Lury.Compiling.Logger
 {
     public class CompileOutput
     {
+        #region -- Public Properties --
+
         public int OutputNumber { get; private set; }
 
         public OutputCategory Category { get; private set; }
@@ -71,6 +73,10 @@ namespace Lury.Compiling.Logger
             }
         }
 
+        #endregion
+
+        #region -- Constructors --
+
         internal CompileOutput(OutputCategory category,
                                int number,
                                string code = null,
@@ -85,6 +91,8 @@ namespace Lury.Compiling.Logger
             this.Position = position;
             this.Appendix = appendix;
         }
+
+        #endregion
     }
 }
 
