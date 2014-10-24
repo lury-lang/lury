@@ -28,6 +28,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using Lury.Resources;
 using Lury.Compiling.Logger;
 
@@ -59,13 +60,13 @@ namespace Lury.Compiling
                 Parser parser = new Parser();
                 Lexer lexer = new Lexer(this.OutputLogger, code);
                 parser.yyparse(lexer);
+
+                return !this.OutputLogger.Outputs.Any();
             }
             catch
             {
                 return false;
             }
-
-            return true;
         }
 
         #endregion
