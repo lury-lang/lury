@@ -168,7 +168,7 @@ namespace Lury
 
         public static bool operator !=(CharPosition cp1, CharPosition　cp2)
         {
-            return cp1.line != cp2.line && cp1.column != cp2.column;
+            return cp1.line != cp2.line || cp1.column != cp2.column;
         }
 
         #endregion
