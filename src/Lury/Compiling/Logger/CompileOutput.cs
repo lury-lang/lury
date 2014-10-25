@@ -81,8 +81,19 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                // TODO: Implement!
-                throw new NotImplementedException();
+                var number = this.OutputNumber.ToString();
+
+                switch (this.Category)
+                {
+                    case OutputCategory.Error:
+                        return Resources.Message.Error.ResourceManager.GetString(number);
+                    case OutputCategory.Warn:
+                        return Resources.Message.Warn.ResourceManager.GetString(number);
+                    case OutputCategory.Info:
+                        return Resources.Message.Info.ResourceManager.GetString(number);
+                    default:
+                        return null;
+                }
             }
         }
 
@@ -94,8 +105,19 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                // TODO: Implement!
-                throw new NotImplementedException();
+                var number = this.OutputNumber.ToString();
+
+                switch (this.Category)
+                {
+                    case OutputCategory.Error:
+                        return Resources.Suggestion.Error.ResourceManager.GetString(number);
+                    case OutputCategory.Warn:
+                        return Resources.Suggestion.Warn.ResourceManager.GetString(number);
+                    case OutputCategory.Info:
+                        return Resources.Suggestion.Info.ResourceManager.GetString(number);
+                    default:
+                        return null;
+                }
             }
         }
 
@@ -107,8 +129,19 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                // TODO: Implement!
-                throw new NotImplementedException();
+                var number = this.OutputNumber.ToString();
+
+                switch (this.Category)
+                {
+                    case OutputCategory.Error:
+                        return Resources.SiteLink.Error.ResourceManager.GetString(number);
+                    case OutputCategory.Warn:
+                        return Resources.SiteLink.Warn.ResourceManager.GetString(number);
+                    case OutputCategory.Info:
+                        return Resources.SiteLink.Info.ResourceManager.GetString(number);
+                    default:
+                        return null;
+                }
             }
         }
 
