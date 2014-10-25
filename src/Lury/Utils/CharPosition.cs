@@ -137,11 +137,20 @@ namespace Lury
 
         #region -- Public Methods --
 
+        /// <summary>
+        /// このオブジェクトを文字列に変換します。
+        /// </summary>
+        /// <returns>このオブジェクトの状態を表す文字列。</returns>
         public override string ToString()
         {
             return string.Format("({0}, {1})", this.line, this.column);
         }
 
+        /// <summary>
+        /// 2つのオブジェクトのインスタンスが等しいかどうかを判定します。
+        /// </summary>
+        /// <param name="obj">このオブジェクトと比較される別のオブジェクト。</param>
+        /// <returns>2つのオブジェクトが等しいとき true、それ以外のとき false。</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is CharPosition))
@@ -152,6 +161,10 @@ namespace Lury
             return (x.line == this.line) && (x.column == this.column);
         }
 
+        /// <summary>
+        /// このオブジェクトに対するハッシュ値を取得します。
+        /// </summary>
+        /// <returns>このオブジェクトに対するハッシュ値を表した整数値。</returns>
         public override int GetHashCode()
         {
             return this.line ^ this.column;
@@ -161,11 +174,23 @@ namespace Lury
 
         #region -- Public Static Methods --
 
+        /// <summary>
+        /// 2つの <see cref="Lury.CharPosition"/> オブジェクトが等価であるかを判定します。
+        /// </summary>
+        /// <param name="cp1">1つ目の <see cref="Lury.CharPosition"/> オブジェクト。</param>
+        /// <param name="cp2">2つ目の <see cref="Lury.CharPosition"/> オブジェクト。</param>
+        /// <returns>2つのオブジェクトが等価であるとき true、それ以外のとき false。</returns>
         public static bool operator ==(CharPosition cp1, CharPosition　cp2)
         {
             return cp1.line == cp2.line && cp1.column == cp2.column;
         }
 
+        /// <summary>
+        /// 2つの <see cref="Lury.CharPosition"/> オブジェクトが等価でないかを判定します。
+        /// </summary>
+        /// <param name="cp1">1つ目の <see cref="Lury.CharPosition"/> オブジェクト。</param>
+        /// <param name="cp2">2つ目の <see cref="Lury.CharPosition"/> オブジェクト。</param>
+        /// <returns>2つのオブジェクトが等価でないとき true、それ以外のとき false。</returns>
         public static bool operator !=(CharPosition cp1, CharPosition　cp2)
         {
             return cp1.line != cp2.line || cp1.column != cp2.column;
