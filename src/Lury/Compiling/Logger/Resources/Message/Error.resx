@@ -15,4 +15,8 @@
 	<!--
         Localization
     -->
+	<data name="0">
+        <comment>Unknown error.</comment>
+		<value>Unknown error.</value>
+	</data>
 </root>

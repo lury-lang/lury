@@ -15,4 +15,8 @@
 	<!--
         Localization (ja-JP)
     -->
+	<data name="0">
+		<comment>Unknown error.</comment>
+		<value>不明なエラーです.</value>
+	</data>
 </root>
