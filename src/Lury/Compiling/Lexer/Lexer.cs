@@ -41,7 +41,6 @@ namespace Lury.Compiling
 
         private TokenizedToken[] tokens;
         private int position = -1;
-        private bool hasError;
         private Stack<int> indentStack;
         private OutputLogger logger;
         private string sourceCode;
@@ -223,8 +222,6 @@ namespace Lury.Compiling
                               code: code,
                               position: code.GetIndexPosition(index),
                               appendix: appendix);
-
-            this.hasError = true;
         }
 
         #endregion
