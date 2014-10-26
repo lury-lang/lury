@@ -132,7 +132,7 @@ namespace Lury.Compiling
 
                                 if (this.indentStack.Count == 0)
                                 {
-                                    this.ReportError("Can not tokenize", this.sourceCode, index);
+                                    this.ReportError("Can not tokenize", index);
                                     yield break;
                                 }
                             }
@@ -152,7 +152,7 @@ namespace Lury.Compiling
                         yield return token;
                     else
                     {
-                        this.ReportError("Can not tokenize", this.sourceCode, index);
+                        this.ReportError("Can not tokenize", index);
                         yield break;
                     }
                 }
@@ -169,7 +169,7 @@ namespace Lury.Compiling
 
             if (this.indentStack.Count == 0)
             {
-                this.ReportError("Illiegal indent", this.sourceCode, index);
+                this.ReportError("Illiegal indent", index);
                 yield break;
             }
             else if (this.indentStack.Peek() != 0)
@@ -216,9 +216,13 @@ namespace Lury.Compiling
             return null;
         }
 
-        private void ReportError(string message, string code, int index)
+        private void ReportError(string message, int index, string code = null, string appendix = null)
         {
-            this.logger.Error(ErrorCategory.Unknown, code: code, position: code.GetIndexPosition(index));
+            this.logger.Error(ErrorCategory.Unknown,
+                              sourceCode: this.sourceCode,
+                              code: code,
+                              position: code.GetIndexPosition(index),
+                              appendix: appendix);
 
             this.hasError = true;
         }
