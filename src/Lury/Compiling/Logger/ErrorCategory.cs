@@ -32,7 +32,20 @@ namespace Lury.Compiling.Logger
 {
     public enum ErrorCategory
     {
+        #region Generic Error
+
         Unknown = 0,
+
+        #endregion
+
+        #region Lexer Error
+
+        Lexer_CannotTokenize = 1000,
+
+        Lexer_IllegalIndent = 1001,
+
+        #endregion
+
     }
 }
 
