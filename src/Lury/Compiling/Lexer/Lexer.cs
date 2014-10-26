@@ -44,18 +44,21 @@ namespace Lury.Compiling
         private bool hasError;
         private Stack<int> indentStack;
         private OutputLogger logger;
+        private string sourceCode;
 
         #endregion
 
         #region -- Constructor --
 
-        public Lexer(OutputLogger logger, string input)
+        public Lexer(OutputLogger logger, string sourceCode)
         {
             this.logger = logger;
             this.indentStack = new Stack<int>();
             this.indentStack.Push(0);
 
-            this.tokens = this.Tokenize(input).ToArray();
+            this.sourceCode = sourceCode;
+
+            this.tokens = this.Tokenize().ToArray();
         }
 
         #endregion
@@ -89,10 +92,10 @@ namespace Lury.Compiling
 
         #region -- Private Methods --
 
-        private IEnumerable<TokenizedToken> Tokenize(string input)
+        private IEnumerable<TokenizedToken> Tokenize()
         {
             int index = 0;
-            int inputLength = input.Length;
+            int inputLength = this.sourceCode.Length;
             bool newLine = false;
             TokenizedToken token = null;
 
@@ -102,12 +105,12 @@ namespace Lury.Compiling
             {
                 int length;
 
-                if (!this.SkipComments(input, index, out length))
+                if (!this.SkipComments(this.sourceCode, index, out length))
                 {
                     if (newLine)
                     {
                         Regex space = new Regex(@"[\t\f\v\x85\p{Z}]*");
-                        Match match = space.Match(input, index);
+                        Match match = space.Match(this.sourceCode, index);
 
                         int indentSize = match.Length;
 
@@ -116,7 +119,7 @@ namespace Lury.Compiling
                             if (this.indentStack.Peek() < indentSize)
                             {
                                 this.indentStack.Push(indentSize);
-                                yield return new TokenizedToken(input.Substring(index, indentSize), Token.Indent, this.indentStack.Count - 1, index);
+                                yield return new TokenizedToken(this.sourceCode.Substring(index, indentSize), Token.Indent, this.indentStack.Count - 1, index);
                             }
                             else
                             {
@@ -129,7 +132,7 @@ namespace Lury.Compiling
 
                                 if (this.indentStack.Count == 0)
                                 {
-                                    this.ReportError("Can not tokenize", input, index);
+                                    this.ReportError("Can not tokenize", this.sourceCode, index);
                                     yield break;
                                 }
                             }
@@ -139,17 +142,17 @@ namespace Lury.Compiling
                         newLine = false;
                     }
 
-                    if ((token = this.TokenizeFor(TokenPairs.Operators, input, index, out length)) != null)
+                    if ((token = this.TokenizeFor(TokenPairs.Operators, this.sourceCode, index, out length)) != null)
                         yield return token;
-                    else if ((token = this.TokenizeFor(TokenPairs.Delimiters, input, index, out length)) != null)
+                    else if ((token = this.TokenizeFor(TokenPairs.Delimiters, this.sourceCode, index, out length)) != null)
                         yield return token;
-                    else if ((token = this.TokenizeFor(TokenPairs.Keywords, input, index, out length)) != null)
+                    else if ((token = this.TokenizeFor(TokenPairs.Keywords, this.sourceCode, index, out length)) != null)
                         yield return token;
-                    else if ((token = this.TokenizeFor(TokenPairs.Operands, input, index, out length)) != null)
+                    else if ((token = this.TokenizeFor(TokenPairs.Operands, this.sourceCode, index, out length)) != null)
                         yield return token;
                     else
                     {
-                        this.ReportError("Can not tokenize", input, index);
+                        this.ReportError("Can not tokenize", this.sourceCode, index);
                         yield break;
                     }
                 }
@@ -166,7 +169,7 @@ namespace Lury.Compiling
 
             if (this.indentStack.Count == 0)
             {
-                this.ReportError("Illiegal indent", input, index);
+                this.ReportError("Illiegal indent", this.sourceCode, index);
                 yield break;
             }
             else if (this.indentStack.Peek() != 0)
