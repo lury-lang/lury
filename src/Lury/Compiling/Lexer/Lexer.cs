@@ -56,9 +56,6 @@ namespace Lury.Compiling
             this.indentStack.Push(0);
 
             this.tokens = this.Tokenize(input).ToArray();
-
-            if (hasError)
-                throw new ArgumentException();
         }
 
         #endregion
