@@ -12,11 +12,19 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<!--
-        Localization (ja-JP)
+    <!--
+        Generic Error
     -->
-	<data name="0">
-		<comment>Unknown error.</comment>
-		<value>不明なエラーです.</value>
-	</data>
+    <data name="Unknown">
+        <value>不明なエラーです.</value>
+    </data>
+    <!--
+        Lexer Error
+    -->
+    <data name="Lexer_CannotTokenize">
+        <value>トークン化できない文字があります.</value>
+    </data>
+    <data name="Lexer_IllegalIndent">
+        <value>不正なインデントがあります.</value>
+    </data>
 </root>
