@@ -63,8 +63,12 @@ namespace Lury.Compiling
 
                 return !this.OutputLogger.Outputs.Any();
             }
-            catch
+            catch (Exception ex)
             {
+                this.OutputLogger.Error(ErrorCategory.Unknown,
+                                        sourceCode: code,
+                                        appendix: ex.ToString());
+
                 return false;
             }
         }
