@@ -46,6 +46,15 @@ namespace Lury.Compiling.Logger
 
         #endregion
 
+        #region Parser Error
+
+        Parser_SyntaxError = 2000,
+
+        Parser_SyntaxErrorAtEOF = 2001,
+
+        Parser_UnexpectedEOF = 2002,
+
+        #endregion
     }
 }
 
