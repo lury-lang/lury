@@ -63,6 +63,12 @@ namespace Lury.Compiling
 
                 return !this.OutputLogger.Outputs.Any();
             }
+            catch (yyParser.yyException ex)
+            {
+                this.ReportyyException(ex, code);
+
+                return false;
+            }
             catch (Exception ex)
             {
                 this.OutputLogger.Error(ErrorCategory.Unknown,
@@ -70,6 +76,49 @@ namespace Lury.Compiling
                                         appendix: ex.ToString());
 
                 return false;
+            }
+        }
+
+        #endregion
+
+        #region -- Private Methods --
+
+        private void ReportyyException(yyParser.yyException ex, string sourceCode)
+        {
+            var position = sourceCode.GetIndexPosition(ex.Token.Index);
+            var appendix = "Token: " + ex.Token.TokenNumber;
+
+            if (ex is yyParser.yySyntaxError)
+            {
+                this.OutputLogger.Error(ErrorCategory.Parser_SyntaxError,
+                                        code: ex.Token.Text,
+                                        sourceCode: sourceCode,
+                                        position: position,
+                                        appendix: appendix);
+            }
+            else if (ex is yyParser.yySyntaxErrorAtEof)
+            {
+                this.OutputLogger.Error(ErrorCategory.Parser_SyntaxErrorAtEOF,
+                                        code: ex.Token.Text,
+                                        sourceCode: sourceCode,
+                                        position: position,
+                                        appendix: appendix);
+            }
+            else if (ex is yyParser.yyUnexpectedEof)
+            {
+                this.OutputLogger.Error(ErrorCategory.Parser_UnexpectedEOF,
+                                        code: ex.Token.Text,
+                                        sourceCode: sourceCode,
+                                        position: position,
+                                        appendix: appendix);
+            }
+            else
+            {
+                this.OutputLogger.Error(ErrorCategory.Unknown,
+                                        code: ex.Token.Text,
+                                        sourceCode: sourceCode,
+                                        position: position,
+                                        appendix: appendix);
             }
         }
 
