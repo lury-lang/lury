@@ -81,16 +81,25 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                var number = this.OutputNumber.ToString();
+                Type category = this.GetCategoryEnum();
+                string name;
+
+                if (category == null)
+                    return null;
+
+                if (Enum.IsDefined(category, this.OutputNumber))
+                    name = Enum.GetName(category, this.OutputNumber);
+                else
+                    name = Enum.GetName(category, 0);
 
                 switch (this.Category)
                 {
                     case OutputCategory.Error:
-                        return Resources.Message.Error.ResourceManager.GetString(number);
+                        return Resources.Message.Error.ResourceManager.GetString(name);
                     case OutputCategory.Warn:
-                        return Resources.Message.Warn.ResourceManager.GetString(number);
+                        return Resources.Message.Warn.ResourceManager.GetString(name);
                     case OutputCategory.Info:
-                        return Resources.Message.Info.ResourceManager.GetString(number);
+                        return Resources.Message.Info.ResourceManager.GetString(name);
                     default:
                         return null;
                 }
@@ -105,16 +114,25 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                var number = this.OutputNumber.ToString();
+                Type category = this.GetCategoryEnum();
+                string name;
+
+                if (category == null)
+                    return null;
+
+                if (Enum.IsDefined(category, this.OutputNumber))
+                    name = Enum.GetName(category, this.OutputNumber);
+                else
+                    name = Enum.GetName(category, 0);
 
                 switch (this.Category)
                 {
                     case OutputCategory.Error:
-                        return Resources.Suggestion.Error.ResourceManager.GetString(number);
+                        return Resources.Suggestion.Error.ResourceManager.GetString(name);
                     case OutputCategory.Warn:
-                        return Resources.Suggestion.Warn.ResourceManager.GetString(number);
+                        return Resources.Suggestion.Warn.ResourceManager.GetString(name);
                     case OutputCategory.Info:
-                        return Resources.Suggestion.Info.ResourceManager.GetString(number);
+                        return Resources.Suggestion.Info.ResourceManager.GetString(name);
                     default:
                         return null;
                 }
@@ -129,16 +147,25 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                var number = this.OutputNumber.ToString();
+                Type category = this.GetCategoryEnum();
+                string name;
+
+                if (category == null)
+                    return null;
+
+                if (Enum.IsDefined(category, this.OutputNumber))
+                    name = Enum.GetName(category, this.OutputNumber);
+                else
+                    name = Enum.GetName(category, 0);
 
                 switch (this.Category)
                 {
                     case OutputCategory.Error:
-                        return Resources.SiteLink.Error.ResourceManager.GetString(number);
+                        return Resources.SiteLink.Error.ResourceManager.GetString(name);
                     case OutputCategory.Warn:
-                        return Resources.SiteLink.Warn.ResourceManager.GetString(number);
+                        return Resources.SiteLink.Warn.ResourceManager.GetString(name);
                     case OutputCategory.Info:
-                        return Resources.SiteLink.Info.ResourceManager.GetString(number);
+                        return Resources.SiteLink.Info.ResourceManager.GetString(name);
                     default:
                         return null;
                 }
@@ -173,6 +200,28 @@ namespace Lury.Compiling.Logger
             this.Code = code;
             this.Position = position;
             this.Appendix = appendix;
+        }
+
+        #endregion
+
+        #region -- Private Methods --
+
+        private Type GetCategoryEnum()
+        {
+            switch (this.Category)
+            {
+                case OutputCategory.Error:
+                    return typeof(ErrorCategory);
+
+                case OutputCategory.Warn:
+                    return typeof(WarnCategory);
+
+                case OutputCategory.Info:
+                    return typeof(InfoCategory);
+
+                default:
+                    return null;
+            }
         }
 
         #endregion
