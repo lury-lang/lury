@@ -98,8 +98,6 @@ namespace Lury.Compiling
             bool newLine = false;
             TokenizedToken token = null;
 
-            this.hasError = false;
-
             while (index < inputLength)
             {
                 int length;
@@ -218,10 +216,10 @@ namespace Lury.Compiling
         private void ReportError(ErrorCategory error, int index, string code = null, string appendix = null)
         {
             this.logger.Error(error,
-                              sourceCode: this.sourceCode,
-                              code: code,
-                              position: code.GetIndexPosition(index),
-                              appendix: appendix);
+                sourceCode: this.sourceCode,
+                code: code,
+                position: code.GetIndexPosition(index),
+                appendix: appendix);
         }
 
         #endregion
