@@ -27,4 +27,16 @@
 	<data name="Lexer_IllegalIndent">
 		<value>Illegal indent is detected.</value>
 	</data>
+	<!--
+        Lexer Error
+    -->
+	<data name="Parser_SyntaxError">
+		<value>Syntax error.</value>
+	</data>
+	<data name="Parser_SyntaxErrorAtEOF">
+		<value>Syntax error at EOF.</value>
+	</data>
+	<data name="Parser_UnexpectedEOF">
+		<value>Unexpected EOF is detected.</value>
+	</data>
 </root>
