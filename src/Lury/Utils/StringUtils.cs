@@ -97,6 +97,26 @@ namespace Lury
             };
         }
 
+        public static string[] GeneratePointingStrings(this string text, CharPosition position)
+        {
+            if (text == null)
+                throw new ArgumentNullException("text");
+
+            if (position.IsEmpty)
+                throw new ArgumentOutOfRangeException("position");
+                
+            string cursorLine = text.GetLine(position.Line)
+                .Replace('\t', ' ')
+                .Replace('\r', ' ')
+                .Replace('\n', ' ');
+
+            return new string[]
+            {
+                cursorLine,
+                new string(' ', position.Column - 1) + "^"
+            };
+        }
+
         public static string GetLine(this string text, int line)
         {
             if (text == null)
