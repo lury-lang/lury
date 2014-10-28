@@ -53,7 +53,7 @@ namespace Lury.SampleRunner
 
             foreach (var fi in EnumerateInputFiles(options.TargetFilePaths))
             {
-                if (options.SilentMode)
+                if (!options.SilentMode)
                     Console.WriteLine(fi.Name);
 
                 string input;
