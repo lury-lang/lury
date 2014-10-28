@@ -29,7 +29,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Lury;
 using Lury.Compiling;
+using Lury.Compiling.Logger;
 using Lury.SampleRunner.Resources;
 
 namespace Lury.SampleRunner
@@ -61,13 +63,60 @@ namespace Lury.SampleRunner
                     input = textReader.ReadToEnd();
                     
                 var compiler = new Compiler();
-                if (!compiler.Compile(input))
+                var success = compiler.Compile(input);
+
+                if (!options.SilentMode)
+                    ShowLogs(compiler.OutputLogger);
+
+                if (!success)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("{0}: {1}", Language.Program_Compilation_Failed, fi.Name);
 
                     if (!options.NonStopMode)
                         Environment.Exit(2);
                 }
+            }
+        }
+
+        private static void ShowLogs(OutputLogger logger)
+        {
+            foreach (var output in logger.Outputs)
+            {
+                if (output.Category == OutputCategory.Error && options.SuppressError)
+                    continue;
+
+                if (output.Category == OutputCategory.Warn && options.SuppressWarning)
+                    continue;
+
+                if (output.Category == OutputCategory.Info && options.SuppressInfo)
+                    continue;
+
+                Console.WriteLine("{0}{1}: {2}", GetCategoryName(output.Category), output.Position, output.Message);
+
+                if (output.SourceCode != null)
+                {
+                    var strs = output.SourceCode.GeneratePointingStrings(output.Position);
+
+                    if (output.Position.Line > 1)
+                        Console.WriteLine("| " + output.SourceCode.GetLine(output.Position.Line - 1));
+
+                    foreach (var s in strs)
+                        Console.WriteLine("| " + s);
+                }
+            }
+        }
+
+        private static string GetCategoryName(OutputCategory category)
+        {
+            switch (category)
+            {
+                case OutputCategory.Error:
+                    return Language.Program_Output_Error;
+                case OutputCategory.Warn:
+                    return Language.Program_Output_Warn;
+                default:
+                    return Language.Program_Output_Info;
             }
         }
 
