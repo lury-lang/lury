@@ -30,7 +30,7 @@ using System.Text.RegularExpressions;
 
 namespace Lury
 {
-    static class StringUtils
+    public static class StringUtils
     {
         #region -- Private Static Fields --
 
