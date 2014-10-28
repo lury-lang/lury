@@ -27,4 +27,13 @@
 	<data name="Program_Directory_Not_Found">
 		<value>ディレクトリ '{0}' は見つかりません.</value>
 	</data>
+	<data name="Program_Output_Error">
+		<value>エラー</value>
+	</data>
+	<data name="Program_Output_Warn">
+		<value>警告</value>
+	</data>
+	<data name="Program_Output_Info">
+		<value>情報</value>
+	</data>
 </root>
