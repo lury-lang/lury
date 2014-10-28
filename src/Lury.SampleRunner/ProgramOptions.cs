@@ -41,6 +41,12 @@ namespace Lury.SampleRunner
 
         public bool SilentMode { get; private set; }
 
+        public bool SuppressError { get; private set; }
+
+        public bool SuppressWarning { get; private set; }
+
+        public bool SuppressInfo { get; private set; }
+
         public ProgramOptions(string[] args)
         {
             List<string> targetDirectories = new List<string>();
@@ -79,6 +85,18 @@ namespace Lury.SampleRunner
                     case "-s":
                     case "--silent":
                         this.SilentMode = true;
+                        break;
+
+                    case "-e":
+                        this.SuppressError = true;
+                        break;
+
+                    case "-w":
+                        this.SuppressWarning = true;
+                        break;
+
+                    case "-i":
+                        this.SuppressInfo = true;
                         break;
 
                     default:
