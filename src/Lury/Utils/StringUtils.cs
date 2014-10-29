@@ -71,7 +71,7 @@ namespace Lury
             return position;
         }
 
-        public static string[] GeneratePointingStrings(this string text, int index, out CharPosition position)
+        public static string[] GeneratePointingStrings(this string text, int index, int length, out CharPosition position)
         {
             if (text == null)
                 throw new ArgumentNullException("text");
@@ -81,16 +81,22 @@ namespace Lury
 
             position = text.GetIndexPosition(index);
 
-            return text.GeneratePointingStrings(position);
+            return text.GeneratePointingStrings(position, length);
         }
 
-        public static string[] GeneratePointingStrings(this string text, CharPosition position)
+        public static string[] GeneratePointingStrings(this string text, CharPosition position, int length)
         {
             if (text == null)
                 throw new ArgumentNullException("text");
 
             if (position.IsEmpty)
                 throw new ArgumentOutOfRangeException("position");
+
+            if (length < 0)
+                throw new ArgumentOutOfRangeException("length");
+
+            if (length == 0)
+                length++;
                 
             string cursorLine = text.GetLine(position.Line)
                 .Replace('\t', ' ')
@@ -100,7 +106,7 @@ namespace Lury
             return new string[]
             {
                 cursorLine,
-                new string(' ', position.Column - 1) + "^"
+                new string(' ', position.Column - 1) + new string('^', length)
             };
         }
 
