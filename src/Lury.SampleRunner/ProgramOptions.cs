@@ -88,14 +88,17 @@ namespace Lury.SampleRunner
                         break;
 
                     case "-e":
+                    case "--suppress-error":
                         this.SuppressError = true;
                         break;
 
                     case "-w":
+                    case "--suppress-warning":
                         this.SuppressWarning = true;
                         break;
 
                     case "-i":
+                    case "--suppress-info":
                         this.SuppressInfo = true;
                         break;
 
