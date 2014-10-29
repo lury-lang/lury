@@ -96,7 +96,7 @@ namespace Lury.SampleRunner
 
                 if (output.SourceCode != null)
                 {
-                    var strs = output.SourceCode.GeneratePointingStrings(output.Position);
+                    var strs = output.SourceCode.GeneratePointingStrings(output.Position, output.Code.Length);
 
                     if (output.Position.Line > 1)
                         Console.WriteLine("| " + output.SourceCode.GetLine(output.Position.Line - 1));
