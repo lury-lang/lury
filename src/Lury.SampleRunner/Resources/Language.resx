@@ -21,6 +21,9 @@
 	<data name="Program_Usage_Or">
 		<value>OR   </value>
 	</data>
+	<data name="Program_Usage_Help">
+		<value>Try '{0} --help' for more information.</value>
+	</data>
 	<data name="Program_Compilation_Failed">
 		<value>Compilation Failed</value>
 	</data>
