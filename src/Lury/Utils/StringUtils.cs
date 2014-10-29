@@ -81,20 +81,7 @@ namespace Lury
 
             position = text.GetIndexPosition(index);
 
-            Match nextNewLine = NewLine.Match(text, index);
-            int cursorLineIndex = index - (position.Column - 1);
-            int cursorLineLength = (nextNewLine.Success ? nextNewLine.Index : text.Length) - cursorLineIndex;
-
-            string cursorLine = text.Substring(cursorLineIndex, cursorLineLength)
-                .Replace('\t', ' ')
-                .Replace('\r', ' ')
-                .Replace('\n', ' ');
-
-            return new string[]
-            {
-                cursorLine,
-                new string(' ', position.Column - 1) + "^"
-            };
+            return text.GeneratePointingStrings(position);
         }
 
         public static string[] GeneratePointingStrings(this string text, CharPosition position)
