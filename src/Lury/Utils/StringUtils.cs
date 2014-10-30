@@ -104,6 +104,9 @@ namespace Lury
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
+            if (index + length > text.Length)
+                throw new ArgumentOutOfRangeException("length");
+
             position = text.GetPositionByIndex(index);
 
             return text.GeneratePointingStrings(position, length);
@@ -134,6 +137,9 @@ namespace Lury
                 .Replace('\t', ' ')
                 .Replace('\r', ' ')
                 .Replace('\n', ' ');
+
+            if (cursorLine.Length < length)
+                throw new ArgumentOutOfRangeException("length");
 
             return new string[]
             {
