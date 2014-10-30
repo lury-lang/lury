@@ -47,8 +47,12 @@ namespace Lury.SampleRunner
 
         public bool SuppressInfo { get; private set; }
 
+        public bool EnableColor { get; private set; }
+
         public ProgramOptions(string[] args)
         {
+            this.EnableColor = true;
+
             List<string> targetDirectories = new List<string>();
             bool commandSwitch = false;
 
@@ -100,6 +104,14 @@ namespace Lury.SampleRunner
                     case "-i":
                     case "--suppress-info":
                         this.SuppressInfo = true;
+                        break;
+
+                    case "--color":
+                        this.EnableColor = true;
+                        break;
+
+                    case "--disable-color":
+                        this.EnableColor = false;
                         break;
 
                     default:
