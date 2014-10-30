@@ -92,7 +92,15 @@ namespace Lury.SampleRunner
                 if (output.Category == OutputCategory.Info && options.SuppressInfo)
                     continue;
 
+                if (output.Category == OutputCategory.Error && options.EnableColor)
+                    Console.ForegroundColor = ConsoleColor.Red;
+
+                if (output.Category == OutputCategory.Warn && options.EnableColor)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+
                 Console.WriteLine("{0}{1}: {2}", GetCategoryName(output.Category), output.Position, output.Message);
+
+                Console.ResetColor();
 
                 if (output.SourceCode != null)
                 {
