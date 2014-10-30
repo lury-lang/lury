@@ -50,7 +50,7 @@ namespace Lury
         }
 
         public LuryException(string message, string code, int index, Exception inner = null)
-            : this(message, code, code.GetIndexPosition(index), inner)
+            : this(message, code, code.GetPositionByIndex(index), inner)
         {
         }
 

@@ -85,7 +85,7 @@ namespace Lury.Compiling
 
         private void ReportyyException(yyParser.yyException ex, string sourceCode)
         {
-            var position = sourceCode.GetIndexPosition(ex.Token.Index);
+            var position = sourceCode.GetPositionByIndex(ex.Token.Index);
             var appendix = "Token: " + ex.Token.TokenNumber;
 
             if (ex is yyParser.yySyntaxError)

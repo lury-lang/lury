@@ -45,7 +45,7 @@ namespace Lury
             return (text == null) ? 0 : NewLine.Matches(text).Count + 1;
         }
 
-        public static CharPosition GetIndexPosition(this string text, int index)
+        public static CharPosition GetPositionByIndex(this string text, int index)
         {
             if (text == null)
                 throw new ArgumentNullException("text");
@@ -79,7 +79,7 @@ namespace Lury
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
-            position = text.GetIndexPosition(index);
+            position = text.GetPositionByIndex(index);
 
             return text.GeneratePointingStrings(position, length);
         }
