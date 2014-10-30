@@ -30,6 +30,9 @@ using System.Text.RegularExpressions;
 
 namespace Lury
 {
+    /// <summary>
+    /// 文字列に対する拡張メソッドを提供します。
+    /// </summary>
     public static class StringUtils
     {
         #region -- Private Static Fields --
@@ -40,11 +43,22 @@ namespace Lury
 
         #region -- Public Static Methods --
 
+        /// <summary>
+        /// 文字列の行数を取得します。
+        /// </summary>
+        /// <returns>指定された文字列の行数。</returns>
+        /// <param name="text">文字列。null の場合は常に 0 が返されます。</param>
         public static int GetNumberOfLine(this string text)
         {
             return (text == null) ? 0 : NewLine.Matches(text).Count + 1;
         }
 
+        /// <summary>
+        /// 文字列の行と列の位置をインデクスから求めます。
+        /// </summary>
+        /// <returns>インデクスに対応する行と列の位置。</returns>
+        /// <param name="text">文字列。</param>
+        /// <param name="index">文字列の位置を指し示すインデクス。</param>
         public static CharPosition GetPositionByIndex(this string text, int index)
         {
             if (text == null)
@@ -71,7 +85,18 @@ namespace Lury
             return position;
         }
 
-        public static string[] GeneratePointingStrings(this string text, int index, int length, out CharPosition position)
+        /// <summary>
+        /// 指定された文字列と、インデクスを指し示す文字列を生成します。
+        /// </summary>
+        /// <returns>指定された文字列と、インデクスを指し示した文字列の配列。</returns>
+        /// <param name="text">文字列。</param>
+        /// <param name="index">指し示されるインデクス。</param>
+        /// <param name="length">指し示される長さ。</param>
+        /// <param name="position">インデクスが指し示す位置。</param>
+        public static string[] GeneratePointingStrings(this string text,
+                                                       int index,
+                                                       int length,
+                                                       out CharPosition position)
         {
             if (text == null)
                 throw new ArgumentNullException("text");
@@ -84,6 +109,13 @@ namespace Lury
             return text.GeneratePointingStrings(position, length);
         }
 
+        /// <summary>
+        /// 指定された文字列と、行と列の位置を指し示す文字列を生成します。
+        /// </summary>
+        /// <returns>指定された文字列と、行と列の位置を指し示した文字列の配列。</returns>
+        /// <param name="text">文字列。</param>
+        /// <param name="position">指し示す行と列の位置。</param>
+        /// <param name="length">指し示される長さ。</param>
         public static string[] GeneratePointingStrings(this string text, CharPosition position, int length)
         {
             if (text == null)
@@ -110,6 +142,12 @@ namespace Lury
             };
         }
 
+        /// <summary>
+        /// 指定された行の文字列を取得します。
+        /// </summary>
+        /// <returns>一行の文字列。</returns>
+        /// <param name="text">元となる文字列。</param>
+        /// <param name="line">取得する行。</param>
         public static string GetLine(this string text, int line)
         {
             if (text == null)
