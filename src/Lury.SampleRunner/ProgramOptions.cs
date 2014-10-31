@@ -76,12 +76,8 @@ namespace Lury.SampleRunner
                     continue;
                 }
 
-                int commandIndex = -1;
-                string command = arg.StartsWith("-", StringComparison.Ordinal) ?
-                                    ((commandIndex = arg.IndexOf(":", StringComparison.Ordinal)) < 0 ?
-                                            arg : arg.Substring(0, commandIndex))
-                                        : string.Empty;
-                string parameter = commandIndex < 0 ? 　string.Empty : arg.Substring(commandIndex);
+                string command, parameter;
+                SeparateArg(arg, out command, out parameter);
 
                 switch (command)
                 {
@@ -141,6 +137,15 @@ namespace Lury.SampleRunner
             }
 
             this.TargetFilePaths = targetDirectories;
+        }
+
+        private static void SeparateArg(string arg, out string command, out string parameter)
+        {
+            int commandIndex = -1;
+            command = arg.StartsWith("-", StringComparison.Ordinal) ?
+                        ((commandIndex = arg.IndexOf(":", StringComparison.Ordinal)) < 0 ?
+                            arg : arg.Substring(0, commandIndex)) : string.Empty;
+            parameter = commandIndex < 0 ? 　string.Empty : arg.Substring(commandIndex);
         }
     }
 }
