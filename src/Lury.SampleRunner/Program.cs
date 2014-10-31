@@ -102,7 +102,7 @@ namespace Lury.SampleRunner
 
                 Console.ResetColor();
 
-                if (output.SourceCode != null)
+                if (output.SourceCode != null && options.EnableCodePointing)
                 {
                     var strs = output.SourceCode.GeneratePointingStrings(output.Position, output.Code.Length);
 
