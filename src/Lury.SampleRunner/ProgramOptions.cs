@@ -53,8 +53,18 @@ namespace Lury.SampleRunner
 
         public ProgramOptions(string[] args)
         {
-            this.EnableColor = true;
+            this.SetDefaultValue();
+            this.ParseCommandLine();
+        }
 
+        private void SetDefaultValue()
+        {
+            this.EnableColor = true;
+            this.EnableCodePointing = true;
+        }
+
+        private void ParseCommandLine(string[] args)
+        {
             List<string> targetDirectories = new List<string>();
             bool commandSwitch = false;
 
@@ -68,9 +78,9 @@ namespace Lury.SampleRunner
 
                 int commandIndex = -1;
                 string command = arg.StartsWith("-", StringComparison.Ordinal) ?
-                    ((commandIndex = arg.IndexOf(":", StringComparison.Ordinal)) < 0 ?
-                        arg : arg.Substring(0, commandIndex))
-                    : string.Empty;
+                                    ((commandIndex = arg.IndexOf(":", StringComparison.Ordinal)) < 0 ?
+                                            arg : arg.Substring(0, commandIndex))
+                                        : string.Empty;
                 string parameter = commandIndex < 0 ? 　string.Empty : arg.Substring(commandIndex);
 
                 switch (command)
