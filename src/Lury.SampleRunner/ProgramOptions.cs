@@ -49,6 +49,8 @@ namespace Lury.SampleRunner
 
         public bool EnableColor { get; private set; }
 
+        public bool EnableCodePointing { get; private set; }
+
         public ProgramOptions(string[] args)
         {
             this.EnableColor = true;
@@ -112,6 +114,14 @@ namespace Lury.SampleRunner
 
                     case "--disable-color":
                         this.EnableColor = false;
+                        break;
+
+                    case "--code-pointing":
+                        this.EnableCodePointing = true;
+                        break;
+
+                    case "--disable-code-pointing":
+                        this.EnableCodePointing = false;
                         break;
 
                     default:
