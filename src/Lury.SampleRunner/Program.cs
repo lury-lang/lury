@@ -43,6 +43,8 @@ namespace Lury.SampleRunner
 
         public static void Main(string[] args)
         {
+            bool failed;
+
             if (args.Length == 0)
             {
                 ShowUsage();
@@ -70,6 +72,8 @@ namespace Lury.SampleRunner
 
                 if (!success)
                 {
+                    failed = true;
+
                     Console.WriteLine();
                     Console.WriteLine("{0}: {1}", Language.Program_Compilation_Failed, fi.Name);
 
@@ -77,6 +81,11 @@ namespace Lury.SampleRunner
                         Environment.Exit(2);
                 }
             }
+
+            if (failed)
+                Environment.Exit(2);
+            else
+                Environment.Exit(0);
         }
 
         private static void ShowLogs(OutputLogger logger)
