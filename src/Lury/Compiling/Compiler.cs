@@ -34,16 +34,26 @@ using Lury.Compiling.Logger;
 
 namespace Lury.Compiling
 {
+    /// <summary>
+    /// コンパイルとその出力をカプセル化したクラスです。
+    /// </summary>
     public class Compiler
     {
         #region -- Public Properties --
-
+        /// <summary>
+        /// コンパイル出力を格納した
+        /// <see cref="Lury.Compiling.OutputLogger"/> オブジェクトを取得します。
+        /// </summary>
+        /// <value><see cref="Lury.Compiling.OutputLogger"/> オブジェクト。</value>
         public OutputLogger OutputLogger { get; private set; }
 
         #endregion
 
         #region -- Constructors --
 
+        /// <summary>
+        /// 新しい <see cref="Lury.Compiling.Compiler"/> クラスのインスタンスを初期化します。
+        /// </summary>
         public Compiler()
         {
             this.OutputLogger = new OutputLogger();
@@ -53,6 +63,11 @@ namespace Lury.Compiling
 
         #region -- Public Methods --
 
+        /// <summary>
+        /// コンパイルするコードを指定してコンパイルします。
+        /// </summary>
+        /// <param name="code">コンパイルされるコード文字列。</param>
+        /// <returns>>コンパイルに成功したとき true、それ以外のとき false。</returns>
         public bool Compile(string code)
         {
             try
