@@ -43,7 +43,7 @@ namespace Lury.SampleRunner
 
         public static void Main(string[] args)
         {
-            bool failed;
+            bool failed = false;
 
             if (args.Length == 0)
             {
