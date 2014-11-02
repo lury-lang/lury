@@ -60,9 +60,7 @@ namespace Lury.SampleRunner
                 if (!options.SilentMode)
                     Console.WriteLine(fi.Name);
 
-                string input;
-                using (var textReader = fi.OpenText())
-                    input = textReader.ReadToEnd();
+                string input = ReadFromFile(fi);
                     
                 var compiler = new Compiler();
                 var success = compiler.Compile(input);
@@ -122,6 +120,24 @@ namespace Lury.SampleRunner
                         Console.WriteLine("| " + s);
                 }
             }
+        }
+
+        private static string ReadFromFile(FileInfo fi)
+        {
+            try
+            {
+                using (var textReader = fi.OpenText())
+                    return textReader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = string.Format(Language.Program_Cant_Open_File, fi.Name);
+                Console.WriteLine("{0}: {1}", errorMessage, ex.Message);
+                Environment.Exit(3);
+            }
+
+            // ダミー
+            return null;
         }
 
         private static string GetCategoryName(OutputCategory category)
