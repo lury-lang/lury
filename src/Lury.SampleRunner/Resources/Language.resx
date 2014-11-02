@@ -30,6 +30,9 @@
 	<data name="Program_Directory_Not_Found">
 		<value>Directory '{0}' not found.</value>
 	</data>
+	<data name="Program_Cant_Open_File">
+		<value>File '{0}' can't be opened</value>
+	</data>
 	<data name="Program_Output_Error">
 		<value>Error</value>
 	</data>
