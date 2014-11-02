@@ -54,7 +54,7 @@ namespace Lury.SampleRunner
         public ProgramOptions(string[] args)
         {
             this.SetDefaultValue();
-            this.ParseCommandLine();
+            this.ParseCommandLine(args);
         }
 
         private void SetDefaultValue()
