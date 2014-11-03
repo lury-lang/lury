@@ -218,7 +218,7 @@ namespace Lury.Compiling
             this.logger.Error(error,
                               sourceCode: this.sourceCode,
                               code: code,
-                              position: code.GetPositionByIndex(index),
+                              position: this.sourceCode.GetPositionByIndex(index),
                               appendix: appendix);
         }
 
