@@ -31,10 +31,16 @@ namespace Lury.Compiling
 {
     class TokenizedToken : yyParser.IToken
     {
+        #region -- Private Fields --
+
         private string text;
         private int tokenNumber;
         private int indentLevel;
         private int index;
+
+        #endregion
+
+        #region -- Public Properties --
 
         public string Text { get { return this.text; } }
 
@@ -44,6 +50,10 @@ namespace Lury.Compiling
 
         public int Index { get { return this.index; } }
 
+        #endregion
+
+        #region -- Constructors --
+
         public TokenizedToken(string text, int tokenNumber, int indentLevel, int index)
         {
             this.text = text;
@@ -52,10 +62,16 @@ namespace Lury.Compiling
             this.index = index;
         }
 
+        #endregion
+
+        #region -- Public Methods --
+
         public override string ToString()
         {
             return string.Format("{0}> {1} : \"{2}\"", this.indentLevel, this.tokenNumber, this.text);
         }
+
+        #endregion
     }
 }
 
