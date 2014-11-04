@@ -130,14 +130,12 @@ namespace Lury.Compiling
 
         public Match MatchBeforeSpace(string input, int startIndex)
         {
-            Regex regex;
+            var pattern = "(" + this.Pattern + ")";
 
-            if (this.IgnoreAfterSpaces)
-                regex = new Regex("(" + this.Pattern + @")", this.Options);
-            else
-                regex = new Regex("(" + this.Pattern + @")[\t\f\v\x85\p{Z}]*", this.Options);
+            if (!this.IgnoreAfterSpaces)
+                pattern += @"[\t\f\v\x85\p{Z}]*";
 
-            return regex.Match(input, startIndex);
+            return new Regex(pattern, this.Options).Match(input, startIndex);
         }
     }
 }
