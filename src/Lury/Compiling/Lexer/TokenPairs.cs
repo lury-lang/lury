@@ -34,6 +34,8 @@ namespace Lury.Compiling
 {
     class TokenPairs
     {
+        #region -- Public Static Fields --
+
         public static readonly IEnumerable<TokenPair> Operands = new []
         {
             new TokenPair(@"[\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Pc}\p{Lm}$]\w*", Token.Identifier),
@@ -41,6 +43,7 @@ namespace Lury.Compiling
             new TokenPair(@"'(?:\'|.)*?'", Token.SingleString),
             new TokenPair(@"""(?:\""|.)*?""", Token.DoubleString),
         };
+
         public static readonly IEnumerable<TokenPair> Keywords = new []
         {
             new TokenPair("def", Token.Def),
@@ -68,6 +71,7 @@ namespace Lury.Compiling
             new TokenPair("println", Token.PrintLine),
             new TokenPair("print", Token.Print),
         };
+
         public static readonly IEnumerable<TokenPair> Operators = new []
         {
             new TokenPair(@"=>", Token.Lambda),
@@ -88,21 +92,27 @@ namespace Lury.Compiling
             new TokenPair(@">", '>'),
             new TokenPair(@"<", '<'),
         };
+
         public static readonly IEnumerable<TokenPair> Delimiters = new []
         {
             new TokenPair(@":", ':'),
             new TokenPair(@"#", '#'),
             new TokenPair(@"(?:(?:\r\n)|\n|\r)+", Token.NewLine) { IgnoreAfterSpaces = true },
         };
+
         public static readonly IEnumerable<TokenPair> Comments = new []
         {
             new TokenPair(@"\/\/[^\r\n]*"),
             new TokenPair(@"\/\*.*?\*\/", RegexOptions.Singleline),
         };
+
+        #endregion
     }
 
     class TokenPair
     {
+        #region -- Public Properties --
+
         public string Pattern { get; private set; }
 
         public int TokenNumber { get; private set; }
@@ -110,6 +120,10 @@ namespace Lury.Compiling
         public RegexOptions Options { get; private set; }
 
         public bool IgnoreAfterSpaces { get; set; }
+
+        #endregion
+
+        #region -- Constructor --
 
         public TokenPair(string pattern)
             : this(pattern, Token.yyErrorCode)
@@ -128,6 +142,10 @@ namespace Lury.Compiling
             this.TokenNumber = tokenNumber;
         }
 
+        #endregion
+
+        #region -- Public Methods --
+
         public Match MatchBeforeSpace(string input, int startIndex)
         {
             var pattern = "(" + this.Pattern + ")";
@@ -137,6 +155,8 @@ namespace Lury.Compiling
 
             return new Regex(pattern, this.Options).Match(input, startIndex);
         }
+
+        #endregion
     }
 }
 
