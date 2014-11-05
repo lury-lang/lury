@@ -38,8 +38,14 @@ namespace Lury.SampleRunner
 {
     class Program
     {
+        #region -- Private Static Fields --
+
         private static ProgramOptions options;
         private static SearchOption searchOption;
+
+        #endregion
+
+        #region -- Public Static Methods --
 
         public static void Main(string[] args)
         {
@@ -85,6 +91,10 @@ namespace Lury.SampleRunner
             else
                 Environment.Exit(0);
         }
+
+        #endregion
+
+        #region -- Private Static Methods --
 
         private static void ShowLogs(OutputLogger logger)
         {
@@ -183,5 +193,7 @@ namespace Lury.SampleRunner
         {
             return System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName;
         }
+
+        #endregion
     }
 }
