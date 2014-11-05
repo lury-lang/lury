@@ -33,6 +33,8 @@ namespace Lury.SampleRunner
 {
     class ProgramOptions
     {
+        #region -- Public Properties --
+
         public bool Recursive { get; private set; }
 
         public IEnumerable<string> TargetFilePaths { get; private set; }
@@ -51,11 +53,19 @@ namespace Lury.SampleRunner
 
         public bool EnableCodePointing { get; private set; }
 
+        #endregion
+
+        #region -- Constructors --
+
         public ProgramOptions(string[] args)
         {
             this.SetDefaultValue();
             this.ParseCommandLine(args);
         }
+
+        #endregion
+
+        #region -- Private Methods --
 
         private void SetDefaultValue()
         {
@@ -139,6 +149,10 @@ namespace Lury.SampleRunner
             this.TargetFilePaths = targetDirectories;
         }
 
+        #endregion
+
+        #region -- Private Static Methods --
+
         private static void SeparateArg(string arg, out string command, out string parameter)
         {
             int commandIndex = -1;
@@ -147,6 +161,8 @@ namespace Lury.SampleRunner
                             arg : arg.Substring(0, commandIndex)) : string.Empty;
             parameter = commandIndex < 0 ? 　string.Empty : arg.Substring(commandIndex);
         }
+
+        #endregion
     }
 }
 
