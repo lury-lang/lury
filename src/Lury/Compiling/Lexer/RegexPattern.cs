@@ -38,6 +38,7 @@ namespace Lury
         #region Strings
 
         public const string Space = @"[\t\f\v\x85\p{Z}]*";
+        public const string NewLine = @"(?:(?:\r\n)|\n|\r)+";
 
         #endregion
 
