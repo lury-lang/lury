@@ -97,7 +97,7 @@ namespace Lury.Compiling
         {
             new TokenPair(@":", ':'),
             new TokenPair(@"#", '#'),
-            new TokenPair(@"(?:(?:\r\n)|\n|\r)+", Token.NewLine) { IgnoreAfterSpaces = true },
+            new TokenPair(RegexPattern.NewLine, Token.NewLine) { IgnoreAfterSpaces = true },
         };
 
         public static readonly IEnumerable<TokenPair> Comments = new []
