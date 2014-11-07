@@ -151,7 +151,7 @@ namespace Lury.Compiling
             var pattern = "(" + this.Pattern + ")";
 
             if (!this.IgnoreAfterSpaces)
-                pattern += @"[\t\f\v\x85\p{Z}]*";
+                pattern += RegexPattern.Space;
 
             return new Regex(pattern, this.Options).Match(input, startIndex);
         }
