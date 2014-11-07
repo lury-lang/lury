@@ -106,8 +106,7 @@ namespace Lury.Compiling
                 {
                     if (newLine)
                     {
-                        Regex space = new Regex(@"[\t\f\v\x85\p{Z}]*");
-                        Match match = space.Match(this.sourceCode, index);
+                        Match match =　RegexPattern.SpaceRegex.Match(this.sourceCode, index);
 
                         int indentSize = match.Length;
 
