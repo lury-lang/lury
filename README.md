@@ -1,8 +1,9 @@
 Lury
 ====
 
-The Lury Programming Language
+_The Lury Programming Language_
 
+I'm writing a proposal for the language: https://gist.github.com/nanase/8d17c7baf30f2cacb4bf (on Japanese)
 
 ## License
 
