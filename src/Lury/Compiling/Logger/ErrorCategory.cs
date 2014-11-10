@@ -30,28 +30,49 @@ using System;
 
 namespace Lury.Compiling.Logger
 {
+    /// <summary>
+    /// エラーを識別するための列挙体です。
+    /// </summary>
     public enum ErrorCategory
     {
         #region Generic Error
 
+        /// <summary>
+        /// 不明なエラー。
+        /// </summary>
         Unknown = 0,
 
         #endregion
 
         #region Lexer Error
 
+        /// <summary>
+        /// トークン化できない文字列が検知されました。
+        /// </summary>
         Lexer_CannotTokenize = 1000,
 
+        /// <summary>
+        /// 不正なインデントが検知されました。
+        /// </summary>
         Lexer_IllegalIndent = 1001,
 
         #endregion
 
         #region Parser Error
 
+        /// <summary>
+        /// 文法エラー。
+        /// </summary>
         Parser_SyntaxError = 2000,
 
+        /// <summary>
+        /// 文末での文法エラーです。
+        /// </summary>
         Parser_SyntaxErrorAtEOF = 2001,
 
+        /// <summary>
+        /// 予期しない位置で文末が出現しました。
+        /// </summary>
         Parser_UnexpectedEOF = 2002,
 
         #endregion
