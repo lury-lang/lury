@@ -36,6 +36,9 @@ using Lury.SampleRunner.Resources;
 
 namespace Lury.SampleRunner
 {
+    /// <summary>
+    /// プログラムのエントリポイントとなるクラスです。
+    /// </summary>
     class Program
     {
         #region -- Private Static Fields --
@@ -47,6 +50,10 @@ namespace Lury.SampleRunner
 
         #region -- Public Static Methods --
 
+        /// <summary>
+        /// プログラムのエントリポイントです。
+        /// </summary>
+        /// <param name="args">コマンドラインで指定された引数を表す文字列の配列。</param>
         public static void Main(string[] args)
         {
             bool failed = false;
@@ -96,6 +103,10 @@ namespace Lury.SampleRunner
 
         #region -- Private Static Methods --
 
+        /// <summary>
+        /// 指定されたロガーに蓄積されたログを表示します。
+        /// </summary>
+        /// <param name="logger">ロガーオブジェクト。</param>
         private static void ShowLogs(OutputLogger logger)
         {
             foreach (var output in logger.Outputs)
@@ -132,6 +143,11 @@ namespace Lury.SampleRunner
             }
         }
 
+        /// <summary>
+        /// 指定されたファイルのテキストを読み込みます。
+        /// </summary>
+        /// <returns>指定したファイルのテキスト。</returns>
+        /// <param name="fi"><see cref="System.IO.FileInfo"/> オブジェクト。</param>
         private static string ReadFromFile(FileInfo fi)
         {
             try
@@ -150,6 +166,11 @@ namespace Lury.SampleRunner
             return null;
         }
 
+        /// <summary>
+        /// カテゴリ名を表す文字列を表示します。
+        /// </summary>
+        /// <returns>カテゴリ名。</returns>
+        /// <param name="category"><see cref="Lury.Compiling.Logger.OutputCategory"/> 列挙体。</param>
         private static string GetCategoryName(OutputCategory category)
         {
             switch (category)
@@ -163,6 +184,9 @@ namespace Lury.SampleRunner
             }
         }
 
+        /// <summary>
+        /// このプログラムの使用法を表示します。
+        /// </summary>
         private static void ShowUsage()
         {
             var executeFilePath = GetExecuteFilePath();
@@ -170,6 +194,11 @@ namespace Lury.SampleRunner
             Console.WriteLine("{0}: {1} [OPTION]... FILE...", Language.Program_Usage_Or, executeFilePath);
         }
 
+        /// <summary>
+        /// 指定されたファイルパスを解析し、ディレクトリの場合はそのディレクトリ直下にあるファイルを返します。
+        /// </summary>
+        /// <returns><see cref="System.IO.FileInfo"/> オブジェクトの列挙子。</returns>
+        /// <param name="filepaths">ファイルパスを表す文字列の列挙子。</param>
         private static IEnumerable<FileInfo> EnumerateInputFiles(IEnumerable<string> filepaths)
         {
             foreach (var filepath in filepaths)
@@ -189,6 +218,10 @@ namespace Lury.SampleRunner
             }
         }
 
+        /// <summary>
+        /// このプログラムの実行ファイル名を取得します。
+        /// </summary>
+        /// <returns>ファイル名を表す文字列。</returns>
         private static string GetExecuteFilePath()
         {
             return System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName;
