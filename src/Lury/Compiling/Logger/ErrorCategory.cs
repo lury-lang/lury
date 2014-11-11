@@ -38,7 +38,7 @@ namespace Lury.Compiling.Logger
         #region Generic Error
 
         /// <summary>
-        /// 不明なエラー。
+        /// 不明なエラー。未分類のエラーに対しても与えられます。
         /// </summary>
         Unknown = 0,
 
