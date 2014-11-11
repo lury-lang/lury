@@ -30,8 +30,14 @@ using System;
 
 namespace Lury.Compiling.Logger
 {
+    /// <summary>
+    /// 情報を識別するための列挙体です。
+    /// </summary>
     public enum InfoCategory
     {
+        /// <summary>
+        /// 不明な情報。未分類の情報に対しても与えられます。
+        /// </summary>
         Unknown = 0,
     }
 }
