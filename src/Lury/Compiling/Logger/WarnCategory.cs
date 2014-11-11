@@ -30,8 +30,14 @@ using System;
 
 namespace Lury.Compiling.Logger
 {
+    /// <summary>
+    /// 警告を識別するための列挙体です。
+    /// </summary>
     public enum WarnCategory
     {
+        /// <summary>
+        /// 不明な警告。未分類の警告に対しても与えられます。
+        /// </summary>
         Unknown = 0,
     }
 }
