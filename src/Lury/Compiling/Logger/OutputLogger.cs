@@ -32,6 +32,9 @@ using System.Linq;
 
 namespace Lury.Compiling.Logger
 {
+    /// <summary>
+    /// コンパイル出力を保持するためのロガークラスです。
+    /// </summary>
     public class OutputLogger
     {
         #region -- Private Fields --
@@ -42,18 +45,34 @@ namespace Lury.Compiling.Logger
 
         #region -- Public Properties --
 
+        /// <summary>
+        /// ロガーに格納された全てのコンパイル出力を列挙する列挙子を取得します。
+        /// </summary>
+        /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> Outputs { get { return this.outputs; } }
 
+        /// <summary>
+        /// ロガーに格納された全てのエラーを列挙する列挙子を取得します。
+        /// </summary>
+        /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> ErrorOutputs
         { 
             get { return this.outputs.Where(o => o.Category == OutputCategory.Error); }
         }
 
+        /// <summary>
+        /// ロガーに格納された全ての警告を列挙する列挙子を取得します。
+        /// </summary>
+        /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> WarnOutputs
         { 
             get { return this.outputs.Where(o => o.Category == OutputCategory.Warn); }
         }
 
+        /// <summary>
+        /// ロガーに格納された全ての情報を列挙する列挙子を取得します。
+        /// </summary>
+        /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> InfoOutputs
         { 
             get { return this.outputs.Where(o => o.Category == OutputCategory.Info); }
@@ -63,6 +82,9 @@ namespace Lury.Compiling.Logger
 
         #region -- Constructors --
 
+        /// <summary>
+        /// 新しい <see cref="Lury.Compiling.Logger.OutputLogger"/> クラスのインスタンスを初期化します。
+        /// </summary>
         public OutputLogger()
         {
             this.outputs = new List<CompileOutput>();
@@ -72,6 +94,14 @@ namespace Lury.Compiling.Logger
 
         #region -- Public Methods --
 
+        /// <summary>
+        /// エラーを報告します。
+        /// </summary>
+        /// <param name="number">エラー番号。</param>
+        /// <param name="code">該当するコード。</param>
+        /// <param name="sourceCode">発生したソースコード全体。</param>
+        /// <param name="position">発生したソースコード上の位置。</param>
+        /// <param name="appendix">コンパイル出力に付随する追加の情報</param>
         public void Error(ErrorCategory number,
                           string code = null,
                           string sourceCode = null,
@@ -81,6 +111,14 @@ namespace Lury.Compiling.Logger
             this.outputs.Add(new CompileOutput(OutputCategory.Error, (int)number, code, sourceCode, position, appendix));
         }
 
+        /// <summary>
+        /// 警告を報告します。
+        /// </summary>
+        /// <param name="number">警告番号。</param>
+        /// <param name="code">該当するコード。</param>
+        /// <param name="sourceCode">発生したソースコード全体。</param>
+        /// <param name="position">発生したソースコード上の位置。</param>
+        /// <param name="appendix">コンパイル出力に付随する追加の情報</param>
         public void Warn(WarnCategory number,
                          string code = null,
                          string sourceCode = null,
@@ -90,6 +128,14 @@ namespace Lury.Compiling.Logger
             this.outputs.Add(new CompileOutput(OutputCategory.Warn, (int)number, code, sourceCode, position, appendix));
         }
 
+        /// <summary>
+        /// 情報を報告します。
+        /// </summary>
+        /// <param name="number">情報番号。</param>
+        /// <param name="code">該当するコード。</param>
+        /// <param name="sourceCode">発生したソースコード全体。</param>
+        /// <param name="position">発生したソースコード上の位置。</param>
+        /// <param name="appendix">コンパイル出力に付随する追加の情報</param>
         public void Info(InfoCategory number,
                          string code = null,
                          string sourceCode = null,
@@ -99,6 +145,9 @@ namespace Lury.Compiling.Logger
             this.outputs.Add(new CompileOutput(OutputCategory.Info, (int)number, code, sourceCode, position, appendix));
         }
 
+        /// <summary>
+        /// 格納された全てのコンパイル出力を削除します。
+        /// </summary>
         public void Clear()
         {
             this.outputs.Clear();
