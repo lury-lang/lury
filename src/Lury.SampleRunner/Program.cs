@@ -109,13 +109,9 @@ namespace Lury.SampleRunner
         {
             foreach (var output in logger.Outputs)
             {
-                if (output.Category == OutputCategory.Error && options.SuppressError)
-                    continue;
-
-                if (output.Category == OutputCategory.Warn && options.SuppressWarning)
-                    continue;
-
-                if (output.Category == OutputCategory.Info && options.SuppressInfo)
+                if (output.Category == OutputCategory.Error && options.SuppressError ||
+                    output.Category == OutputCategory.Warn && options.SuppressWarning ||
+                    output.Category == OutputCategory.Info && options.SuppressInfo)
                     continue;
 
                 if (output.Category == OutputCategory.Error && options.EnableColor)
