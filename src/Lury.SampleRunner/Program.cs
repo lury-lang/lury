@@ -56,6 +56,7 @@ namespace Lury.SampleRunner
         /// <param name="args">コマンドラインで指定された引数を表す文字列の配列。</param>
         public static void Main(string[] args)
         {
+            // コンパイル失敗フラグ
             bool failed = false;
 
             if (args.Length == 0)
@@ -93,10 +94,7 @@ namespace Lury.SampleRunner
                 }
             }
 
-            if (failed)
-                Environment.Exit(2);
-            else
-                Environment.Exit(0);
+            Environment.Exit(failed ? 2 : 0);
         }
 
         #endregion
