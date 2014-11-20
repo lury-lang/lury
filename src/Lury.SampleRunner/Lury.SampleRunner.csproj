@@ -54,6 +54,7 @@
       <DependentUpon>Language.ja-JP.resx</DependentUpon>
     </Compile>
     <Compile Include="ProgramOptions.cs" />
+    <Compile Include="ExitCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Language.ja-JP.resx">
