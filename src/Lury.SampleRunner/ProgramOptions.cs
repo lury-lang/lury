@@ -35,28 +35,69 @@ namespace Lury.SampleRunner
     {
         #region -- Public Properties --
 
+        /// <summary>
+        /// ディレクトリが指定された場合に子ディレクトリも再帰的に探索するかの真偽値を取得します。
+        /// </summary>
+        /// <value>再帰するとき true、それ以外のとき false。</value>
         public bool Recursive { get; private set; }
 
+        /// <summary>
+        /// 実行対象のファイル名またはディレクトリ名の列挙子を取得します。
+        /// </summary>
+        /// <value>ファイルパスを列挙する列挙子。</value>
         public IEnumerable<string> TargetFilePaths { get; private set; }
 
+        /// <summary>
+        /// エラーが発生した場合でも処理を中断せずに次の処理を続けるかの真偽値を取得します。
+        /// </summary>
+        /// <value>中断しないとき true、それ以外のとき false。</value>
         public bool NonStopMode { get; private set; }
 
+        /// <summary>
+        /// コンパイル出力以外のメッセージを表示しないかどうかの真偽値を取得します。
+        /// </summary>
+        /// <value>出力しないとき true、それ以外のとき false。</value>
         public bool SilentMode { get; private set; }
 
+        /// <summary>
+        /// エラー出力を表示しないかどうかの真偽値を取得します。
+        /// </summary>
+        /// <value>エラーを表示しないとき true、それ以外のとき false。</value>
         public bool SuppressError { get; private set; }
 
+        /// <summary>
+        /// 警告出力を表示しないかどうかの真偽値を取得します。
+        /// </summary>
+        /// <value>警告を表示しないとき true、それ以外のとき false。</value>
         public bool SuppressWarning { get; private set; }
 
+        /// <summary>
+        /// 情報出力を表示しないかどうかの真偽値を取得します。
+        /// </summary>
+        /// <value>情報を表示しないとき true、それ以外のとき false。</value>
         public bool SuppressInfo { get; private set; }
 
+        /// <summary>
+        /// 出力をカラーにするかの真偽値を取得します。
+        /// </summary>
+        /// <value>カラー出力するとき true、それ以外のとき false。</value>
         public bool EnableColor { get; private set; }
 
+        /// <summary>
+        /// コンパイル出力発生箇所のソースを表示するかの真偽値を取得します。
+        /// </summary>
+        /// <value>ソースを表示するとき true、それ以外のとき false。</value>
         public bool EnableCodePointing { get; private set; }
 
         #endregion
 
         #region -- Constructors --
 
+        /// <summary>
+        /// コマンドライン引数を指定して
+        /// 新しい <see cref="Lury.SampleRunner.ProgramOptions"/> クラスのインスタンスを初期化します。
+        /// </summary>
+        /// <param name="args">コマンドライン引数。</param>
         public ProgramOptions(string[] args)
         {
             this.SetDefaultValue();
