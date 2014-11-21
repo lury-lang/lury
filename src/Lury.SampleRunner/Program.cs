@@ -62,7 +62,7 @@ namespace Lury.SampleRunner
             if (args.Length == 0)
             {
                 ShowUsage();
-                Environment.Exit(1);
+                Environment.Exit(ExitCode.ParameterNotEnough);
             }
 
             options = new ProgramOptions(args);
@@ -90,11 +90,11 @@ namespace Lury.SampleRunner
                     Console.WriteLine("{0}: {1}", Language.Program_Compilation_Failed, fi.Name);
 
                     if (!options.NonStopMode)
-                        Environment.Exit(2);
+                        Environment.Exit(ExitCode.CompileError);
                 }
             }
 
-            Environment.Exit(failed ? 2 : 0);
+            Environment.Exit(failed ? ExitCode.CompileError : ExitCode.Success);
         }
 
         #endregion
@@ -153,7 +153,7 @@ namespace Lury.SampleRunner
             {
                 var errorMessage = string.Format(Language.Program_Cant_Open_File, fi.Name);
                 Console.WriteLine("{0}: {1}", errorMessage, ex.Message);
-                Environment.Exit(3);
+                Environment.Exit(ExitCode.FileCannotOpened);
             }
 
             // ダミー
