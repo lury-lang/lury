@@ -108,12 +108,19 @@ namespace Lury.SampleRunner
 
         #region -- Private Methods --
 
+        /// <summary>
+        /// 各プロパティにデフォルト値を設定します。
+        /// </summary>
         private void SetDefaultValue()
         {
             this.EnableColor = true;
             this.EnableCodePointing = true;
         }
 
+        /// <summary>
+        /// コマンドライン引数を解析して各プロパティに反映します。
+        /// </summary>
+        /// <param name="args">コマンドライン引数を格納した文字列の配列。</param>
         private void ParseCommandLine(string[] args)
         {
             List<string> targetDirectories = new List<string>();
@@ -194,6 +201,12 @@ namespace Lury.SampleRunner
 
         #region -- Private Static Methods --
 
+        /// <summary>
+        /// 文字列をコマンドとパラメータに分割します。
+        /// </summary>
+        /// <param name="arg">文字列。</param>
+        /// <param name="command">コマンドを表す文字列。</param>
+        /// <param name="parameter">パラメータを表す文字列。</param>
         private static void SeparateArg(string arg, out string command, out string parameter)
         {
             int commandIndex = -1;
