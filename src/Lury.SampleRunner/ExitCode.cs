@@ -30,14 +30,29 @@ using System;
 
 namespace Lury.SampleRunner
 {
+    /// <summary>
+    /// 終了コードを格納したクラスです。
+    /// </summary>
     public static class ExitCode
     {
+        /// <summary>
+        /// プログラムはエラー無しに終了しました。
+        /// </summary>
         public const int Success = 0;
 
+        /// <summary>
+        /// パラメータが足りません。
+        /// </summary>
         public const int ParameterNotEnough = 1;
 
+        /// <summary>
+        /// コンパイルエラーが発生しました。
+        /// </summary>
         public const int CompileError = 2;
 
+        /// <summary>
+        /// ファイルを開けません。
+        /// </summary>
         public const int FileCannotOpened = 3;
     }
 }
