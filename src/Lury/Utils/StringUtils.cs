@@ -37,7 +37,7 @@ namespace Lury
     {
         #region -- Private Static Fields --
 
-        private static readonly Regex NewLine = new Regex(@"(\n|(:?\r\n)|\r)", RegexOptions.Compiled | RegexOptions.Singleline);
+        private static readonly Regex NewLine = new Regex(RegexPattern.NewLine, RegexOptions.Compiled | RegexOptions.Singleline);
 
         #endregion
 
