@@ -151,7 +151,7 @@ namespace Lury.Compiling
             var pattern = "(" + this.Pattern + ")";
 
             if (!this.IgnoreAfterSpaces)
-                pattern += RegexPattern.Space;
+                pattern += RegexPattern.Space + "*";
 
             return new Regex(pattern, this.Options).Match(input, startIndex);
         }

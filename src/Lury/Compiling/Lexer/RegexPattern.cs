@@ -37,14 +37,14 @@ namespace Lury
 
         #region Strings
 
-        public const string Space = @"[\t\f\v\x85\p{Z}]*";
+        public const string Space = @"[\t\f\v\x85\p{Z}]";
         public const string NewLine = @"(?:(?:\r\n)|\n|\r)";
 
         #endregion
 
         #region Regex
 
-        public static readonly Regex SpaceRegex = new Regex(Space, RegexOptions.Compiled);
+        public static readonly Regex SpaceRegex = new Regex(Space + "*", RegexOptions.Compiled);
 
         #endregion
 
