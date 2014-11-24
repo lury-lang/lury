@@ -39,6 +39,7 @@ namespace Lury
 
         public const string Space = @"[\t\f\v\x85\p{Z}]";
         public const string NewLine = @"(?:(?:\r\n)|\n|\r)";
+        public const string Identifier = @"[\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Pc}\p{Lm}$]\w";
 
         #endregion
 
