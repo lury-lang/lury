@@ -89,6 +89,12 @@ namespace Lury.SampleRunner
         /// <value>ソースを表示するとき true、それ以外のとき false。</value>
         public bool EnableCodePointing { get; private set; }
 
+        /// <summary>
+        /// ヘルプを表示するかの真偽値を取得します。
+        /// </summary>
+        /// <value>ヘルプ表示モードのとき true、それ以外のとき false。</value>
+        public bool ShowHelpMode { get; private set; }
+
         #endregion
 
         #region -- Constructors --
@@ -139,6 +145,10 @@ namespace Lury.SampleRunner
 
                 switch (command)
                 {
+                    case "--help":
+                        this.ShowHelpMode = true;
+                        return;
+
                     case "-R":
                     case "--recursive":
                         this.Recursive = true;
