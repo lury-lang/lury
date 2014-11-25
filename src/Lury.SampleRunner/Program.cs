@@ -69,6 +69,12 @@ namespace Lury.SampleRunner
             searchOption = options.Recursive ? SearchOption.AllDirectories :
                                                SearchOption.TopDirectoryOnly;
 
+            if (options.ShowHelpMode)
+            {
+                ShowHelp();
+                Environment.Exit(ExitCode.Success);
+            }
+
             foreach (var fi in EnumerateInputFiles(options.TargetFilePaths))
             {
                 if (!options.SilentMode)
@@ -219,6 +225,13 @@ namespace Lury.SampleRunner
         private static string GetExecuteFilePath()
         {
             return System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName;
+        }
+
+        private static void ShowHelp()
+        {
+            ShowUsage();
+            Console.WriteLine();
+            ProgramOptions.ShowHelp();
         }
 
         #endregion
