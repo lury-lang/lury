@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lury.SampleRunner
 {
@@ -213,7 +214,29 @@ namespace Lury.SampleRunner
 
         public static void ShowHelp()
         {
-            // TODO: WIP!
+            var args = new []
+            {
+                new {Command = "--", Text = "これ以降のオプションをすべてファイルパスとして認識します."},
+                new {Command = "    --code-pointing", Text = "コードポインティングを有効化します."},
+                new {Command = "    --color", Text = "カラー表示を有効化します."},
+                new {Command = "    --disable-code-pointing", Text = "コードポインティングを無効化します."},
+                new {Command = "    --disable-color", Text = "カラー表示を無効化します."},
+                new {Command = "-e, --suppress-error", Text = "エラー表示を抑制します."},
+                new {Command = "-i, --suppress-info", Text = "情報表示を抑制します."},
+                new {Command = "    --nonstop", Text = "エラー時が発生しても処理を中断しません."},
+                new {Command = "-R, --recursive", Text = "子ディレクトリも再帰的に探索します."},
+                new {Command = "-s, --silent", Text = "コンパイル出力以外の表示を抑制します."},
+                new {Command = "-w, --suppress-warning", Text = "警告表示を抑制します."},
+
+                new {Command = "--help", Text = "このヘルプを表示します."},
+            };
+
+            Console.WriteLine("Options:");
+            var commandLength = Math.Min(25, args.Max(a => a.Command.Length));
+            var format = string.Format("  {{0,{0}}} {{1}}", -commandLength);
+
+            foreach (var arg in args)
+                Console.WriteLine(format, arg.Command, arg.Text);
         }
 
         #endregion
