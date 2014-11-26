@@ -212,6 +212,9 @@ namespace Lury.SampleRunner
 
         #region -- Public Static Methods --
 
+        /// <summary>
+        /// 引数に関するヘルプを表示します。
+        /// </summary>
         public static void ShowHelp()
         {
             var args = new []
