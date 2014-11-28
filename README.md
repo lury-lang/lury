@@ -1,4 +1,4 @@
-Lury
+![Lury][Lury]
 ====
 
 _The Lury Programming Language_
@@ -15,3 +15,5 @@ Copyright (C) 2014 Tomona Nanase
 ### Jay (jay.exe)
 
 __New BSD License__
+
+[Lury]: https://raw.githubusercontent.com/nanase/lury/master/logo/lury.png
