@@ -3,7 +3,7 @@
 Luryのロゴ画像群です。
 
 * 文字にLatoフォントを使用しています。
-	* ライセンス: [SIL OPEN FONT LICENSE Version 1.1](./LICENSE_Lato)
+	* ライセンス: [SIL OPEN FONT LICENSE Version 1.1](./LICENSE.Lato)
 * 文字の色は <span style="color:#2a5caa">**瑠璃色** (#2A5CAA)</span> です。
 
 * ロゴ使用の際はLuryの関連であれば許諾は不要です。
