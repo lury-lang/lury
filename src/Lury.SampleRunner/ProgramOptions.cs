@@ -146,6 +146,7 @@ namespace Lury.SampleRunner
 
                 switch (command)
                 {
+                    case "-h":
                     case "--help":
                         this.ShowHelpMode = true;
                         return;
@@ -231,7 +232,7 @@ namespace Lury.SampleRunner
                 new {Command = "-s, --silent", Text = "コンパイル出力以外の表示を抑制します."},
                 new {Command = "-w, --suppress-warning", Text = "警告表示を抑制します."},
 
-                new {Command = "--help", Text = "このヘルプを表示します."},
+                new {Command = "-h, --help", Text = "このヘルプを表示します."},
             };
 
             Console.WriteLine("Options:");
