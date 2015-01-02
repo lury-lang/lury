@@ -10,7 +10,7 @@ I'm writing a proposal for the language: https://gist.github.com/nanase/8d17c7ba
 ### Lury
 
 [__MIT License__](../master/LICENSE.lury) /
-Copyright (C) 2014 Tomona Nanase
+Copyright (C) 2014-2015 Tomona Nanase
 
 ### Jay (jay.exe)
 
