@@ -233,7 +233,7 @@ namespace Lury.SampleRunner
             Console.WriteLine();
             ProgramOptions.ShowHelp();
             Console.WriteLine();
-            Console.WriteLine("プログラムのリポジトリ: <https://github.com/nanase/lury>");
+            Console.WriteLine("プログラムのリポジトリ: <https://github.com/lury-lang/lury>");
         }
 
         #endregion
