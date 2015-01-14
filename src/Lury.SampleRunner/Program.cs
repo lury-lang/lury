@@ -227,6 +227,9 @@ namespace Lury.SampleRunner
             return System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName;
         }
 
+        /// <summary>
+        /// プログラムのヘルプを表示します。
+        /// </summary>
         private static void ShowHelp()
         {
             ShowUsage();
