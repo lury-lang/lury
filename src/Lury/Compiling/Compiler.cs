@@ -98,6 +98,11 @@ namespace Lury.Compiling
 
         #region -- Private Methods --
 
+        /// <summary>
+        /// コンパイルエラーをロガーに出力します。
+        /// </summary>
+        /// <param name="ex">コンパイルエラーを表す yyParser.yyException オブジェクト。</param>
+        /// <param name="sourceCode">エラーを起こしたソースコード。</param>
         private void ReportyyException(yyParser.yyException ex, string sourceCode)
         {
             var position = sourceCode.GetPositionByIndex(ex.Token.Index);
