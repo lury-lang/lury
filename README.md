@@ -16,4 +16,4 @@ Copyright (C) 2014-2015 Tomona Nanase
 
 __New BSD License__
 
-[Lury]: https://raw.githubusercontent.com/nanase/lury/master/logo/lury.png
+[Lury]: https://raw.githubusercontent.com/lury-lang/lury/master/logo/lury.png
