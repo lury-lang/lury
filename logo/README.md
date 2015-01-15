@@ -18,5 +18,5 @@ Luryのロゴ画像群です。
 ### ロゴ（文字入り）
 ![Lury Logo][logo]
 
-[logo]: https://raw.githubusercontent.com/nanase/lury/master/logo/lury.png
-[logo_dolphin]: https://raw.githubusercontent.com/nanase/lury/master/logo/lury_dolphin.png
+[logo]: https://raw.githubusercontent.com/lury-lang/lury/master/logo/lury.png
+[logo_dolphin]: https://raw.githubusercontent.com/lury-lang/lury/master/logo/lury_dolphin.png
