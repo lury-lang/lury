@@ -3,7 +3,13 @@
 
 _The Lury Programming Language_
 
-I'm writing a proposal for the language: https://gist.github.com/nanase/8d17c7baf30f2cacb4bf (on Japanese)
+## Overview
+The Lury is _new_ programming language for beginners!
+
+The Lury is python-like, but also includes many idea from D, Ruby, Java and C#. The Lury DOES NOT want to replace existing languages.
+
+- A proposal for the language: https://gist.github.com/nanase/8d17c7baf30f2cacb4bf (on Japanese)
+- Language design, specifications: [lury-lang/lury-specification](https://github.com/lury-lang/lury-specification)
 
 ## License
 
