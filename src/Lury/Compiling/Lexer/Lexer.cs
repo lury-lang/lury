@@ -35,6 +35,9 @@ using Lury.Compiling.Logger;
 
 namespace Lury.Compiling
 {
+    /// <summary>
+    /// コードをトークン列に変換するを字句解析器です。
+    /// </summary>
     class Lexer : yyParser.yyInput
     {
         #region -- Private Fields --
@@ -48,7 +51,11 @@ namespace Lury.Compiling
         #endregion
 
         #region -- Constructor --
-
+        /// <summary>
+        /// ソースコードを指定して新しい Lexer クラスのインスタンスを初期化します。
+        /// </summary>
+        /// <param name="logger">ロガーとなる OutputLogger オブジェクト。</param>
+        /// <param name="sourceCode">ソースコードを表す文字列。</param>
         public Lexer(OutputLogger logger, string sourceCode)
         {
             this.logger = logger;
@@ -63,7 +70,10 @@ namespace Lury.Compiling
         #endregion
 
         #region -- Public Methods --
-
+        /// <summary>
+        /// 文字列の解析位置を進め、解析が続行できるかの真偽値を取得します。
+        /// </summary>
+        /// <returns>解析が続行できるとき true、文字列の終端に達したなど解析が続行できないとき false。</returns>
         public bool Advance()
         {
             if (this.tokens.Length <= this.position + 1)
@@ -77,11 +87,19 @@ namespace Lury.Compiling
             }
         }
 
+        /// <summary>
+        /// 現在の解析位置でのトークンを取得します。
+        /// </summary>
+        /// <returns>yyParser.IToken　インタフェースを実装するトークンオブジェクト。</returns>
         public yyParser.IToken GetToken()
         {
             return this.tokens[this.position];
         }
 
+        /// <summary>
+        /// トークンの値を表すオブジェクトを取得します。
+        /// </summary>
+        /// <returns>トークンの値を表すオブジェクト。</returns>
         public object GetValue()
         {
             return 0;
