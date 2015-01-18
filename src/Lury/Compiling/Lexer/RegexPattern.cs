@@ -31,20 +31,35 @@ using System.Text.RegularExpressions;
 
 namespace Lury
 {
+    /// <summary>
+    /// 頻繁に使用される正規表現パターンの文字列を提供します。
+    /// </summary>
     static class RegexPattern
     {
         #region -- Public Static Fields --
 
         #region Strings
 
+        /// <summary>
+        /// 空白文字1文字を表す正規表現パターン文字列。
+        /// </summary>
         public const string Space = @"[\t\f\v\x85\p{Z}]";
+
+        /// <summary>
+        /// 改行文字1文字を表す正規表現パターン文字列。
+        /// </summary>
         public const string NewLine = @"(?:(?:\r\n)|\n|\r)";
+
+        // TODO: 1文字目と2文字目以降に使用できる文字パターンの分離
         public const string Identifier = @"[\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Pc}\p{Lm}$]\w";
 
         #endregion
 
         #region Regex
 
+        /// <summary>
+        /// 空白文字列にマッチする正規表現オブジェクト。
+        /// </summary>
         public static readonly Regex SpaceRegex = new Regex(Space + "*", RegexOptions.Compiled);
 
         #endregion
