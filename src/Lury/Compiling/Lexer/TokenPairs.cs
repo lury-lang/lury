@@ -38,7 +38,7 @@ namespace Lury.Compiling
 
         public static readonly IEnumerable<TokenPair> Operands = new []
         {
-            new TokenPair(RegexPattern.Identifier + "*", Token.Identifier),
+            new TokenPair(RegexPattern.IdentifierFirst + RegexPattern.IdentifierContinue + "*", Token.Identifier),
             new TokenPair(@"\d+", Token.Number),
             new TokenPair(@"'(?:\'|.)*?'", Token.SingleString),
             new TokenPair(@"""(?:\""|.)*?""", Token.DoubleString),
