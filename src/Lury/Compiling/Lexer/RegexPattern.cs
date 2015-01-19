@@ -50,8 +50,15 @@ namespace Lury
         /// </summary>
         public const string NewLine = @"(?:(?:\r\n)|\n|\r)";
 
-        // TODO: 1文字目と2文字目以降に使用できる文字パターンの分離
-        public const string Identifier = @"[\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Pc}\p{Lm}$]\w";
+        /// <summary>
+        /// 識別子の1文字目に使用できる正規表現パターン文字列です。
+        /// </summary>
+        public const string IdentifierFirst = @"[\p{L}\p{Pc}\p{So}]";
+
+        /// <summary>
+        /// 識別子の2文字目以降に使用できる正規表現パターン文字列です。
+        /// </summary>
+        public const string IdentifierContinue = @"[\p{L}\p{Pc}\p{So}\p{Nd}]";
 
         #endregion
 
