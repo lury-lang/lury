@@ -53,12 +53,12 @@ namespace Lury
         /// <summary>
         /// 識別子の1文字目に使用できる正規表現パターン文字列です。
         /// </summary>
-        public const string IdentifierFirst = @"[\p{L}\p{Pc}\p{So}]";
+        public const string IdentifierFirst = @"[_\p{L}]";
 
         /// <summary>
         /// 識別子の2文字目以降に使用できる正規表現パターン文字列です。
         /// </summary>
-        public const string IdentifierContinue = @"[\p{L}\p{Pc}\p{So}\p{Nd}]";
+        public const string IdentifierContinue = @"[_\p{L}\p{Nd}]";
 
         #endregion
 
