@@ -147,6 +147,7 @@
       <DependentUpon>Error.ja-JP.resx</DependentUpon>
     </Compile>
     <Compile Include="Compiling\Lexer\RegexPattern.cs" />
+    <Compile Include="Compiling\Lexer\TokenEntry.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
