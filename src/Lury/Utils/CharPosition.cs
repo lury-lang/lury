@@ -101,7 +101,7 @@ namespace Lury
 
         /// <summary>
         /// 文字列中のどの位置も指し示さないような、
-        /// 空の C<see cref="Lury.CharPosition"/>harPosition オブジェクトを取得します。
+        /// 空の <see cref="Lury.CharPosition"/> オブジェクトを取得します。
         /// </summary>
         /// <value>空の <see cref="Lury.CharPosition"/> オブジェクト。</value>
         public static CharPosition Empty { get { return empty; } }
