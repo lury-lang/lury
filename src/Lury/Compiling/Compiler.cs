@@ -101,7 +101,7 @@ namespace Lury.Compiling
         /// <summary>
         /// コンパイルエラーをロガーに出力します。
         /// </summary>
-        /// <param name="ex">コンパイルエラーを表す yyParser.yyException オブジェクト。</param>
+        /// <param name="ex">コンパイルエラーを表す <see cref="Lury.Compiling.yyParser.yyException"/> オブジェクト。</param>
         /// <param name="sourceCode">エラーを起こしたソースコード。</param>
         private void ReportyyException(yyParser.yyException ex, string sourceCode)
         {
