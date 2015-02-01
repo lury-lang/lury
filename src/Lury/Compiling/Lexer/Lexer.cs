@@ -52,9 +52,9 @@ namespace Lury.Compiling
 
         #region -- Constructor --
         /// <summary>
-        /// ソースコードを指定して新しい Lexer クラスのインスタンスを初期化します。
+        /// ソースコードを指定して新しい <see cref="Lury.Compiling.Lexer"/> クラスのインスタンスを初期化します。
         /// </summary>
-        /// <param name="logger">ロガーとなる OutputLogger オブジェクト。</param>
+        /// <param name="logger">ロガーとなる <see cref="Lury.Compiling.Logger.OutputLogger"/> オブジェクト。</param>
         /// <param name="sourceCode">ソースコードを表す文字列。</param>
         public Lexer(OutputLogger logger, string sourceCode)
         {
@@ -90,7 +90,7 @@ namespace Lury.Compiling
         /// <summary>
         /// 現在の解析位置でのトークンを取得します。
         /// </summary>
-        /// <returns>yyParser.IToken　インタフェースを実装するトークンオブジェクト。</returns>
+        /// <returns><see cref="Lury.Compiling.yyParser.IToken"/>　インタフェースを実装するトークンオブジェクト。</returns>
         public yyParser.IToken GetToken()
         {
             return this.tokens[this.position];
