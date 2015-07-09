@@ -31,6 +31,8 @@ using System.IO;
 using System.Linq;
 using Lury.Resources;
 using Lury.Compiling.Logger;
+using Lury.Compiling.Utils;
+using Lury.Compiling.Lexer;
 
 namespace Lury.Compiling
 {
@@ -70,13 +72,15 @@ namespace Lury.Compiling
         /// <returns>>コンパイルに成功したとき true、それ以外のとき false。</returns>
         public bool Compile(string code)
         {
-            try
-            {
-                Parser parser = new Parser();
-                Lexer lexer = new Lexer(this.OutputLogger, code);
-                parser.yyparse(lexer);
+            var lexer = new Lexer.Lexer(code);
+            return lexer.Tokenize();
 
-                return !this.OutputLogger.Outputs.Any();
+            /*try
+            {
+                //Parser parser = new Parser();
+                //parser.yyparse(lexer);
+
+                return !lexer.Logger.ErrorOutputs.Any();
             }
             catch (yyParser.yyException ex)
             {
@@ -86,12 +90,12 @@ namespace Lury.Compiling
             }
             catch (Exception ex)
             {
-                this.OutputLogger.Error(ErrorCategory.Unknown,
+                this.OutputLogger.ReportError(ErrorCategory.Unknown,
                                         sourceCode: code,
                                         appendix: ex.ToString());
 
                 return false;
-            }
+            }*/
         }
 
         #endregion
@@ -108,9 +112,10 @@ namespace Lury.Compiling
             var position = sourceCode.GetPositionByIndex(ex.Token.Index);
             var appendix = "Token: " + ex.Token.TokenNumber;
 
-            if (ex is yyParser.yySyntaxError)
+            // TODO: Replace ErrorCategory
+            /*if (ex is yyParser.yySyntaxError)
             {
-                this.OutputLogger.Error(ErrorCategory.Parser_SyntaxError,
+                this.OutputLogger.ReportError(ErrorCategory.Parser_SyntaxError,
                                         code: ex.Token.Text,
                                         sourceCode: sourceCode,
                                         position: position,
@@ -118,7 +123,7 @@ namespace Lury.Compiling
             }
             else if (ex is yyParser.yySyntaxErrorAtEof)
             {
-                this.OutputLogger.Error(ErrorCategory.Parser_SyntaxErrorAtEOF,
+                this.OutputLogger.ReportError(ErrorCategory.Parser_SyntaxErrorAtEOF,
                                         code: ex.Token.Text,
                                         sourceCode: sourceCode,
                                         position: position,
@@ -126,7 +131,7 @@ namespace Lury.Compiling
             }
             else if (ex is yyParser.yyUnexpectedEof)
             {
-                this.OutputLogger.Error(ErrorCategory.Parser_UnexpectedEOF,
+                this.OutputLogger.ReportError(ErrorCategory.Parser_UnexpectedEOF,
                                         code: ex.Token.Text,
                                         sourceCode: sourceCode,
                                         position: position,
@@ -134,12 +139,12 @@ namespace Lury.Compiling
             }
             else
             {
-                this.OutputLogger.Error(ErrorCategory.Unknown,
+                this.OutputLogger.ReportError(ErrorCategory.Unknown,
                                         code: ex.Token.Text,
                                         sourceCode: sourceCode,
                                         position: position,
                                         appendix: appendix);
-            }
+            }*/
         }
 
         #endregion
