@@ -1,0 +1,3 @@
+[submodule "submodule/lury-lexer"]
+	path = submodule/lury-lexer
+	url = git@github.com:lury-lang/lury-lexer.git
