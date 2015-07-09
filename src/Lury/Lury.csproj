@@ -7,37 +7,10 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Lury</RootNamespace>
     <AssemblyName>lury</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="BeforeBuild" command="../../tools/jay.sh ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
-      </CustomCommands>
-    </CustomCommands>
-    <Externalconsole>true</Externalconsole>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <Externalconsole>true</Externalconsole>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="BeforeBuild" command="../../tools/jay.sh ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
-      </CustomCommands>
-    </CustomCommands>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug (Windows)|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug (Windows)|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -46,7 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <CustomCommands>
       <CustomCommands>
         <Command type="BeforeBuild" command="../../tools/jay.bat ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
@@ -54,18 +27,47 @@
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release (Windows)|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release (Windows)|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>..\..\bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <CustomCommands>
       <CustomCommands>
         <Command type="BeforeBuild" command="../../tools/jay.bat ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
       </CustomCommands>
     </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" command="../../tools/jay.sh ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" command="../../tools/jay.sh ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -74,72 +76,121 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Language.Designer.cs">
       <DependentUpon>Language.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\Language.ja-JP.Designer.cs">
       <DependentUpon>Language.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Compiler.cs" />
     <Compile Include="Compiling\Parser.cs" />
     <Compile Include="Compiling\Logger\Resources\Message\Info.Designer.cs">
       <DependentUpon>Info.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Message\Info.ja-JP.Designer.cs">
       <DependentUpon>Info.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Message\Warn.Designer.cs">
       <DependentUpon>Warn.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Message\Warn.ja-JP.Designer.cs">
       <DependentUpon>Warn.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\SiteLink\Info.Designer.cs">
       <DependentUpon>Info.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\SiteLink\Info.ja-JP.Designer.cs">
       <DependentUpon>Info.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\SiteLink\Warn.Designer.cs">
       <DependentUpon>Warn.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\SiteLink\Warn.ja-JP.Designer.cs">
       <DependentUpon>Warn.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Suggestion\Info.Designer.cs">
       <DependentUpon>Info.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Suggestion\Info.ja-JP.Designer.cs">
       <DependentUpon>Info.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Suggestion\Warn.Designer.cs">
       <DependentUpon>Warn.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Suggestion\Warn.ja-JP.Designer.cs">
       <DependentUpon>Warn.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\SiteLink\Error.Designer.cs">
       <DependentUpon>Error.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\SiteLink\Error.ja-JP.Designer.cs">
       <DependentUpon>Error.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Suggestion\Error.Designer.cs">
       <DependentUpon>Error.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Suggestion\Error.ja-JP.Designer.cs">
       <DependentUpon>Error.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Message\Error.Designer.cs">
       <DependentUpon>Error.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\Resources\Message\Error.ja-JP.Designer.cs">
       <DependentUpon>Error.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="Compiling\Grammar.jay" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\submodule\lury-lexer\lury-lexer\lury-lexer.csproj">
+      <Project>{05c9df24-183e-43e3-b140-b6ddfd3b95fe}</Project>
+      <Name>lury-lexer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\submodule\lury-lexer\submodule\compiler-base\Lury.Compiling\Lury.Compiling.csproj">
+      <Project>{0523ce8e-34d5-46f1-9408-4c957f0bb9aa}</Project>
+      <Name>Lury.Compiling</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Language.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -242,13 +293,5 @@
       <LastGenOutput>Warn.ja-JP.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-    <Folder Include="Compiling\" />
-    <Folder Include="Compiling\Logger\" />
-    <Folder Include="Compiling\Logger\Resources\" />
-    <Folder Include="Compiling\Logger\Resources\Message\" />
-    <Folder Include="Compiling\Logger\Resources\Suggestion\" />
-    <Folder Include="Compiling\Logger\Resources\SiteLink\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
