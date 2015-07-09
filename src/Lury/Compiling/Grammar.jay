@@ -39,132 +39,340 @@ namespace Lury.Compiling
 
 %}
 
-/* Operator */
-%token Lambda
+/* Whitespace */
+%token NewLine Indent Dedent EndOfFile
 
-/* Delimiters */
-%token NewLine Indent Dedent
+/* ContextualKeyword */
+%token IdentifierGet IdentifierSet IdentifierFile IdentifierLine IdentifierExit
+%token IdentifierSuccess IdentifierFailure
 
-/* Keywords */
-%token Abstract Class Extends
-%token Def Var
-%token Property Getter Setter
-%token Public Protected Private
-%token Me
-%token Print PrintLine
+/* Keyword */
+%token KeywordAbstract KeywordAnd KeywordBreak KeywordCase KeywordCatch KeywordClass
+%token KeywordContinue KeywordDef KeywordDefault KeywordDelete KeywordElif KeywordElse
+%token KeywordEnum KeywordExtended KeywordFalse KeywordFinally KeywordFor KeywordIf
+%token KeywordImport KeywordIn KeywordInterface KeywordInvariant KeywordIs KeywordLazy
+%token KeywordNameof KeywordNew KeywordNil KeywordNot KeywordOr KeywordOut KeywordOverride
+%token KeywordPass KeywordPrivate KeywordProperty KeywordProtected KeywordPublic
+%token KeywordRef KeywordReflect KeywordReturn KeywordScope KeywordSealed KeywordStatic
+%token KeywordSuper KeywordSwitch KeywordThis KeywordThrow KeywordTrue KeywordTry
+%token KeywordUnittest KeywordUnless KeywordUntil KeywordVar KeywordWhile KeywordWith
+%token KeywordYield
 
-/* Operand */
+/* Identifier */
 %token Identifier
-%token SingleString DoubleString
-%token <int> Number
 
-%type <int> Expression
+/* Literal */
+%token StringLiteral EmbedStringLiteral WysiwygStringLiteral
+%token ImaginaryNumber FloatNumber Integer
 
-%left '+' '-'
-%left '*' '/'
+/* Operator */
+%token RangeOpen RangeClose Increment AssignmentAdd Decrement AssignmentSub
+%token AnnotationReturn AssignmentConcat AssignmentPower Power AssignmentMultiply
+%token AssignmentIntDivide IntDivide AssignmentDivide AssignmentModulo AssignmentLeftShift
+%token LeftShift LessThan AssignmentRightShift RightShift MoreThan Equal Lambda NotEqual
+%token NotIn IsNot AndShort AssignmentAnd AssignmentXor OrShort AssignmentOr NilCoalesce
 
-%start Program
+//%type <int> Expression
+
+%left  ','
+%right '=' AssignmentPower AssignmentMultiply AssignmentDivide AssignmentIntDivide AssignmentModulo AssignmentAdd AssignmentSub AssignmentConcat AssignmentOr AssignmentAnd AssignmentXor AssignmentLeftShift AssignmentRightShift
+%right '?' ':' KeywordIf KeywordElse
+%left  OrShort KeywordOr
+%left  AndShort KeywordAnd
+%right '!' KeywordNot
+%left  Equal NotEqual '<' '>' LessThan MoreThan KeywordIs IsNot
+%left  '|'
+%left  '^'
+%left  '&'
+%left  LeftShift RightShift
+%left  '+' '-' '~'
+%left  '*' IntDivide '/' '%'
+%right Power
+%right Increment Decrement
+%left  '.'
+
+%start program
 
 %%
 
-Program
-    : 
-    | StatementList
+program
+    : EndOfFile
+    | program_lines EndOfFile
 
-StatementList
-    :
-    | StatementList Statement
+program_lines
+    : program_line
+    | program_line program_lines
+
+program_line
+    : statement
     | NewLine
 
-Statement
-    : PropertyDeclaration
-    | FunctionDeclaration
-    | ClassDeclaration
-    | Decorations
-    | Expression
 
-PropertyDeclaration
-    : Abstract Accessibility Property Identifier '[' PropertyAccessorList ']'
-    | Accessibility Property Identifier '[' PropertyAccessorList ']'
-    | Accessibility Property Identifier ':' Suite
+statement
+    : statement_list NewLine
+    | compound_statement
 
-PropertyAccessorList
-    : PropertyAccessorList ',' PropertyAccessor
-    | PropertyAccessor
+statement_list
+    : simple_statement
+    | simple_statement simple_statements
 
-PropertyAccessor
-    : Getter
-    | Setter
-    | Accessibility Getter
-    | Accessibility Setter
+simple_statements
+    : ';'
+    | ';' simple_statement simple_statements
 
-FunctionDeclaration
-    : Accessibility Def FunctionName ParameterDeclaration ':' Suite
-    | Accessibility Def FunctionName ParameterDeclaration Lambda Expression
-    | Abstract Accessibility Def FunctionName ParameterDeclaration
+compound_statement
+    : if_statement
+    | while_statement
+    | function_definition
+    | class_definition
 
-FunctionName
-    : Me
-    | Identifier
+suite
+    : statement_list NewLine
+    | NewLine Indent statements Dedent
 
-ParameterDeclaration
-    : 
-    | '(' ParameterList ')'
+statements
+    : statement
+    | statement statements
 
-ParameterList
-    : 
-    | ParameterList ',' Identifier
-    | Identifier
 
-ClassDeclaration
-    : Abstract Class Identifier ClassExtends ':' Suite
-    | Class Identifier ClassExtends ':' Suite
+if_statement
+    : KeywordIf expression ':' suite
+    | KeywordIf expression ':' suite elif_statements
 
-ClassExtends
-    : 
-    | Extends ClassExtendsList
+elif_statements
+    : KeywordElif expression ':' suite
+    | KeywordElif expression ':' suite elif_statements
+    | else_statement
 
-ClassExtendsList
-    : 
-    | Identifier ClassExtendsList
+else_statement
+    : KeywordElse ':' suite
 
-Decorations
-    : '#' DecorationList
+while_statement
+    : KeywordWhile expression ':' suite
+    | KeywordWhile expression ':' suite else_statement
 
-DecorationList
-    : Decorator
-    | DecorationList Decorator
+function_definition
+    : KeywordDef function_name '(' parameter_list ':' ':' suite
+    | KeywordDef function_name ':' suite
 
-Decorator
-    : Abstract
-    | Accessibility
+function_name
+    : identifier_all
+    | function_name '.' identifier_all
 
-Accessibility
-    :
-    | Public
-    | Protected
-    | Private
+parameter_list
+    : parameter
+    | parameter_list ',' parameter
 
-//
+parameter
+    : identifier_all
 
-Suite
-    : NewLine Indent StatementList Dedent
-    | NewLine Indent StatementList NewLine Dedent
+class_definition
+    : KeywordClass class_name '(' inheritance_list ')' ':' suite
+    | KeywordClass class_name ':' suite
 
-//
+class_name
+    : identifier_all
 
-Expression
-    : SingleString
-    | DoubleString
-    | Identifier
-    | Expression '+' Expression
-    | Expression '-' Expression
-    | Expression '*' Expression
-    | Expression '/' Expression
-    | '+' Expression
-    | '-' Expression
-    | '(' Expression ')'
-    | Number
+inheritance_list
+    : object_name
+    | inheritance_list ',' object_name
+
+object_name
+    : identifier_all
+    | object_name '.' identifier_all
+
+
+simple_statement
+    : pass_statement
+    | expression_statement
+    | return_statement
+    | break_statement
+    | continue_statement
+    | import_statement
+
+pass_statement
+    : KeywordPass
+
+expression_statement
+    : expression
+
+return_statement
+    : KeywordReturn
+    | KeywordReturn expression
+
+break_statement
+    : KeywordBreak
+
+continue_statement
+    : KeywordContinue
+
+import_statement
+    : KeywordImport import_names
+    | KeywordPublic KeywordImport import_names
+
+import_names
+    : import_name
+    | import_names ',' import_name
+
+import_name
+    : module_name
+
+module_name
+    : identifier_all
+    | module_name '.' identifier_all
+
+identifier_all
+    : Identifier
+    | contextual_keyword
+
+contextual_keyword
+    : IdentifierGet
+    | IdentifierSet
+    | IdentifierFile
+    | IdentifierLine
+    | IdentifierExit
+    | IdentifierSuccess
+    | IdentifierFailure
+
+
+expression
+    : comma_expression
+
+comma_expression
+    : assignment_expression
+    | assignment_expression ',' comma_expression
+
+assignment_expression 
+    : conditional_expression
+    | conditional_expression '=' assignment_expression
+    | conditional_expression AssignmentAdd assignment_expression
+    | conditional_expression AssignmentSub assignment_expression
+    | conditional_expression AssignmentMultiply assignment_expression
+    | conditional_expression AssignmentDivide assignment_expression
+    | conditional_expression AssignmentIntDivide assignment_expression
+    | conditional_expression AssignmentPower assignment_expression
+    | conditional_expression AssignmentModulo assignment_expression
+    | conditional_expression AssignmentAnd assignment_expression
+    | conditional_expression AssignmentOr assignment_expression
+    | conditional_expression AssignmentXor assignment_expression
+    | conditional_expression AssignmentConcat assignment_expression
+    | conditional_expression AssignmentLeftShift assignment_expression
+    | conditional_expression AssignmentRightShift assignment_expression
+
+conditional_expression
+    : bool_or_expression
+    | bool_or_expression '?' bool_or_expression ':' bool_or_expression
+    | bool_or_expression KeywordIf bool_or_expression KeywordElse bool_or_expression
+
+bool_or_expression
+    : bool_and_expression
+    | bool_or_expression KeywordOr bool_and_expression
+    | bool_or_expression OrShort bool_and_expression
+
+bool_and_expression
+    : bool_not_expression
+    | bool_and_expression KeywordAnd bool_not_expression
+    | bool_and_expression AndShort bool_not_expression
+
+bool_not_expression
+    : comparison_expression
+    | KeywordNot bool_not_expression
+    | '!' bool_not_expression
+
+comparison_expression
+    : or_expression
+    | or_expression comparison_operator or_expression
+
+comparison_operator
+    : '<'
+    | '>'
+    | Equal
+    | LessThan
+    | MoreThan
+    | NotEqual
+    | KeywordIs
+    | IsNot
+    | KeywordIs KeywordNot
+
+or_expression
+    : xor_expression
+    | or_expression '|' xor_expression
+
+xor_expression
+    : and_expression
+    | xor_expression '^' and_expression
+
+and_expression
+    : shift_expression
+    | and_expression '&' shift_expression
+
+shift_expression
+    : addition_expression
+    | shift_expression LeftShift addition_expression
+    | shift_expression RightShift addition_expression
+
+addition_expression
+    : multiplication_expression
+    | addition_expression '+' multiplication_expression
+    | addition_expression '-' multiplication_expression
+    | addition_expression '~' multiplication_expression
+
+multiplication_expression 
+    : unary_expression
+    | multiplication_expression '*' unary_expression
+    | multiplication_expression IntDivide unary_expression
+    | multiplication_expression '/' unary_expression
+    | multiplication_expression '%' unary_expression
+
+unary_expression
+    : power_expression
+    | Increment unary_expression
+    | Decrement unary_expression
+    | '-' unary_expression
+    | '+' unary_expression
+    | '~' unary_expression
+
+power_expression
+    : postfix_expression
+    | power_expression Power postfix_expression
+
+postfix_expression
+    : primary
+    | postfix_expression '.' identifier_all
+    | postfix_expression Increment
+    | postfix_expression Decrement
+    | postfix_expression '(' ')'
+    | postfix_expression '(' argument_list ')'
+
+argument_list
+    : argument
+    | argument ',' argument_list
+
+argument
+    : expression
+    | named_argument
+
+named_argument
+    : identifier_all ':' expression
+
+primary
+    : identifier_all
+    | literal
+    | KeywordTrue
+    | KeywordFalse
+    | KeywordNil
+    | KeywordThis
+    | KeywordSuper
+    | '(' expression ')'
+
+literal
+    : StringLiteral
+    | EmbedStringLiteral
+    | WysiwygStringLiteral
+    | ImaginaryNumber
+    | FloatNumber
+    | Integer
+
 
 %%
 
