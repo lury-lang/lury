@@ -152,7 +152,7 @@ while_statement
     | KeywordWhile expression ':' suite else_statement
 
 function_definition
-    : KeywordDef function_name '(' parameter_list ':' ':' suite
+    : KeywordDef function_name '(' parameter_list ')' ':' suite
     | KeywordDef function_name ':' suite
 
 function_name
