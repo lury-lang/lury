@@ -96,8 +96,8 @@ namespace Lury.Compiling
 %%
 
 program
-    : EndOfFile
-    | program_lines EndOfFile
+    :
+    | program_lines
 
 program_lines
     : program_line
