@@ -33,6 +33,7 @@ using Lury.Resources;
 using Lury.Compiling.Logger;
 using Lury.Compiling.Utils;
 using Lury.Compiling.Lexer;
+using System.Collections.Generic;
 
 namespace Lury.Compiling
 {
@@ -149,6 +150,186 @@ namespace Lury.Compiling
 
         #endregion
 
+        class Lex2yyInput : yyParser.yyInput
+        {
+            private readonly Lexer.Lexer lexer;
+            private IEnumerator<Lexer.Token> tokenEnumerator;
+
+            public Lex2yyInput(Lexer.Lexer lexer)
+            {
+                this.lexer = lexer;
+                this.tokenEnumerator = this.lexer.TokenOutput.GetEnumerator();
+            }
+
+            public bool Advance()
+            {
+                return this.tokenEnumerator.MoveNext();
+
+                /*if (!this.tokenEnumerator.MoveNext())
+                    return false;
+
+                return (this.tokenEnumerator.Current.Entry.Name != "EndOfFile");*/
+            }
+
+            public yyParser.IToken GetToken()
+            {
+                return new Token2yyToken(this.tokenEnumerator.Current);
+            }
+
+            public object GetValue()
+            {
+                return this.tokenEnumerator.Current;
+            }
+        }
+
+        class Token2yyToken : yyParser.IToken
+        {
+            private readonly Lexer.Token token;
+
+            public Token2yyToken(Lexer.Token token)
+            {
+                this.token = token;
+            }
+
+            public string Text
+            {
+                get { return token.Text; }
+            }
+
+            public int TokenNumber
+            {
+                get
+                {
+                    if (this.token.Entry.Name.Length == 1)
+                        return (int)this.token.Entry.Name[0];
+
+                    return tokenMap[this.token.Entry.Name];
+                }
+            }
+
+            public int IndentLevel
+            {
+                get { throw new NotImplementedException(); }
+            }
+
+            public int Index
+            {
+                get { return token.Index; }
+            }
+
+            #region -- Private Static Fields --
+
+            private readonly Dictionary<string, int> tokenMap = new Dictionary<string, int>()
+            {
+                {"NewLine", Token.NewLine },
+                {"Indent", Token.Indent },
+                {"Dedent", Token.Dedent },
+                {"EndOfFile", Token.NewLine },  // EndOfFile -> NewLine
+                {"IdentifierGet", Token.IdentifierGet },
+                {"IdentifierSet", Token.IdentifierSet },
+                {"IdentifierFile", Token.IdentifierFile },
+                {"IdentifierLine", Token.IdentifierLine },
+                {"IdentifierExit", Token.IdentifierExit },
+                {"IdentifierSuccess", Token.IdentifierSuccess },
+                {"IdentifierFailure", Token.IdentifierFailure },
+                {"KeywordAbstract", Token.KeywordAbstract },
+                {"KeywordAnd", Token.KeywordAnd },
+                {"KeywordBreak", Token.KeywordBreak },
+                {"KeywordCase", Token.KeywordCase },
+                {"KeywordCatch", Token.KeywordCatch },
+                {"KeywordClass", Token.KeywordClass },
+                {"KeywordContinue", Token.KeywordContinue },
+                {"KeywordDef", Token.KeywordDef },
+                {"KeywordDefault", Token.KeywordDefault },
+                {"KeywordDelete", Token.KeywordDelete },
+                {"KeywordElif", Token.KeywordElif },
+                {"KeywordElse", Token.KeywordElse },
+                {"KeywordEnum", Token.KeywordEnum },
+                {"KeywordExtended", Token.KeywordExtended },
+                {"KeywordFalse", Token.KeywordFalse },
+                {"KeywordFinally", Token.KeywordFinally },
+                {"KeywordFor", Token.KeywordFor },
+                {"KeywordIf", Token.KeywordIf },
+                {"KeywordImport", Token.KeywordImport },
+                {"KeywordIn", Token.KeywordIn },
+                {"KeywordInterface", Token.KeywordInterface },
+                {"KeywordInvariant", Token.KeywordInvariant },
+                {"KeywordIs", Token.KeywordIs },
+                {"KeywordLazy", Token.KeywordLazy },
+                {"KeywordNameof", Token.KeywordNameof },
+                {"KeywordNew", Token.KeywordNew },
+                {"KeywordNil", Token.KeywordNil },
+                {"KeywordNot", Token.KeywordNot },
+                {"KeywordOr", Token.KeywordOr },
+                {"KeywordOut", Token.KeywordOut },
+                {"KeywordOverride", Token.KeywordOverride },
+                {"KeywordPass", Token.KeywordPass },
+                {"KeywordPrivate", Token.KeywordPrivate },
+                {"KeywordProperty", Token.KeywordProperty },
+                {"KeywordProtected", Token.KeywordProtected },
+                {"KeywordPublic", Token.KeywordPublic },
+                {"KeywordRef", Token.KeywordRef },
+                {"KeywordReflect", Token.KeywordReflect },
+                {"KeywordReturn", Token.KeywordReturn },
+                {"KeywordScope", Token.KeywordScope },
+                {"KeywordSealed", Token.KeywordSealed },
+                {"KeywordStatic", Token.KeywordStatic },
+                {"KeywordSuper", Token.KeywordSuper },
+                {"KeywordSwitch", Token.KeywordSwitch },
+                {"KeywordThis", Token.KeywordThis },
+                {"KeywordThrow", Token.KeywordThrow },
+                {"KeywordTrue", Token.KeywordTrue },
+                {"KeywordTry", Token.KeywordTry },
+                {"KeywordUnittest", Token.KeywordUnittest },
+                {"KeywordUnless", Token.KeywordUnless },
+                {"KeywordUntil", Token.KeywordUntil },
+                {"KeywordVar", Token.KeywordVar },
+                {"KeywordWhile", Token.KeywordWhile },
+                {"KeywordWith", Token.KeywordWith },
+                {"KeywordYield", Token.KeywordYield },
+                {"Identifier", Token.Identifier },
+                {"StringLiteral", Token.StringLiteral },
+                {"EmbedStringLiteral", Token.EmbedStringLiteral },
+                {"WysiwygStringLiteral", Token.WysiwygStringLiteral },
+                {"ImaginaryNumber", Token.ImaginaryNumber },
+                {"FloatNumber", Token.FloatNumber },
+                {"Integer", Token.Integer },
+                {"RangeOpen", Token.RangeOpen },
+                {"RangeClose", Token.RangeClose },
+                {"Increment", Token.Increment },
+                {"AssignmentAdd", Token.AssignmentAdd },
+                {"Decrement", Token.Decrement },
+                {"AssignmentSub", Token.AssignmentSub },
+                {"AnnotationReturn", Token.AnnotationReturn },
+                {"AssignmentConcat", Token.AssignmentConcat },
+                {"AssignmentPower", Token.AssignmentPower },
+                {"Power", Token.Power },
+                {"AssignmentMultiply", Token.AssignmentMultiply },
+                {"AssignmentIntDivide", Token.AssignmentIntDivide },
+                {"IntDivide", Token.IntDivide },
+                {"AssignmentDivide", Token.AssignmentDivide },
+                {"AssignmentModulo", Token.AssignmentModulo },
+                {"AssignmentLeftShift", Token.AssignmentLeftShift },
+                {"LeftShift", Token.LeftShift },
+                {"LessThan", Token.LessThan },
+                {"AssignmentRightShift", Token.AssignmentRightShift },
+                {"RightShift", Token.RightShift },
+                {"MoreThan", Token.MoreThan },
+                {"Equal", Token.Equal },
+                {"Lambda", Token.Lambda },
+                {"NotEqual", Token.NotEqual },
+                {"NotIn", Token.NotIn },
+                {"IsNot", Token.IsNot },
+                {"AndShort", Token.AndShort },
+                {"AssignmentAnd", Token.AssignmentAnd },
+                {"AssignmentXor", Token.AssignmentXor },
+                {"OrShort", Token.OrShort },
+                {"AssignmentOr", Token.AssignmentOr },
+                {"NilCoalesce", Token.NilCoalesce },
+            };
+
+            #endregion
+        }
     }
 }
 
