@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lury", "Lury\Lury.csproj", "{1428DED1-B614-44A3-A57D-BC91C8D6B5B5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8} = {C9300F63-58BB-49A4-B6B7-112DD43E59E8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lury.SampleRunner", "Lury.SampleRunner\Lury.SampleRunner.csproj", "{21940659-48CF-4512-8D23-6DBDA091B3EB}"
 EndProject
@@ -12,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lury-lexer", "..\submodule\lury-lexer\lury-lexer\lury-lexer.csproj", "{05C9DF24-183E-43E3-B140-B6DDFD3B95FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lury.Compiling", "..\submodule\lury-lexer\submodule\compiler-base\Lury.Compiling\Lury.Compiling.csproj", "{0523CE8E-34D5-46F1-9408-4C957F0BB9AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JayLauncher", "..\submodule\JayLauncher\JayLauncher.csproj", "{C9300F63-58BB-49A4-B6B7-112DD43E59E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +58,14 @@ Global
 		{0523CE8E-34D5-46F1-9408-4C957F0BB9AA}.Release (Windows)|Any CPU.Build.0 = Release|Any CPU
 		{0523CE8E-34D5-46F1-9408-4C957F0BB9AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0523CE8E-34D5-46F1-9408-4C957F0BB9AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8}.Debug (Windows)|Any CPU.ActiveCfg = Release|Any CPU
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8}.Debug (Windows)|Any CPU.Build.0 = Release|Any CPU
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8}.Release (Windows)|Any CPU.ActiveCfg = Release|Any CPU
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8}.Release (Windows)|Any CPU.Build.0 = Release|Any CPU
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +73,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{05C9DF24-183E-43E3-B140-B6DDFD3B95FE} = {80D3E9CF-ED00-435A-83BA-2ECF1813C4C5}
 		{0523CE8E-34D5-46F1-9408-4C957F0BB9AA} = {80D3E9CF-ED00-435A-83BA-2ECF1813C4C5}
+		{C9300F63-58BB-49A4-B6B7-112DD43E59E8} = {80D3E9CF-ED00-435A-83BA-2ECF1813C4C5}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Lury.SampleRunner\Lury.SampleRunner.csproj
@@ -75,6 +89,9 @@ Global
 		$4.NamingStyle = None
 		$4.IncludeInstanceMembers = True
 		$4.IncludeStaticEntities = True
+		$0.DotNetNamingPolicy = $5
+		$5.DirectoryNamespaceAssociation = None
+		$5.ResourceNamePolicy = FileFormatDefault
 		description = The Lury Programming Language
 	EndGlobalSection
 EndGlobal
