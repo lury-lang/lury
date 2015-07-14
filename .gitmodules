@@ -1,3 +1,6 @@
 [submodule "submodule/lury-lexer"]
 	path = submodule/lury-lexer
 	url = git@github.com:lury-lang/lury-lexer.git
+[submodule "submodule/JayLauncher"]
+	path = submodule/JayLauncher
+	url = git@github.com:lury-lang/JayLauncher.git
