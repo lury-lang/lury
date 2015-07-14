@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1428DED1-B614-44A3-A57D-BC91C8D6B5B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Lury</RootNamespace>
@@ -22,7 +22,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CustomCommands>
       <CustomCommands>
-        <Command type="BeforeBuild" command="../../tools/jay.bat ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
         <Command type="BeforeExecute" />
       </CustomCommands>
     </CustomCommands>
@@ -34,11 +33,6 @@
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="BeforeBuild" command="../../tools/jay.bat ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -49,12 +43,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="BeforeBuild" command="../../tools/jay.sh ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <Optimize>true</Optimize>
@@ -63,11 +51,9 @@
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="BeforeBuild" command="../../tools/jay.sh ./Compiling/Grammar.jay ./Compiling/skeleton.cs ./Compiling/Parser.cs" workingdir="${ProjectDir}" />
-      </CustomCommands>
-    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -183,11 +169,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\submodule\lury-lexer\lury-lexer\lury-lexer.csproj">
-      <Project>{05c9df24-183e-43e3-b140-b6ddfd3b95fe}</Project>
+      <Project>{05C9DF24-183E-43E3-B140-B6DDFD3B95FE}</Project>
       <Name>lury-lexer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\submodule\lury-lexer\submodule\compiler-base\Lury.Compiling\Lury.Compiling.csproj">
-      <Project>{0523ce8e-34d5-46f1-9408-4c957f0bb9aa}</Project>
+      <Project>{0523CE8E-34D5-46F1-9408-4C957F0BB9AA}</Project>
       <Name>Lury.Compiling</Name>
     </ProjectReference>
   </ItemGroup>
@@ -293,5 +279,7 @@
       <LastGenOutput>Warn.ja-JP.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <PropertyGroup>
+    <PreBuildEvent>..\..\tools\JayLauncher.exe "-c" $(ProjectDir)\Compiling\Grammar.jay $(ProjectDir)\Compiling\skeleton.cs $(ProjectDir)\Compiling\Parser.cs</PreBuildEvent>
+  </PropertyGroup>
 </Project>
