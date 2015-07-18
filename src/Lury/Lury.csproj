@@ -162,6 +162,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Compiling\Element\Literal.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -282,4 +283,7 @@
   <PropertyGroup>
     <PreBuildEvent>..\..\tools\JayLauncher.exe "-c" $(ProjectDir)\Compiling\Grammar.jay $(ProjectDir)\Compiling\skeleton.cs $(ProjectDir)\Compiling\Parser.cs</PreBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Compiling\Element\" />
+  </ItemGroup>
 </Project>
