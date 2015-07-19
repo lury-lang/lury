@@ -55,7 +55,7 @@ namespace Lury.Compiling.Element
 
         private static string ConvertToInternalString(string value, char marker)
         {
-            if (value == null)
+            if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentNullException("value");
 
             if (value.Length < 2)
