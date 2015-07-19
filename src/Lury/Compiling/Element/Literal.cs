@@ -39,6 +39,11 @@ namespace Lury.Compiling.Element
         {
             this.Value = value;
         }
+
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
     }
 
     class StringLiteral : Literal<string>
@@ -46,11 +51,6 @@ namespace Lury.Compiling.Element
         public StringLiteral(string value, char marker)
             : base(ConvertToInternalString(value, marker))
         {
-        }
-
-        public override string ToString()
-        {
-            return this.Value;
         }
 
         private static string ConvertToInternalString(string value, char marker)
