@@ -133,5 +133,32 @@ namespace Lury.Compiling.Element
             return double.Parse(value.Replace("_", ""));
         }
     }
+
+    class IntegerLiteral : Literal<long>
+    {
+        public IntegerLiteral(string value)
+            : base(ConvertToInt64(value))
+        {
+        }
+
+        private static long ConvertToInt64(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("value");
+
+            value = value.Replace("_", "");
+
+            if (value.StartsWith("0x", true, null))
+                return Convert.ToInt64(value.Substring(2), 16);
+               
+            if (value.StartsWith("0o", true, null))
+                return Convert.ToInt64(value.Substring(2), 8);
+
+            if (value.StartsWith("0b", true, null))
+                return Convert.ToInt64(value.Substring(2), 2);
+
+            return long.Parse(value);
+        }
+    }
 }
 
