@@ -93,5 +93,29 @@ namespace Lury.Compiling.Element
             // TODO: Replace Unicode EscapeSequence
         }
     }
+
+    class ImaginaryNumberLiteral : Literal<double>
+    {
+        public ImaginaryNumberLiteral(string value)
+            : base(ConvertToDouble(value))
+        {
+        }
+
+        public override string ToString()
+        {
+            return this.Value.ToString() + "i";
+        }
+
+        private static double ConvertToDouble(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("value");
+
+            if (value[value.Length - 1] != 'i')
+                throw new ArgumentException("value");
+
+            return double.Parse(value.Substring(0, value.Length - 1).Replace("_", ""));
+        }
+    }
 }
 
