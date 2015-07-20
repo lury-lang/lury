@@ -117,5 +117,21 @@ namespace Lury.Compiling.Element
             return double.Parse(value.Substring(0, value.Length - 1).Replace("_", ""));
         }
     }
+
+    class FloatingNumberLiteral : Literal<double>
+    {
+        public FloatingNumberLiteral(string value)
+            : base(ConvertToDouble(value))
+        {
+        }
+
+        private static double ConvertToDouble(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("value");
+
+            return double.Parse(value.Replace("_", ""));
+        }
+    }
 }
 
