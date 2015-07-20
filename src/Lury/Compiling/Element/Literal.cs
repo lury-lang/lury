@@ -27,7 +27,9 @@
 // THE SOFTWARE.
 
 using System;
+using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Lury.Compiling.Element
 {
@@ -48,6 +50,12 @@ namespace Lury.Compiling.Element
 
     class StringLiteral : Literal<string>
     {
+        #region -- Private Static Fields --
+
+        private static readonly Regex unicode_hex4 = new Regex(@"\\u([0-9A-Fa-f]{4})", RegexOptions.Compiled);
+
+        #endregion
+
         public StringLiteral(string value, char marker)
             : base(ConvertToInternalString(value, marker))
         {
@@ -60,6 +68,8 @@ namespace Lury.Compiling.Element
 
             if (value.Length < 2)
                 throw new ArgumentException("value");
+
+            ReplaceUnicodeChar(ref value);
 
             var sb = new StringBuilder(value);
             TrimMarker(sb, marker);
@@ -89,6 +99,15 @@ namespace Lury.Compiling.Element
             value.Replace(@"\r", "\r");
             value.Replace(@"\t", "\t");
             value.Replace(@"\v", "\v");
+        }
+
+        private static void ReplaceUnicodeChar(ref string value)
+        {
+            // Refer to:
+            // http://stackoverflow.com/questions/183907
+
+            // type: \uXXXX
+            value = unicode_hex4.Replace(value, match => ((char)Int32.Parse(match.Value.Substring(2), NumberStyles.HexNumber)).ToString());
 
             // TODO: Replace Unicode EscapeSequence
         }
