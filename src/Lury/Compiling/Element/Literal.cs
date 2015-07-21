@@ -52,7 +52,9 @@ namespace Lury.Compiling.Element
     {
         #region -- Private Static Fields --
 
+        private static readonly Regex unicode_hex = new Regex(@"\\x[0-9A-Fa-f]{1,4}", RegexOptions.Compiled);
         private static readonly Regex unicode_hex4 = new Regex(@"\\u[0-9A-Fa-f]{4}", RegexOptions.Compiled);
+        private static readonly Regex unicode_hex8 = new Regex(@"\\U[0-9A-Fa-f]{8}", RegexOptions.Compiled);
 
         #endregion
 
@@ -106,10 +108,32 @@ namespace Lury.Compiling.Element
             // Refer to:
             // http://stackoverflow.com/questions/183907
 
+            // type \xX - \xXXXX
+            value = unicode_hex.Replace(value, m => ((char)Int16.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
+
             // type: \uXXXX
             value = unicode_hex4.Replace(value, m => ((char)Int32.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
 
-            // TODO: Replace Unicode EscapeSequence
+            // type: \UXXXXXXXX
+            value = unicode_hex8.Replace(value, m => ToUTF16(m.Value.Substring(2)));
+        }
+
+        private static string ToUTF16(string hex)
+        {
+            int value = int.Parse(hex, NumberStyles.HexNumber);
+
+            if (value < 0 || value > 0x10ffff)
+                throw new ArgumentException("hex");
+
+            if (value <= 0x00ff)
+                return ((char)value).ToString();
+            else
+            {
+                int w = value - 0x10000;
+                char high = (char)(0xd800 | (w >> 10) & 0x03ff);
+                char low  = (char)(0xdc00 | (w >>  0) & 0x03ff);
+                return new string(new char[2] { high, low });
+            }
         }
     }
 
