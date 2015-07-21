@@ -52,7 +52,7 @@ namespace Lury.Compiling.Element
     {
         #region -- Private Static Fields --
 
-        private static readonly Regex unicode_hex4 = new Regex(@"\\u([0-9A-Fa-f]{4})", RegexOptions.Compiled);
+        private static readonly Regex unicode_hex4 = new Regex(@"\\u[0-9A-Fa-f]{4}", RegexOptions.Compiled);
 
         #endregion
 
@@ -107,7 +107,7 @@ namespace Lury.Compiling.Element
             // http://stackoverflow.com/questions/183907
 
             // type: \uXXXX
-            value = unicode_hex4.Replace(value, match => ((char)Int32.Parse(match.Value.Substring(2), NumberStyles.HexNumber)).ToString());
+            value = unicode_hex4.Replace(value, m => ((char)Int32.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
 
             // TODO: Replace Unicode EscapeSequence
         }
