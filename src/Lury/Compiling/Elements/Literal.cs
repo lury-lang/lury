@@ -30,14 +30,16 @@ using System;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 
-namespace Lury.Compiling.Element
+namespace Lury.Compiling.Elements
 {
-    abstract class Literal<T>
+    abstract class Literal : Terminal
     {
-        public T Value { get; private set; } 
+        public object Value { get; private set; } 
 
-        public Literal(T value)
+        public Literal(object token, object value)
+            : base(token)
         {
             this.Value = value;
         }
@@ -48,7 +50,7 @@ namespace Lury.Compiling.Element
         }
     }
 
-    class StringLiteral : Literal<string>
+    class StringLiteral : Literal
     {
         #region -- Private Static Fields --
 
@@ -58,8 +60,8 @@ namespace Lury.Compiling.Element
 
         #endregion
 
-        public StringLiteral(string value, char marker)
-            : base(ConvertToInternalString(value, marker))
+        public StringLiteral(object token, char marker)
+            : base(token, ConvertToInternalString(((Lexer.Token)token).Text, marker))
         {
         }
 
@@ -137,10 +139,10 @@ namespace Lury.Compiling.Element
         }
     }
 
-    class ImaginaryNumberLiteral : Literal<double>
+    class ImaginaryNumberLiteral : Literal
     {
-        public ImaginaryNumberLiteral(string value)
-            : base(ConvertToDouble(value))
+        public ImaginaryNumberLiteral(object token)
+            : base(token, ConvertToDouble(((Lexer.Token)token).Text))
         {
         }
 
@@ -161,10 +163,10 @@ namespace Lury.Compiling.Element
         }
     }
 
-    class FloatingNumberLiteral : Literal<double>
+    class FloatingNumberLiteral : Literal
     {
-        public FloatingNumberLiteral(string value)
-            : base(ConvertToDouble(value))
+        public FloatingNumberLiteral(object token)
+            : base(token, ConvertToDouble(((Lexer.Token)token).Text))
         {
         }
 
@@ -177,10 +179,10 @@ namespace Lury.Compiling.Element
         }
     }
 
-    class IntegerLiteral : Literal<long>
+    class IntegerLiteral : Literal
     {
-        public IntegerLiteral(string value)
-            : base(ConvertToInt64(value))
+        public IntegerLiteral(object token)
+            : base(token, ConvertToInt64(((Lexer.Token)token).Text))
         {
         }
 
