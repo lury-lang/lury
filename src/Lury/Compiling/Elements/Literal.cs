@@ -205,5 +205,37 @@ namespace Lury.Compiling.Elements
             return long.Parse(value);
         }
     }
+
+    class BooleanLiteral : Literal
+    {
+        public BooleanLiteral(object token, bool value)
+            : base(token, value)
+        {
+        }
+    }
+
+    class NilLiteral : Literal
+    {
+        public NilLiteral(object token)
+            : base(token, "nil")
+        {
+        }
+    }
+
+    class ThisLiteral : Literal
+    {
+        public ThisLiteral(object token)
+            : base(token, "this")
+        {
+        }
+    }
+
+    class SuperLiteral : Literal
+    {
+        public SuperLiteral(object token)
+            : base(token, "super")
+        {
+        }
+    }
 }
 
