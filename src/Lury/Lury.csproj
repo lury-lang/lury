@@ -163,6 +163,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Elements\Literal.cs" />
+    <Compile Include="Compiling\Elements\Terminal.cs" />
+    <Compile Include="Compiling\Elements\Nonterminal.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -284,6 +286,6 @@
     <PreBuildEvent>..\..\tools\JayLauncher.exe "-c" $(ProjectDir)\Compiling\Grammar.jay $(ProjectDir)\Compiling\skeleton.cs $(ProjectDir)\Compiling\Parser.cs</PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Compiling\Element\" />
+    <Folder Include="Compiling\Elements\" />
   </ItemGroup>
 </Project>
