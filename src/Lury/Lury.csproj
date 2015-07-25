@@ -165,6 +165,7 @@
     <Compile Include="Compiling\Elements\Literal.cs" />
     <Compile Include="Compiling\Elements\Terminal.cs" />
     <Compile Include="Compiling\Elements\Nonterminal.cs" />
+    <Compile Include="Compiling\Elements\PostfixExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
