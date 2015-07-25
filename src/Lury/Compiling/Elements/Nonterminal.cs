@@ -27,30 +27,11 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Lury.Compiling.Elements
 {
-    class Nonterminal
+    abstract class Nonterminal
     {
-        private readonly object[] elements;
-
-        public IReadOnlyList<object> Elements { get { return this.elements; } }
-
-        public Nonterminal(params object[] elements)
-        {
-            for (int i = 0; i < elements.Length; i++)
-                if (elements[i] is Lexer.Token)
-                    elements[i] = new Terminal(elements[i]);
-
-            this.elements = elements;
-        }
-
-        public override string ToString()
-        {
-            return string.Join("", this.elements.Select(e => e.ToString()));
-        }
     }
 }
 
