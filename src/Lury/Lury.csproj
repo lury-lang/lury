@@ -169,6 +169,7 @@
     <Compile Include="Compiling\Elements\PowerExpression.cs" />
     <Compile Include="Compiling\Elements\UnaryExpression.cs" />
     <Compile Include="Compiling\Elements\MultiplicationExpression.cs" />
+    <Compile Include="Compiling\Elements\AdditionExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
