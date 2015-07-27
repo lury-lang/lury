@@ -30,6 +30,7 @@
 
 using System;
 using Lury.Resources;
+using Lury.Compiling.Elements;
 
 namespace Lury.Compiling
 {
@@ -308,41 +309,119 @@ and_expression
 
 shift_expression
     : addition_expression
+        {
+            $$ = new ShiftExpressionAddition($1);
+        }
     | shift_expression LeftShift addition_expression
+        {
+            $$ = new ShiftExpressionLeft($1, $3);
+        }
     | shift_expression RightShift addition_expression
+        {
+            $$ = new ShiftExpressionRight($1, $3);
+        }
 
 addition_expression
     : multiplication_expression
+        {
+            $$ = new AdditionExpressionMultiplication($1);
+        }
     | addition_expression '+' multiplication_expression
+        {
+            $$ = new AdditionExpressionRecursiveAddition($1, $3);
+        }
     | addition_expression '-' multiplication_expression
+        {
+            $$ = new AdditionExpressionRecursiveSubtraction($1, $3);
+        }
     | addition_expression '~' multiplication_expression
+        {
+            $$ = new AdditionExpressionRecursiveConcatenation($1, $3);
+        }
 
 multiplication_expression 
     : unary_expression
+        {
+            $$ = new MultiplicationExpressionUnary($1);
+        }
     | multiplication_expression '*' unary_expression
+        {
+            $$ = new MultiplicationExpressionMultiplication($1, $3);
+        }
     | multiplication_expression IntDivide unary_expression
+        {
+            $$ = new MultiplicationExpressionIntDivision($1, $3);
+        }
     | multiplication_expression '/' unary_expression
+        {
+            $$ = new MultiplicationExpressionDivision($1, $3);
+        }
     | multiplication_expression '%' unary_expression
+        {
+            $$ = new MultiplicationExpressionModulo($1, $3);
+        }
 
 unary_expression
     : power_expression
+        {
+            $$ = new UnaryExpressionPower($1);
+        }
     | Increment unary_expression
+        {
+            $$ = new UnaryExpressionIncrement($1);
+        }
     | Decrement unary_expression
+        {
+            $$ = new UnaryExpressionDecrement($1);
+        }
     | '-' unary_expression
+        {
+            $$ = new UnaryExpressionMinus($1);
+        }
     | '+' unary_expression
+        {
+            $$ = new UnaryExpressionPlus($1);
+        }
     | '~' unary_expression
+        {
+            $$ = new UnaryExpressionInvert($1);
+        }
 
 power_expression
     : postfix_expression
+        {
+            $$ = new PowerExpressionPostfix($1);
+        }
     | power_expression Power postfix_expression
+        {
+            $$ = new PowerExpressionPower($1, $3);
+        }
 
 postfix_expression
     : primary
+        {
+            $$ = new PostfixExpressionPrimary($1);
+        }
     | postfix_expression '.' identifier_all
+        {
+            $$ = new PostfixExpressionDot($1, $3);
+        }
     | postfix_expression Increment
+        {
+            $$ = new PostfixExpressionIncrement($1);
+        }
     | postfix_expression Decrement
+        {
+            $$ = new PostfixExpressionDecrement($1);
+        }
     | postfix_expression '(' ')'
+        {
+            $$ = new PostfixExpressionCallNoArg($1);
+        }
     | postfix_expression '(' argument_list ')'
+        {
+            $$ = new PostfixExpressionCall($1, $3);
+        }
 
 argument_list
     : argument
@@ -357,23 +436,58 @@ named_argument
 
 primary
     : identifier_all
+        {
+            $$ = new Terminal($1);
+        }
     | literal
     | KeywordTrue
+        {
+            $$ = new BooleanLiteral($1, true);
+        }
     | KeywordFalse
+        {
+            $$ = new BooleanLiteral($1, false);
+        }
     | KeywordNil
+        {
+            $$ = new NilLiteral($1);
+        }
     | KeywordThis
+        {
+            $$ = new ThisLiteral($1);
+        }
     | KeywordSuper
+        {
+            $$ = new SuperLiteral($1);
+        }
     | '(' expression ')'
 
 literal
     : StringLiteral
+        {
+            $$ = new StringLiteral($1, '\'');
+        }
     | EmbedStringLiteral
+        {
+            $$ = new StringLiteral($1, '"');
+        }
     | WysiwygStringLiteral
+        {
+            $$ = new StringLiteral($1, '`');
+        }
     | ImaginaryNumber
+        {
+            $$ = new ImaginaryNumberLiteral($1);
+        }
     | FloatNumber
+        {
+            $$ = new FloatingNumberLiteral($1);
+        }
     | Integer
-
-
+        {
+            $$ = new IntegerLiteral($1);
+        }
+    
 %%
 
     }
