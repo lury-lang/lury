@@ -173,6 +173,7 @@
     <Compile Include="Compiling\Elements\ShiftExpression.cs" />
     <Compile Include="Compiling\Elements\AndExpression.cs" />
     <Compile Include="Compiling\Elements\XorExpression.cs" />
+    <Compile Include="Compiling\Elements\OrExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
