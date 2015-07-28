@@ -282,22 +282,61 @@ bool_not_expression
 
 comparison_expression
     : or_expression
+        {
+            $$ = new ComparisonExpressionOr($1);
+        }
     | or_expression comparison_operator or_expression
+        {
+            $$ = new ComparisonExpressionComparison($1, $2, $3);
+        }
 
 comparison_operator
     : '<'
+        {
+            $$ = new ComparisonOperator($1, ComparisonType.LessThan);
+        }
     | '>'
+        {
+            $$ = new ComparisonOperator($1, ComparisonType.MoreThan);
+        }
     | Equal
+        {
+            $$ = new ComparisonOperator($1, ComparisonType.Equal);
+        }
     | LessThan
+        {
+            $$ = new ComparisonOperator($1, ComparisonType.LessThanEqual);
+        }
     | MoreThan
+        {
+            $$ = new ComparisonOperator($1, ComparisonType.MoreThanEqual);
+        }
     | NotEqual
+        {
+            $$ = new ComparisonOperator($1, ComparisonType.NotEqual);
+        }
     | KeywordIs
+        {
+            $$ = new ComparisonOperator($1, ComparisonType.Is);
+        }
     | IsNot
+        {
+            $$ = new ComparisonOperator($1, ComparisonType.IsNot);
+        }
     | KeywordIs KeywordNot
+        {
+            $$ = new TwoComparisonOperator($1, $2, ComparisonType.IsNot);
+        }
 
 or_expression
     : xor_expression
+        {
+            $$ = new OrExpressionXor($1);
+        }
     | or_expression '|' xor_expression
+        {
+            $$ = new OrExpressionOr($1, $3);
+        }
 
 xor_expression
     : and_expression
