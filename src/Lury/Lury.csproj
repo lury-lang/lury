@@ -175,6 +175,7 @@
     <Compile Include="Compiling\Elements\XorExpression.cs" />
     <Compile Include="Compiling\Elements\OrExpression.cs" />
     <Compile Include="Compiling\Elements\ComparisonExpression.cs" />
+    <Compile Include="Compiling\Elements\BoolNotExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
