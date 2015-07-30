@@ -178,6 +178,7 @@
     <Compile Include="Compiling\Elements\BoolNotExpression.cs" />
     <Compile Include="Compiling\Elements\BoolAndExpression.cs" />
     <Compile Include="Compiling\Elements\BoolOrExpression.cs" />
+    <Compile Include="Compiling\Elements\ConditionalExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
