@@ -262,23 +262,59 @@ assignment_expression
 
 conditional_expression
     : bool_or_expression
+        {
+            $$ = new ConditionalExpression($1);
+        }
     | bool_or_expression '?' bool_or_expression ':' bool_or_expression
+        {
+            $$ = new ConditionalExpressionConditional($1, $3, $5);
+        }
     | bool_or_expression KeywordIf bool_or_expression KeywordElse bool_or_expression
+        {
+            $$ = new ConditionalExpressionIf($1, $3, $5);
+        }
 
 bool_or_expression
     : bool_and_expression
+        {
+            $$ = new BoolOrExpressionAnd($1);
+        }
     | bool_or_expression KeywordOr bool_and_expression
+        {
+            $$ = new BoolOrExpressionOr($1, $2, $3);
+        }
     | bool_or_expression OrShort bool_and_expression
+        {
+            $$ = new BoolOrExpressionOr($1, $2, $3);
+        }
 
 bool_and_expression
     : bool_not_expression
+        {
+            $$ = new BoolAndExpressionNot($1);
+        }
     | bool_and_expression KeywordAnd bool_not_expression
+        {
+            $$ = new BoolAndExpressionAnd($1, $2, $3);
+        }
     | bool_and_expression AndShort bool_not_expression
+        {
+            $$ = new BoolAndExpressionAnd($1, $2, $3);
+        }
 
 bool_not_expression
     : comparison_expression
+        {
+            $$ = new BoolNotExpressionComparison($1);
+        }
     | KeywordNot bool_not_expression
+        {
+            $$ = new BoolNotExpressionNot($1, $2);
+        }
     | '!' bool_not_expression
+        {
+            $$ = new BoolNotExpressionNot($1, $2);
+        }
 
 comparison_expression
     : or_expression
