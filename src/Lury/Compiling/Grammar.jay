@@ -245,20 +245,65 @@ comma_expression
 
 assignment_expression 
     : conditional_expression
+        {
+            $$ = new AssignmentExpression($1);
+        }
     | conditional_expression '=' assignment_expression
+        {
+            $$ = new AssignmentExpressionAssignment($1, $3);
+        }
     | conditional_expression AssignmentAdd assignment_expression
+        {
+            $$ = new AssignmentExpressionAdd($1, $3);
+        }
     | conditional_expression AssignmentSub assignment_expression
+        {
+            $$ = new AssignmentExpressionSub($1, $3);
+        }
     | conditional_expression AssignmentMultiply assignment_expression
+        {
+            $$ = new AssignmentExpressionMultiply($1, $3);
+        }
     | conditional_expression AssignmentDivide assignment_expression
+        {
+            $$ = new AssignmentExpressionDivide($1, $3);
+        }
     | conditional_expression AssignmentIntDivide assignment_expression
+        {
+            $$ = new AssignmentExpressionIntDivide($1, $3);
+        }
     | conditional_expression AssignmentPower assignment_expression
+        {
+            $$ = new AssignmentExpressionPower($1, $3);
+        }
     | conditional_expression AssignmentModulo assignment_expression
+        {
+            $$ = new AssignmentExpressionModulo($1, $3);
+        }
     | conditional_expression AssignmentAnd assignment_expression
+        {
+            $$ = new AssignmentExpressionAnd($1, $3);
+        }
     | conditional_expression AssignmentOr assignment_expression
+        {
+            $$ = new AssignmentExpressionOr($1, $3);
+        }
     | conditional_expression AssignmentXor assignment_expression
+        {
+            $$ = new AssignmentExpressionXor($1, $3);
+        }
     | conditional_expression AssignmentConcat assignment_expression
+        {
+            $$ = new AssignmentExpressionConcat($1, $3);
+        }
     | conditional_expression AssignmentLeftShift assignment_expression
+        {
+            $$ = new AssignmentExpressionLeftShift($1, $3);
+        }
     | conditional_expression AssignmentRightShift assignment_expression
+        {
+            $$ = new AssignmentExpressionRightShift($1, $3);
+        }
 
 conditional_expression
     : bool_or_expression
