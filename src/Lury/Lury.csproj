@@ -180,6 +180,7 @@
     <Compile Include="Compiling\Elements\BoolOrExpression.cs" />
     <Compile Include="Compiling\Elements\ConditionalExpression.cs" />
     <Compile Include="Compiling\Elements\AssignmentExpression.cs" />
+    <Compile Include="Compiling\Elements\CommaExpression.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
