@@ -237,5 +237,20 @@ namespace Lury.Compiling.Elements
         {
         }
     }
+
+    class ExpressionPrimary : Nonterminal
+    {
+        public readonly Expression Expression;
+
+        public ExpressionPrimary(object expression)
+        {
+            this.Expression = (Expression)expression;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("({0})", this.Expression);
+        }
+    }
 }
 
