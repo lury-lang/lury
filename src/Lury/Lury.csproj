@@ -182,6 +182,7 @@
     <Compile Include="Compiling\Elements\AssignmentExpression.cs" />
     <Compile Include="Compiling\Elements\CommaExpression.cs" />
     <Compile Include="Compiling\Elements\Expression.cs" />
+    <Compile Include="Compiling\Elements\IElementList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
