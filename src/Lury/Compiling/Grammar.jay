@@ -238,10 +238,19 @@ contextual_keyword
 
 expression
     : comma_expression
+        {
+            $$ = new ExpressionComma($1);
+        }
 
 comma_expression
     : assignment_expression
+        {
+            $$ = new CommaExpression($1);
+        }
     | assignment_expression ',' comma_expression
+        {
+            $$ = new CommaExpressionComma($1, $3);
+        }
 
 assignment_expression 
     : conditional_expression
@@ -557,14 +566,26 @@ postfix_expression
 
 argument_list
     : argument
+        {
+            $$ = new CallArgumentList($1);
+        }
     | argument ',' argument_list
+        {
+            $$ = new CallArgumentList($1, $3);
+        }
 
 argument
     : expression
+        {
+            $$ = new CallArgument($1);
+        }
     | named_argument
 
 named_argument
     : identifier_all ':' expression
+        {
+            $$ = new NamedCallArgument($1, $3);
+        }
 
 primary
     : identifier_all
@@ -593,6 +614,9 @@ primary
             $$ = new SuperLiteral($1);
         }
     | '(' expression ')'
+        {
+            $$ = new ExpressionPrimary($2);
+        }
 
 literal
     : StringLiteral
