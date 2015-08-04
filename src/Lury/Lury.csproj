@@ -184,6 +184,7 @@
     <Compile Include="Compiling\Elements\Expression.cs" />
     <Compile Include="Compiling\Elements\CallArgument.cs" />
     <Compile Include="Compiling\Elements\IElementList.cs" />
+    <Compile Include="Compiling\Elements\ImportStatement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
