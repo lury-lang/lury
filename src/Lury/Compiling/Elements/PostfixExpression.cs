@@ -118,13 +118,12 @@ namespace Lury.Compiling.Elements
 
     class PostfixExpressionCall : PostfixExpressionRecursive
     {
-        // TODO: Create class ArgumentList
-        public readonly object ArgumentList;
+        public readonly CallArgumentList ArgumentList;
 
         public PostfixExpressionCall(object postfix, object argumentList)
             : base(postfix)
         {
-            this.ArgumentList = argumentList;
+            this.ArgumentList = (CallArgumentList)argumentList;
         }
 
         public override string ToString()
