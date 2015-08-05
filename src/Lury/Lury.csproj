@@ -186,6 +186,7 @@
     <Compile Include="Compiling\Elements\IElementList.cs" />
     <Compile Include="Compiling\Elements\ImportStatement.cs" />
     <Compile Include="Compiling\Elements\ContinueStatement.cs" />
+    <Compile Include="Compiling\Elements\BreakStatement.cs" />
     <Compile Include="Compiling\Elements\SimpleStatement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
