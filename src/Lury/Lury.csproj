@@ -189,6 +189,7 @@
     <Compile Include="Compiling\Elements\BreakStatement.cs" />
     <Compile Include="Compiling\Elements\ReturnStatement.cs" />
     <Compile Include="Compiling\Elements\ExpressionStatement.cs" />
+    <Compile Include="Compiling\Elements\PassStatement.cs" />
     <Compile Include="Compiling\Elements\SimpleStatement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
