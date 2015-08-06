@@ -192,6 +192,7 @@
     <Compile Include="Compiling\Elements\PassStatement.cs" />
     <Compile Include="Compiling\Elements\SimpleStatement.cs" />
     <Compile Include="Compiling\Elements\ObjectName.cs" />
+    <Compile Include="Compiling\Elements\InheritanceList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
