@@ -194,6 +194,7 @@
     <Compile Include="Compiling\Elements\ObjectName.cs" />
     <Compile Include="Compiling\Elements\InheritanceList.cs" />
     <Compile Include="Compiling\Elements\ClassDefinition.cs" />
+    <Compile Include="Compiling\Elements\FunctionDefinition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
