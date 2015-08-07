@@ -154,33 +154,69 @@ while_statement
 
 function_definition
     : KeywordDef function_name '(' parameter_list ')' ':' suite
+        {
+            $$ = new FunctionDefinition($1, $2, $4, $7);
+        }
     | KeywordDef function_name ':' suite
+        {
+            $$ = new FunctionDefinition($1, $2, $4);
+        }
 
 function_name
     : identifier_all
+        {
+            $$ = new FunctionName($1);
+        }
     | function_name '.' identifier_all
+        {
+            $$ = new FunctionName($1, $3);
+        }
 
 parameter_list
     : parameter
+        {
+            $$ = new FunctionParameterList($1);
+        }
     | parameter_list ',' parameter
+        {
+            $$ = new FunctionParameterList($1, $3);
+        }
 
 parameter
     : identifier_all
 
 class_definition
     : KeywordClass class_name '(' inheritance_list ')' ':' suite
+        {
+            $$ = new ClassDefinition($1, $2, $4, $7);
+        }
     | KeywordClass class_name ':' suite
+        {
+            $$ = new ClassDefinition($1, $2, $4);
+        }
 
 class_name
     : identifier_all
 
 inheritance_list
     : object_name
+        {
+            $$ = new InheritanceList($1);
+        }
     | inheritance_list ',' object_name
+        {
+            $$ = new InheritanceList($1, $3);
+        }
 
 object_name
     : identifier_all
+        {
+            $$ = new ObjectName($1);
+        }
     | object_name '.' identifier_all
+        {
+            $$ = new ObjectName($1, $3);
+        }
 
 
 simple_statement
@@ -193,16 +229,31 @@ simple_statement
 
 pass_statement
     : KeywordPass
+        {
+            $$ = new PassStatement($1);
+        }
 
 expression_statement
     : expression
+        {
+            $$ = new ExpressionStatement($1);
+        }
 
 return_statement
     : KeywordReturn
+        {
+            $$ = new ReturnStatement($1);
+        }
     | KeywordReturn expression
+        {
+            $$ = new ReturnStatement($1, $2);
+        }
 
 break_statement
     : KeywordBreak
+        {
+            $$ = new BreakStatement($1);
+        }
 
 continue_statement
     : KeywordContinue
