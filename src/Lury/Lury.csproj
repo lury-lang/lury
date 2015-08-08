@@ -195,6 +195,7 @@
     <Compile Include="Compiling\Elements\InheritanceList.cs" />
     <Compile Include="Compiling\Elements\ClassDefinition.cs" />
     <Compile Include="Compiling\Elements\FunctionDefinition.cs" />
+    <Compile Include="Compiling\Elements\ElseStatement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
