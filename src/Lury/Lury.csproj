@@ -196,6 +196,7 @@
     <Compile Include="Compiling\Elements\ClassDefinition.cs" />
     <Compile Include="Compiling\Elements\FunctionDefinition.cs" />
     <Compile Include="Compiling\Elements\ElseStatement.cs" />
+    <Compile Include="Compiling\Elements\WhileStatement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
