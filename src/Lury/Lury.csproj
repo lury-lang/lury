@@ -199,6 +199,7 @@
     <Compile Include="Compiling\Elements\WhileStatement.cs" />
     <Compile Include="Compiling\Elements\IfStatement.cs" />
     <Compile Include="Compiling\Elements\CompundStatement.cs" />
+    <Compile Include="Compiling\Elements\Statement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
