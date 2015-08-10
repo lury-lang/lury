@@ -98,28 +98,64 @@ namespace Lury.Compiling
 
 program
     :
+        {
+            $$ = new Program();
+        }
     | program_lines
+        {
+            $$ = new Program($1);
+        }
 
 program_lines
     : program_line
+        {
+            $$ = new ProgramLines($1);
+        }
     | program_line program_lines
+        {
+            $$ = new ProgramLines($1, $2);
+        }
 
 program_line
     : statement
+        {
+            $$ = new ProgramLine($1);
+        }
     | NewLine
+        {
+            $$ = new ProgramLine();
+        }
 
 
 statement
     : statement_list NewLine
+        {
+            $$ = new StatementStatementList($1);
+        }
     | compound_statement
+        {
+            $$ = new StatementCompound($1);
+        }
 
 statement_list
     : simple_statement
+        {
+            $$ = new StatementList($1);
+        }
     | simple_statement simple_statements
+        {
+            $$ = new StatementList($1, $2);
+        }
 
 simple_statements
     : ';'
+        {
+            $$ = new SimpleStatements();
+        }
     | ';' simple_statement simple_statements
+        {
+            $$ = new SimpleStatements($2, $3);
+        }
 
 compound_statement
     : if_statement
@@ -129,28 +165,64 @@ compound_statement
 
 suite
     : statement_list NewLine
+        {
+            $$ = new StatementListSuite($1);
+        }
     | NewLine Indent statements Dedent
+        {
+            $$ = new StatementsSuite($3);
+        }
 
 statements
     : statement
+        {
+            $$ = new Statements($1);
+        }
     | statement statements
+        {
+            $$ = new Statements($1, $2);
+        }
 
 
 if_statement
     : KeywordIf expression ':' suite
+        {
+            $$ = new IfStatement($1, $2, $4);
+        }
     | KeywordIf expression ':' suite elif_statements
+        {
+            $$ = new IfStatement($1, $2, $4, $5);
+        }
 
 elif_statements
     : KeywordElif expression ':' suite
+        {
+            $$ = new ElifStatement($1, $2, $4);
+        }
     | KeywordElif expression ':' suite elif_statements
+        {
+            $$ = new ElifStatement($1, $2, $4, $5);
+        }
     | else_statement
+        {
+            $$ = new ElifStatement($1);
+        }
 
 else_statement
     : KeywordElse ':' suite
+        {
+            $$ = new ElseStatement($1, $3);
+        }
 
 while_statement
     : KeywordWhile expression ':' suite
+        {
+            $$ = new WhileStatement($1, $2, $4);
+        }
     | KeywordWhile expression ':' suite else_statement
+        {
+            $$ = new WhileStatement($1, $2, $4, $5);
+        }
 
 function_definition
     : KeywordDef function_name '(' parameter_list ')' ':' suite
