@@ -202,6 +202,7 @@
     <Compile Include="Compiling\Elements\Statement.cs" />
     <Compile Include="Compiling\Elements\Suite.cs" />
     <Compile Include="Compiling\Elements\Program.cs" />
+    <Compile Include="Compiling\Elements\Element.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
