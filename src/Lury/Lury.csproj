@@ -203,6 +203,7 @@
     <Compile Include="Compiling\Elements\Suite.cs" />
     <Compile Include="Compiling\Elements\Program.cs" />
     <Compile Include="Compiling\Elements\Element.cs" />
+    <Compile Include="Compiling\Elements\Identifier.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
