@@ -30,7 +30,7 @@ using System;
 
 namespace Lury.Compiling.Elements
 {
-    class Terminal
+    abstract class Terminal : Element
     {
         public Lexer.Token Token { get; private set; }
 
