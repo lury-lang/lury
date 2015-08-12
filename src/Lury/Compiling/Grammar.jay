@@ -734,7 +734,7 @@ named_argument
 primary
     : identifier_all
         {
-            $$ = new Terminal($1);
+            $$ = new Identifier($1);
         }
     | literal
     | KeywordTrue
