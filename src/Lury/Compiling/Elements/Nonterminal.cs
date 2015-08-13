@@ -30,7 +30,7 @@ using System;
 
 namespace Lury.Compiling.Elements
 {
-    abstract class Nonterminal
+    abstract class Nonterminal : Element
     {
     }
 }
