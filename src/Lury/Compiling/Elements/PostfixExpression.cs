@@ -31,16 +31,16 @@ using System;
 namespace Lury.Compiling.Elements
 {
     abstract class PostfixExpression : Nonterminal
-    { 
+    {
     }
 
     class PostfixExpressionPrimary : PostfixExpression
     {
-        public readonly object Primary;
+        public readonly Element Primary;
 
         public PostfixExpressionPrimary(object primary)
         {
-            this.Primary = primary;
+            this.Primary = (Element)primary;
         }
 
         public override string ToString()
