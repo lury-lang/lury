@@ -27,13 +27,14 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Lury.Resources;
+using Lury.Compiling.Lexer;
 using Lury.Compiling.Logger;
 using Lury.Compiling.Utils;
-using Lury.Compiling.Lexer;
-using System.Collections.Generic;
+using Lury.Compiling.Elements;
+using Lury.Resources;
 
 namespace Lury.Compiling
 {
@@ -70,16 +71,29 @@ namespace Lury.Compiling
         /// コンパイルするコードを指定してコンパイルします。
         /// </summary>
         /// <param name="code">コンパイルされるコード文字列。</param>
-        /// <returns>>コンパイルに成功したとき true、それ以外のとき false。</returns>
+        /// <returns>コンパイルに成功したとき true、それ以外のとき false。</returns>
         public bool Compile(string code)
         {
-            var lexer = new Lexer.Lexer(code);
-            return lexer.Tokenize();
+            var lexer = new Lexer.Lexer(code + '\n');
+
+            if (!lexer.Tokenize())
+                return false;
+
+            var parser = new Parser();
+			var tree = parser.yyparse(new Lex2yyInput(lexer), new yydebug.yyDebugSimple());
+
+			if (!(tree is Program))
+				return false;
+
+			var program = (Program)tree;
+
+            // TODO: Convert to LLVM bit code!
+
+            return true;
 
             /*try
             {
-                //Parser parser = new Parser();
-                //parser.yyparse(lexer);
+               
 
                 return !lexer.Logger.ErrorOutputs.Any();
             }
@@ -114,38 +128,6 @@ namespace Lury.Compiling
             var appendix = "Token: " + ex.Token.TokenNumber;
 
             // TODO: Replace ErrorCategory
-            /*if (ex is yyParser.yySyntaxError)
-            {
-                this.OutputLogger.ReportError(ErrorCategory.Parser_SyntaxError,
-                                        code: ex.Token.Text,
-                                        sourceCode: sourceCode,
-                                        position: position,
-                                        appendix: appendix);
-            }
-            else if (ex is yyParser.yySyntaxErrorAtEof)
-            {
-                this.OutputLogger.ReportError(ErrorCategory.Parser_SyntaxErrorAtEOF,
-                                        code: ex.Token.Text,
-                                        sourceCode: sourceCode,
-                                        position: position,
-                                        appendix: appendix);
-            }
-            else if (ex is yyParser.yyUnexpectedEof)
-            {
-                this.OutputLogger.ReportError(ErrorCategory.Parser_UnexpectedEOF,
-                                        code: ex.Token.Text,
-                                        sourceCode: sourceCode,
-                                        position: position,
-                                        appendix: appendix);
-            }
-            else
-            {
-                this.OutputLogger.ReportError(ErrorCategory.Unknown,
-                                        code: ex.Token.Text,
-                                        sourceCode: sourceCode,
-                                        position: position,
-                                        appendix: appendix);
-            }*/
         }
 
         #endregion
