@@ -38,6 +38,7 @@ namespace Lury.Compiling.Elements
         {
             this.Expression = (Expression)expression;
         }
+
         public override string ToString()
         {
             return this.Expression.ToString();

@@ -27,8 +27,6 @@
 // THE SOFTWARE.
 
 using System;
-using Lury.Type;
-using Lury.Runtime;
 
 namespace Lury.Compiling.Elements
 {
@@ -58,11 +56,6 @@ namespace Lury.Compiling.Elements
                 return string.Format("{0} {1}:{2}{3}", this.If, this.Expression, this.Suite, this.Elif);
             else
                 return string.Format("{0} {1}:{2}", this.If, this.Expression, this.Suite);
-        }
-
-        public override LuryObject Evaluate(LuryHost host)
-        {
-            throw new NotImplementedException();
         }
     }
 
@@ -101,11 +94,6 @@ namespace Lury.Compiling.Elements
                 return string.Format("{0} {1}:{2}{3}", this.Elif, this.Expression, this.Suite, this.NextElif);
             else
                 return string.Format("{0} {1}:{2}", this.Elif, this.Expression, this.Suite);
-        }
-
-        public override LuryObject Evaluate(LuryHost host)
-        {
-            throw new NotImplementedException();
         }
     }
 }

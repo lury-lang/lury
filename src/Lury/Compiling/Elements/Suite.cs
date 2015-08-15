@@ -27,8 +27,6 @@
 // THE SOFTWARE.
 
 using System;
-using Lury.Type;
-using Lury.Runtime;
 
 namespace Lury.Compiling.Elements
 {
@@ -49,12 +47,6 @@ namespace Lury.Compiling.Elements
         {
             return string.Format("{0}\n", this.StatementList);
         }
-
-        public override LuryObject Evaluate(LuryHost host)
-        {
-            this.StatementList.Evaluate(host);
-            return null;
-        }
     }
 
     class StatementsSuite : Suite
@@ -69,12 +61,6 @@ namespace Lury.Compiling.Elements
         public override string ToString()
         {
             return string.Format("\n  {0}", this.Statements);
-        }
-
-        public override LuryObject Evaluate(LuryHost host)
-        {
-            this.Statements.Evaluate(host);
-            return null;
         }
     }
 }

@@ -27,8 +27,6 @@
 // THE SOFTWARE.
 
 using System;
-using Lury.Type;
-using Lury.Runtime;
 
 namespace Lury.Compiling.Elements
 {
@@ -52,12 +50,6 @@ namespace Lury.Compiling.Elements
                 return this.ProgramLines.ToString();
             else
                 return string.Empty;
-        }
-
-        public override LuryObject Evaluate(LuryHost host)
-        {
-            this.ProgramLines.Evaluate(host);
-            return null;
         }
     }
 
@@ -86,16 +78,6 @@ namespace Lury.Compiling.Elements
             else
                 return this.ProgramLine.ToString();
         }
-
-        public override LuryObject Evaluate(LuryHost host)
-        {
-            this.ProgramLine.Evaluate(host);
-
-            if (this.HasNextElement)
-                this.NextProgramLines.Evaluate(host);
-
-            return null;
-        }
     }
 
     class ProgramLine : Nonterminal
@@ -118,12 +100,6 @@ namespace Lury.Compiling.Elements
                 return this.Statement.ToString();
             else
                 return "\n";
-        }
-
-        public override LuryObject Evaluate(LuryHost host)
-        {
-            this.Statement.Evaluate(host);
-            return null;
         }
     }
 }
