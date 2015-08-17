@@ -57,6 +57,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="LLVMSharp">
+      <HintPath>..\..\submodule\LLVMSharpBinary\LLVMSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,6 +211,22 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="Compiling\Grammar.jay" />
+    <None Include="..\..\submodule\LLVMSharpBinary\LLVMSharp.dll.config">
+      <Link>LLVMSharp.dll.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\submodule\LLVMSharpBinary\LICENSE.llvmsharp">
+      <Link>LICENSE.llvmsharp</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\submodule\LLVMSharpBinary\LICENSE.llvm">
+      <Link>LICENSE.llvm</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\submodule\LLVMSharpBinary\lib\x86\libLLVM.dll">
+      <Link>lib\x86\libLLVM.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\submodule\lury-lexer\lury-lexer\lury-lexer.csproj">
@@ -326,5 +345,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Compiling\Elements\" />
+    <Folder Include="lib\" />
+    <Folder Include="lib\x86\" />
   </ItemGroup>
 </Project>
