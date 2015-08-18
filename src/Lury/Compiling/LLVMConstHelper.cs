@@ -67,7 +67,10 @@ namespace Lury.Compiling
 
         #region Type
 
-        private LLVMTypeRef BooleanType { get { return this.booleanType ?? (this.booleanType = LLVM.Int1TypeInContext(this.llvmHelper.Context)); } }
+        private LLVMTypeRef IntegerType
+        { 
+            get { return this.integerType.Pointer != IntPtr.Zero ? this.integerType : (this.integerType = LLVM.Int64TypeInContext(this.llvmHelper.Context)); }
+        }
 
         #endregion
 
