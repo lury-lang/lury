@@ -208,6 +208,7 @@
     <Compile Include="Compiling\Elements\Element.cs" />
     <Compile Include="Compiling\Elements\Identifier.cs" />
     <Compile Include="Compiling\LLVMHelper.cs" />
+    <Compile Include="Compiling\LLVMConstHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
