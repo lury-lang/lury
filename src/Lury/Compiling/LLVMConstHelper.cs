@@ -111,7 +111,36 @@ namespace Lury.Compiling
 
         #region -- Public Methods --
 
+        public LLVMBool GetBoolean(bool value)
+        {
+            return value ? @true : @false;
+        }
 
+        public LLVMValueRef GetInteger(long value)
+        {
+            var signed = this.GetBoolean(value < 0);
+
+            if (value < 0)
+                value = -value;
+
+            return LLVM.ConstInt(this.integerType, (ulong)value, signed);
+        }
+
+        public LLVMValueRef GetReal(double value)
+        {
+            return LLVM.ConstReal(this.realType, value);
+        }
+
+        public LLVMValueRef GetComplex(double real, double imag)
+        {
+            LLVMValueRef[] complex = { this.GetReal(real), this.GetReal(imag) };
+            return LLVM.ConstVector(out complex[0], 2);
+        }
+
+        public LLVMValueRef GetString(string text)
+        {
+            return LLVM.ConstStringInContext(this.llvmHelper.Context, text, (uint)text.Length, @false);
+        }
 
         #endregion
     }
