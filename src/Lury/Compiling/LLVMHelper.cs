@@ -116,28 +116,28 @@ namespace Lury.Compiling
         {
             if (disposing)
             {
-                if (this.executionEngine != null)
+                if (this.executionEngine.Pointer != IntPtr.Zero)
                 {
                     LLVM.DisposeExecutionEngine(this.executionEngine);
-                    this.executionEngine == null;
+                    this.executionEngine.Pointer = IntPtr.Zero;
                 }
 
-                if (this.builder != null)
+                if (this.builder.Pointer != IntPtr.Zero)
                 {
                     LLVM.DisposeBuilder(this.builder);
-                    this.builder == null;
+                    this.builder.Pointer = IntPtr.Zero;
                 }
 
-                if (this.module != null)
+                if (this.module.Pointer != IntPtr.Zero)
                 {
                     LLVM.DisposeModule(this.module);
-                    this.module == null;
+                    this.module.Pointer = IntPtr.Zero;
                 }
 
-                if (this.context != null)
+                if (this.context.Pointer != IntPtr.Zero)
                 {
                     LLVM.ContextDispose(this.context);
-                    this.context == null;
+                    this.context.Pointer = IntPtr.Zero;
                 }
             }
 
