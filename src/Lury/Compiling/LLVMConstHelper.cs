@@ -40,7 +40,8 @@ namespace Lury.Compiling
 
         #region Value Constants
 
-        private LLVMBool @false, @true;
+        private static readonly LLVMBool @false = new LLVMBool(0);
+        private static readonly LLVMBool @true = new LLVMBool(1);
 
         #endregion
 
@@ -58,9 +59,9 @@ namespace Lury.Compiling
 
         #region Value Constants
 
-        private LLVMBool False { get { return this.@false ?? (this.@false = new LLVMBool(0)); } }
+        private LLVMBool False { get { return @false; } }
 
-        private LLVMBool True { get { return this.@true ?? (this.@true = new LLVMBool(1)); } }
+        private LLVMBool True { get { return @true; } }
 
         #endregion
 
