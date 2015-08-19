@@ -32,6 +32,7 @@ using System.IO;
 using Lury;
 using Lury.Compiling;
 using Lury.Compiling.Logger;
+using Lury.Compiling.Utils;
 using Lury.SampleRunner.Resources;
 
 namespace Lury.SampleRunner
@@ -83,7 +84,7 @@ namespace Lury.SampleRunner
                 string input = ReadFromFile(fi);
                     
                 var compiler = new Compiler();
-                var success = compiler.Compile(input);
+                var success = compiler.CompileAndRun(fi.Name, input);
 
                 if (!options.SilentMode)
                     ShowLogs(compiler.OutputLogger);
