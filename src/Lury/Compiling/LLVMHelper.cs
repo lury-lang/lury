@@ -46,6 +46,13 @@ namespace Lury.Compiling
 
         #endregion
 
+        #region -- Public Delegates --
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void Executable();
+
+        #endregion
+
         #region -- Public Properties --
 
         public LLVMContextRef Context
@@ -102,6 +109,20 @@ namespace Lury.Compiling
 
         #region -- Public Methods --
 
+        public Executable GetExecutableFunction(LLVMValueRef entryFunction)
+        {
+            var functionPointer = LLVM.GetPointerToGlobal(this.executionEngine, entryFunction);
+            return (Executable)Marshal.GetDelegateForFunctionPointer(functionPointer, typeof(Executable));
+        }
+
+        public bool Verify()
+        {
+            IntPtr error;
+            var failed = LLVM.VerifyModule(this.module, LLVMVerifierFailureAction.LLVMPrintMessageAction, out error);
+
+            return (failed.Value == 0);
+        }
+
         public void Dispose()
         {
             this.Dispose(true);
@@ -126,12 +147,6 @@ namespace Lury.Compiling
                 {
                     LLVM.DisposeBuilder(this.builder);
                     this.builder.Pointer = IntPtr.Zero;
-                }
-
-                if (this.module.Pointer != IntPtr.Zero)
-                {
-                    LLVM.DisposeModule(this.module);
-                    this.module.Pointer = IntPtr.Zero;
                 }
 
                 if (this.context.Pointer != IntPtr.Zero)
