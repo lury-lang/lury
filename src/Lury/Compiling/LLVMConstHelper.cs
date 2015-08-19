@@ -123,12 +123,12 @@ namespace Lury.Compiling
             if (value < 0)
                 value = -value;
 
-            return LLVM.ConstInt(this.integerType, (ulong)value, signed);
+            return LLVM.ConstInt(this.IntegerType, (ulong)value, signed);
         }
 
         public LLVMValueRef GetReal(double value)
         {
-            return LLVM.ConstReal(this.realType, value);
+            return LLVM.ConstReal(this.RealType, value);
         }
 
         public LLVMValueRef GetComplex(double real, double imag)
