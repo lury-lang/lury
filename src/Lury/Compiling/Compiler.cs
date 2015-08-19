@@ -147,7 +147,11 @@ namespace Lury.Compiling
             var position = sourceCode.GetPositionByIndex(ex.Token.Index);
             var appendix = "Token: " + ex.Token.TokenNumber;
 
-            // TODO: Replace ErrorCategory
+            if (ex is yyParser.yySyntaxError)
+            {
+                this.OutputLogger.ReportError(CompileError.SyntaxError, ex.Token.Text, sourceCode, position, appendix);
+                return;
+            }
         }
 
         #endregion
