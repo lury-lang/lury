@@ -209,6 +209,7 @@
     <Compile Include="Compiling\Elements\Identifier.cs" />
     <Compile Include="Compiling\LLVMHelper.cs" />
     <Compile Include="Compiling\LLVMConstHelper.cs" />
+    <Compile Include="Compiling\Logger\CompileError.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
