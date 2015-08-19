@@ -111,6 +111,28 @@ namespace Lury.Compiling
 
         #region -- Public Methods --
 
+        public LLVMTypeRef GetFunctionType(LLVMTypeRef returnType, params LLVMTypeRef[] types)
+        {
+            if (types.Length == 0)
+            {
+                types = new LLVMTypeRef[] { new LLVMTypeRef() };
+                return LLVM.FunctionType(returnType, out types[0], 0, @false);
+            }
+            else
+                return LLVM.FunctionType(returnType, out types[0], (uint)types.Length, @false);
+        }
+
+        public LLVMTypeRef GetFunctionTypeVoid(params LLVMTypeRef[] types)
+        {
+            if (types.Length == 0)
+            {
+                types = new LLVMTypeRef[] { new LLVMTypeRef() };
+                return LLVM.FunctionType(this.VoidType, out types[0], 0, @false);
+            }
+            else
+                return LLVM.FunctionType(this.VoidType, out types[0], (uint)types.Length, @false);
+        }
+
         public LLVMBool GetBoolean(bool value)
         {
             return value ? @true : @false;
