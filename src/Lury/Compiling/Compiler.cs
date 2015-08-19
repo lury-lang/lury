@@ -35,6 +35,7 @@ using Lury.Compiling.Logger;
 using Lury.Compiling.Utils;
 using Lury.Compiling.Elements;
 using Lury.Resources;
+using LLVMSharp;
 
 namespace Lury.Compiling
 {
@@ -44,6 +45,7 @@ namespace Lury.Compiling
     public class Compiler
     {
         #region -- Public Properties --
+
         /// <summary>
         /// コンパイル出力を格納した
         /// <see cref="Lury.Compiling.OutputLogger"/> オブジェクトを取得します。
@@ -68,54 +70,72 @@ namespace Lury.Compiling
         #region -- Public Methods --
 
         /// <summary>
-        /// コンパイルするコードを指定してコンパイルします。
+        /// コンパイルするコードを指定してコンパイルし、実行します。
         /// </summary>
         /// <param name="code">コンパイルされるコード文字列。</param>
         /// <returns>コンパイルに成功したとき true、それ以外のとき false。</returns>
-        public bool Compile(string code)
+        public bool CompileAndRun(string filename, string code)
         {
-            var lexer = new Lexer.Lexer(code + '\n');
+            var moduleName = Path.GetFileNameWithoutExtension(filename);
 
-            if (!lexer.Tokenize())
-                return false;
+            using (var llvm = new LLVMHelper(moduleName))
+            {
+                var ch = new LLVMConstHelper(llvm);
+                var main_func = LLVM.AddFunction(llvm.Module, "lury_main_func", ch.GetFunctionTypeVoid());
+                LLVM.PositionBuilderAtEnd(llvm.Builder, LLVM.AppendBasicBlock(main_func, "entry"));
 
-            var parser = new Parser();
-			var tree = parser.yyparse(new Lex2yyInput(lexer), new yydebug.yyDebugSimple());
+                if (!this.Compile(llvm, ch, code))
+                    return false;
 
-			if (!(tree is Program))
-				return false;
-
-			var program = (Program)tree;
-
-            // TODO: Convert to LLVM bit code!
+                LLVM.DumpModule(llvm.Module);
+                llvm.GetExecutableFunction(main_func).Invoke();
+            }
 
             return true;
-
-            /*try
-            {
-               
-
-                return !lexer.Logger.ErrorOutputs.Any();
-            }
-            catch (yyParser.yyException ex)
-            {
-                this.ReportyyException(ex, code);
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                this.OutputLogger.ReportError(ErrorCategory.Unknown,
-                                        sourceCode: code,
-                                        appendix: ex.ToString());
-
-                return false;
-            }*/
         }
 
         #endregion
 
         #region -- Private Methods --
+
+        private bool Compile(LLVMHelper llvm, LLVMConstHelper llvmch, string code)
+        {
+            var lexer = new Lexer.Lexer(code + '\n');
+            var succeedTokenize = lexer.Tokenize();
+            lexer.Logger.CopyTo(this.OutputLogger);
+
+            if (!succeedTokenize)
+                return false;
+
+            var parser = new Parser(llvm, llvmch);
+            Program 　program = null;
+
+            try
+            {
+                var tree = parser.yyparse(new Lex2yyInput(lexer), new yydebug.yyDebugSimple());
+                program = (Program)tree;
+            }
+            catch (yyParser.yyException ex)
+            {
+                this.ReportyyException(ex, code);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                this.OutputLogger.ReportError(CompileError.Unknown,
+                                                  sourceCode: code,
+                                                  appendix: ex.ToString());
+
+                return false;
+            }
+
+            LLVM.BuildRetVoid(llvm.Builder);
+
+            if (!llvm.Verify())
+                return false;
+            
+            return true;
+        }
 
         /// <summary>
         /// コンパイルエラーをロガーに出力します。
