@@ -63,35 +63,35 @@ namespace Lury.Compiling
 
         #region Value Constants
 
-        private LLVMBool False { get { return @false; } }
+        public LLVMBool False { get { return @false; } }
 
-        private LLVMBool True { get { return @true; } }
+        public LLVMBool True { get { return @true; } }
 
         #endregion
 
         #region Type
 
-        private LLVMTypeRef VoidType
+        public LLVMTypeRef VoidType
         { 
             get { return this.voidType.Pointer != IntPtr.Zero ? this.voidType : (this.voidType = LLVM.VoidTypeInContext(this.llvmHelper.Context)); }
         }
 
-        private LLVMTypeRef BooleanType
+        public LLVMTypeRef BooleanType
         { 
             get { return this.booleanType.Pointer != IntPtr.Zero ? this.booleanType : (this.booleanType = LLVM.Int1TypeInContext(this.llvmHelper.Context)); }
         }
 
-        private LLVMTypeRef IntegerType
+        public LLVMTypeRef IntegerType
         { 
             get { return this.integerType.Pointer != IntPtr.Zero ? this.integerType : (this.integerType = LLVM.Int64TypeInContext(this.llvmHelper.Context)); }
         }
 
-        private LLVMTypeRef RealType
+        public LLVMTypeRef RealType
         {
             get { return this.realType.Pointer != IntPtr.Zero ? this.realType : (this.realType = LLVM.DoubleTypeInContext(this.llvmHelper.Context)); }
         }
 
-        private LLVMTypeRef ComplexType
+        public LLVMTypeRef ComplexType
         {
             get { return this.complexType.Pointer != IntPtr.Zero ? this.complexType : (this.complexType = LLVM.VectorType(this.realType, 2)); }
         }
