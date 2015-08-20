@@ -727,7 +727,7 @@ argument_list
         }
 
 argument
-    : expression
+    : assignment_expression
         {
             $$ = new CallArgument($1);
         }
