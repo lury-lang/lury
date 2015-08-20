@@ -33,9 +33,8 @@ using System.Linq;
 using Lury.Compiling.Lexer;
 using Lury.Compiling.Logger;
 using Lury.Compiling.Utils;
-using Lury.Compiling.Elements;
 using Lury.Resources;
-using LLVMSharp;
+using Lury.Objects;
 
 namespace Lury.Compiling
 {
@@ -74,68 +73,37 @@ namespace Lury.Compiling
         /// </summary>
         /// <param name="code">コンパイルされるコード文字列。</param>
         /// <returns>コンパイルに成功したとき true、それ以外のとき false。</returns>
-        public bool CompileAndRun(string filename, string code)
-        {
-            var moduleName = Path.GetFileNameWithoutExtension(filename);
-
-            using (var llvm = new LLVMHelper(moduleName))
-            {
-                var ch = new LLVMConstHelper(llvm);
-                var main_func = LLVM.AddFunction(llvm.Module, "lury_main_func", ch.GetFunctionTypeVoid());
-                LLVM.PositionBuilderAtEnd(llvm.Builder, LLVM.AppendBasicBlock(main_func, "entry"));
-
-                if (!this.Compile(llvm, ch, code))
-                    return false;
-
-                LLVM.DumpModule(llvm.Module);
-                llvm.GetExecutableFunction(main_func).Invoke();
-            }
-
-            return true;
-        }
-
-        #endregion
-
-        #region -- Private Methods --
-
-        private bool Compile(LLVMHelper llvm, LLVMConstHelper llvmch, string code)
+        public LuryObject Evaluate(string code)
         {
             var lexer = new Lexer.Lexer(code + '\n');
             var succeedTokenize = lexer.Tokenize();
             lexer.Logger.CopyTo(this.OutputLogger);
 
             if (!succeedTokenize)
-                return false;
+                return null;
 
-            var parser = new Parser(llvm, llvmch);
-            Program 　program = null;
+            var globalObject = new LuryObject();
+            Intrinsic.SetBuiltInFunctions(globalObject);
+            var parser = new Parser(globalObject);
+            LuryObject luryObject = null;
 
             try
             {
-                var tree = parser.yyparse(new Lex2yyInput(lexer), new yydebug.yyDebugSimple());
-                program = (Program)tree;
+                var result = parser.yyparse(new Lex2yyInput(lexer), new yydebug.yyDebugSimple());
+                luryObject = (result is LValue) ? ((LValue)result).Dereference(globalObject) : (LuryObject)result;
             }
             catch (yyParser.yyException ex)
             {
                 this.ReportyyException(ex, code);
-                return false;
-            }
-            catch (Exception ex)
-            {
-                this.OutputLogger.ReportError(CompileError.Unknown,
-                                                  sourceCode: code,
-                                                  appendix: ex.ToString());
-
-                return false;
+                return null;
             }
 
-            LLVM.BuildRetVoid(llvm.Builder);
-
-            if (!llvm.Verify())
-                return false;
-            
-            return true;
+            return luryObject;
         }
+
+        #endregion
+
+        #region -- Private Methods --
 
         /// <summary>
         /// コンパイルエラーをロガーに出力します。

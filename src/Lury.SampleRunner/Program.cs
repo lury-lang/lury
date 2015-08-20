@@ -29,6 +29,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Lury;
 using Lury.Compiling;
 using Lury.Compiling.Logger;
@@ -84,12 +85,12 @@ namespace Lury.SampleRunner
                 string input = ReadFromFile(fi);
                     
                 var compiler = new Compiler();
-                var success = compiler.CompileAndRun(fi.Name, input);
+                compiler.Evaluate(input);
 
                 if (!options.SilentMode)
                     ShowLogs(compiler.OutputLogger);
 
-                if (!success)
+                if (compiler.OutputLogger.ErrorOutputs.Any())
                 {
                     failed = true;
 
