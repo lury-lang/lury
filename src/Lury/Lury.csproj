@@ -163,6 +163,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\CompileError.cs" />
+    <Compile Include="Compiling\ParserInterpreter.cs" />
     <Compile Include="Objects\LuryObject.cs" />
     <Compile Include="Objects\LuryFunction.cs" />
     <Compile Include="Objects\LuryBoolean.cs" />
