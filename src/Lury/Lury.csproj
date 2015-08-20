@@ -163,6 +163,14 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Compiling\Logger\CompileError.cs" />
+    <Compile Include="Objects\LuryObject.cs" />
+    <Compile Include="Objects\LuryFunction.cs" />
+    <Compile Include="Objects\LuryBoolean.cs" />
+    <Compile Include="Objects\LuryString.cs" />
+    <Compile Include="Objects\LuryNumber.cs" />
+    <Compile Include="Objects\LuryInteger.cs" />
+    <Compile Include="Objects\LuryReal.cs" />
+    <Compile Include="Objects\LuryComplex.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -284,5 +292,6 @@
     <PreBuildEvent>..\..\tools\JayLauncher.exe "-c" $(ProjectDir)\Compiling\Grammar.jay $(ProjectDir)\Compiling\skeleton.cs $(ProjectDir)\Compiling\Parser.cs</PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Objects\" />
   </ItemGroup>
 </Project>
