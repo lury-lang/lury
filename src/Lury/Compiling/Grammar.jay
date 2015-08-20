@@ -721,7 +721,7 @@ argument_list
         {
             $$ = new CallArgumentList($1);
         }
-    | argument ',' argument_list
+    | argument_list ',' argument
         {
             $$ = new CallArgumentList($1, $3);
         }
