@@ -29,22 +29,15 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using Lury.Resources;
-using Lury.Compiling.Elements;
+using Lury.Objects;
 
 namespace Lury.Compiling
 {
     partial　class Parser
     {
         private int yacc_verbose_flag = 0;
-        private readonly LLVMHelper llvm;
-        private readonly LLVMConstHelper llvmch;
-
-        public Parser(LLVMHelper llvm, LLVMConstHelper llvmch)
-        {
-            this.llvm = llvm;
-            this.llvmch = llvmch;
-        }
 
 %}
 
@@ -107,62 +100,41 @@ namespace Lury.Compiling
 program
     :
         {
-            $$ = new Program();
+            $$ = null;
         }
     | program_lines
-        {
-            $$ = new Program($1);
-        }
 
 program_lines
     : program_line
-        {
-            $$ = new ProgramLines($1);
-        }
     | program_line program_lines
-        {
-            $$ = new ProgramLines($1, $2);
-        }
 
 program_line
     : statement
-        {
-            $$ = new ProgramLine($1);
-        }
     | NewLine
-        {
-            $$ = new ProgramLine();
-        }
 
 
 statement
     : statement_list NewLine
         {
-            $$ = new StatementStatementList($1);
+            $$ = $1;
         }
     | compound_statement
-        {
-            $$ = new StatementCompound($1);
-        }
 
 statement_list
     : simple_statement
-        {
-            $$ = new StatementList($1);
-        }
     | simple_statement simple_statements
         {
-            $$ = new StatementList($1, $2);
+            throw new NotImplementedException();
         }
 
 simple_statements
     : ';'
         {
-            $$ = new SimpleStatements();
+            throw new NotImplementedException();
         }
     | ';' simple_statement simple_statements
         {
-            $$ = new SimpleStatements($2, $3);
+            throw new NotImplementedException();
         }
 
 compound_statement
@@ -174,93 +146,78 @@ compound_statement
 suite
     : statement_list NewLine
         {
-            $$ = new StatementListSuite($1);
+            throw new NotImplementedException();
         }
     | NewLine Indent statements Dedent
         {
-            $$ = new StatementsSuite($3);
+            throw new NotImplementedException();
         }
 
 statements
     : statement
-        {
-            $$ = new Statements($1);
-        }
     | statement statements
         {
-            $$ = new Statements($1, $2);
+            throw new NotImplementedException();
         }
 
 
 if_statement
     : KeywordIf expression ':' suite
         {
-            $$ = new IfStatement($1, $2, $4);
+            throw new NotImplementedException();
         }
     | KeywordIf expression ':' suite elif_statements
         {
-            $$ = new IfStatement($1, $2, $4, $5);
+            throw new NotImplementedException();
         }
 
 elif_statements
     : KeywordElif expression ':' suite
         {
-            $$ = new ElifStatement($1, $2, $4);
+            throw new NotImplementedException();
         }
     | KeywordElif expression ':' suite elif_statements
         {
-            $$ = new ElifStatement($1, $2, $4, $5);
+            throw new NotImplementedException();
         }
     | else_statement
         {
-            $$ = new ElifStatement($1);
+            throw new NotImplementedException();
         }
 
 else_statement
     : KeywordElse ':' suite
         {
-            $$ = new ElseStatement($1, $3);
+            throw new NotImplementedException();
         }
 
 while_statement
     : KeywordWhile expression ':' suite
         {
-            $$ = new WhileStatement($1, $2, $4);
+            throw new NotImplementedException();
         }
     | KeywordWhile expression ':' suite else_statement
         {
-            $$ = new WhileStatement($1, $2, $4, $5);
+            throw new NotImplementedException();
         }
 
 function_definition
     : KeywordDef function_name '(' parameter_list ')' ':' suite
         {
-            $$ = new FunctionDefinition($1, $2, $4, $7);
+            throw new NotImplementedException();
         }
     | KeywordDef function_name ':' suite
         {
-            $$ = new FunctionDefinition($1, $2, $4);
+            throw new NotImplementedException();
         }
 
 function_name
     : identifier_all
-        {
-            $$ = new FunctionName($1);
-        }
     | function_name '.' identifier_all
-        {
-            $$ = new FunctionName($1, $3);
-        }
 
 parameter_list
     : parameter
-        {
-            $$ = new FunctionParameterList($1);
-        }
     | parameter_list ',' parameter
-        {
-            $$ = new FunctionParameterList($1, $3);
-        }
 
 parameter
     : identifier_all
@@ -268,11 +225,11 @@ parameter
 class_definition
     : KeywordClass class_name '(' inheritance_list ')' ':' suite
         {
-            $$ = new ClassDefinition($1, $2, $4, $7);
+            throw new NotImplementedException();
         }
     | KeywordClass class_name ':' suite
         {
-            $$ = new ClassDefinition($1, $2, $4);
+            throw new NotImplementedException();
         }
 
 class_name
@@ -280,23 +237,11 @@ class_name
 
 inheritance_list
     : object_name
-        {
-            $$ = new InheritanceList($1);
-        }
     | inheritance_list ',' object_name
-        {
-            $$ = new InheritanceList($1, $3);
-        }
 
 object_name
     : identifier_all
-        {
-            $$ = new ObjectName($1);
-        }
     | object_name '.' identifier_all
-        {
-            $$ = new ObjectName($1, $3);
-        }
 
 
 simple_statement
@@ -309,70 +254,52 @@ simple_statement
 
 pass_statement
     : KeywordPass
-        {
-            $$ = new PassStatement($1);
-        }
 
 expression_statement
     : expression
-        {
-            $$ = new ExpressionStatement($1);
-        }
 
 return_statement
     : KeywordReturn
         {
-            $$ = new ReturnStatement($1);
+            throw new NotImplementedException();
         }
     | KeywordReturn expression
         {
-            $$ = new ReturnStatement($1, $2);
+            throw new NotImplementedException();
         }
 
 break_statement
     : KeywordBreak
         {
-            $$ = new BreakStatement($1);
+            throw new NotImplementedException();
         }
 
 continue_statement
     : KeywordContinue
         {
-            $$ = new ContinueStatement($1);
+            throw new NotImplementedException();
         }
 
 import_statement
     : KeywordImport import_names
         {
-            $$ = new ImportStatement($2);
+            throw new NotImplementedException();
         }
     | KeywordPublic KeywordImport import_names
         {
-            $$ = new ImportStatement($3);
+            throw new NotImplementedException();
         }
 
 import_names
     : import_name
-        {
-            $$ = new ImportName($1);
-        }
     | import_names ',' import_name
-        {
-            $$ = new ImportName($1, $3);
-        }
 
 import_name
     : module_name
 
 module_name
     : identifier_all
-        {
-            $$ = new ModuleName($1);
-        }
     | module_name '.' identifier_all
-        {
-            $$ = new ModuleName($1, $3);
-        }
 
 identifier_all
     : Identifier
@@ -390,410 +317,332 @@ contextual_keyword
 
 expression
     : comma_expression
-        {
-            $$ = new ExpressionComma($1);
-        }
 
 comma_expression
     : assignment_expression
-        {
-            $$ = new CommaExpression($1);
-        }
     | assignment_expression ',' comma_expression
         {
-            $$ = new CommaExpressionComma($1, $3);
+            throw new NotImplementedException();
         }
 
 assignment_expression 
     : conditional_expression
-        {
-            $$ = new AssignmentExpression($1);
-        }
     | conditional_expression '=' assignment_expression
         {
-            $$ = new AssignmentExpressionAssignment($1, $3);
+            $$ = this.BuildAssign($1, $3, AssignOperator.Assign);
         }
     | conditional_expression AssignmentAdd assignment_expression
         {
-            $$ = new AssignmentExpressionAdd($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentSub assignment_expression
         {
-            $$ = new AssignmentExpressionSub($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentMultiply assignment_expression
         {
-            $$ = new AssignmentExpressionMultiply($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentDivide assignment_expression
         {
-            $$ = new AssignmentExpressionDivide($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentIntDivide assignment_expression
         {
-            $$ = new AssignmentExpressionIntDivide($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentPower assignment_expression
         {
-            $$ = new AssignmentExpressionPower($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentModulo assignment_expression
         {
-            $$ = new AssignmentExpressionModulo($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentAnd assignment_expression
         {
-            $$ = new AssignmentExpressionAnd($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentOr assignment_expression
         {
-            $$ = new AssignmentExpressionOr($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentXor assignment_expression
         {
-            $$ = new AssignmentExpressionXor($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentConcat assignment_expression
         {
-            $$ = new AssignmentExpressionConcat($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentLeftShift assignment_expression
         {
-            $$ = new AssignmentExpressionLeftShift($1, $3);
+            throw new NotImplementedException();
         }
     | conditional_expression AssignmentRightShift assignment_expression
         {
-            $$ = new AssignmentExpressionRightShift($1, $3);
+            throw new NotImplementedException();
         }
 
 conditional_expression
     : bool_or_expression
-        {
-            $$ = new ConditionalExpression($1);
-        }
     | bool_or_expression '?' bool_or_expression ':' bool_or_expression
         {
-            $$ = new ConditionalExpressionConditional($1, $3, $5);
+            throw new NotImplementedException();
         }
     | bool_or_expression KeywordIf bool_or_expression KeywordElse bool_or_expression
         {
-            $$ = new ConditionalExpressionIf($1, $3, $5);
+            throw new NotImplementedException();
         }
 
 bool_or_expression
     : bool_and_expression
-        {
-            $$ = new BoolOrExpressionAnd($1);
-        }
     | bool_or_expression KeywordOr bool_and_expression
         {
-            $$ = new BoolOrExpressionOr($1, $2, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.LogicalOr);
         }
     | bool_or_expression OrShort bool_and_expression
         {
-            $$ = new BoolOrExpressionOr($1, $2, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.LogicalOr);
         }
 
 bool_and_expression
     : bool_not_expression
-        {
-            $$ = new BoolAndExpressionNot($1);
-        }
     | bool_and_expression KeywordAnd bool_not_expression
         {
-            $$ = new BoolAndExpressionAnd($1, $2, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.LogicalAnd);
         }
     | bool_and_expression AndShort bool_not_expression
         {
-            $$ = new BoolAndExpressionAnd($1, $2, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.LogicalAnd);
         }
 
 bool_not_expression
     : comparison_expression
-        {
-            $$ = new BoolNotExpressionComparison($1);
-        }
     | KeywordNot bool_not_expression
         {
-            $$ = new BoolNotExpressionNot($1, $2);
+            $$ = this.BuildUnary($2, UnaryOperator.LogicalNot);
         }
     | '!' bool_not_expression
         {
-            $$ = new BoolNotExpressionNot($1, $2);
+            $$ = this.BuildUnary($2, UnaryOperator.LogicalNot);
         }
 
 comparison_expression
     : or_expression
-        {
-            $$ = new ComparisonExpressionOr($1);
-        }
     | or_expression comparison_operator or_expression
         {
-            $$ = new ComparisonExpressionComparison($1, $2, $3);
+            throw new NotImplementedException();
         }
 
 comparison_operator
     : '<'
-        {
-            $$ = new ComparisonOperator($1, ComparisonType.LessThan);
-        }
     | '>'
-        {
-            $$ = new ComparisonOperator($1, ComparisonType.MoreThan);
-        }
     | Equal
-        {
-            $$ = new ComparisonOperator($1, ComparisonType.Equal);
-        }
     | LessThan
-        {
-            $$ = new ComparisonOperator($1, ComparisonType.LessThanEqual);
-        }
     | MoreThan
-        {
-            $$ = new ComparisonOperator($1, ComparisonType.MoreThanEqual);
-        }
     | NotEqual
-        {
-            $$ = new ComparisonOperator($1, ComparisonType.NotEqual);
-        }
     | KeywordIs
-        {
-            $$ = new ComparisonOperator($1, ComparisonType.Is);
-        }
     | IsNot
-        {
-            $$ = new ComparisonOperator($1, ComparisonType.IsNot);
-        }
     | KeywordIs KeywordNot
-        {
-            $$ = new TwoComparisonOperator($1, $2, ComparisonType.IsNot);
-        }
 
 or_expression
     : xor_expression
-        {
-            $$ = new OrExpressionXor($1);
-        }
     | or_expression '|' xor_expression
         {
-            $$ = new OrExpressionOr($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.ArithmeticOr);
         }
 
 xor_expression
     : and_expression
-        {
-            $$ = new XorExpressionAnd($1);
-        }
     | xor_expression '^' and_expression
         {
-            $$ = new XorExpressionXor($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.ArithmeticXor);
         }
 
 and_expression
     : shift_expression
-        {
-            $$ = new AndExpressionShift($1);
-        }
     | and_expression '&' shift_expression
         {
-            $$ = new AndExpressionAnd($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.ArithmeticAnd);
         }
 
 shift_expression
     : addition_expression
-        {
-            $$ = new ShiftExpressionAddition($1);
-        }
     | shift_expression LeftShift addition_expression
         {
-            $$ = new ShiftExpressionLeft($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.LeftShift);
         }
     | shift_expression RightShift addition_expression
         {
-            $$ = new ShiftExpressionRight($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.RightShift);
         }
 
 addition_expression
     : multiplication_expression
-        {
-            $$ = new AdditionExpressionMultiplication($1);
-        }
     | addition_expression '+' multiplication_expression
         {
-            $$ = new AdditionExpressionRecursiveAddition($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.Addition);
         }
     | addition_expression '-' multiplication_expression
         {
-            $$ = new AdditionExpressionRecursiveSubtraction($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.Subtraction);
         }
     | addition_expression '~' multiplication_expression
         {
-            $$ = new AdditionExpressionRecursiveConcatenation($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.Concatenation);
         }
 
 multiplication_expression 
     : unary_expression
-        {
-            $$ = new MultiplicationExpressionUnary($1);
-        }
     | multiplication_expression '*' unary_expression
         {
-            $$ = new MultiplicationExpressionMultiplication($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.Multiplication);
         }
     | multiplication_expression IntDivide unary_expression
         {
-            $$ = new MultiplicationExpressionIntDivision($1, $3);
+            throw new NotImplementedException();
         }
     | multiplication_expression '/' unary_expression
         {
-            $$ = new MultiplicationExpressionDivision($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.Division);
         }
     | multiplication_expression '%' unary_expression
         {
-            $$ = new MultiplicationExpressionModulo($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.Modulo);
         }
 
 unary_expression
     : power_expression
-        {
-            $$ = new UnaryExpressionPower($1);
-        }
     | Increment unary_expression
         {
-            $$ = new UnaryExpressionIncrement($1);
+            $$ = this.BuildUnaryAssign($2, UnaryAssignOperator.IncrementPrefix);
         }
     | Decrement unary_expression
         {
-            $$ = new UnaryExpressionDecrement($1);
+            $$ = this.BuildUnaryAssign($2, UnaryAssignOperator.DecrementPrefix);
         }
     | '-' unary_expression
         {
-            $$ = new UnaryExpressionMinus($1);
+            $$ = this.BuildUnary($2, UnaryOperator.SignNegative);
         }
     | '+' unary_expression
         {
-            $$ = new UnaryExpressionPlus($1);
+            $$ = this.BuildUnary($2, UnaryOperator.SignPositive);
         }
     | '~' unary_expression
         {
-            $$ = new UnaryExpressionInvert($1);
+            $$ = this.BuildUnary($2, UnaryOperator.BitwiseNot);
         }
 
 power_expression
     : postfix_expression
-        {
-            $$ = new PowerExpressionPostfix($1);
-        }
     | power_expression Power postfix_expression
         {
-            $$ = new PowerExpressionPower($1, $3);
+            $$ = this.BuildBinary($1, $3, BinaryOperator.Power);
         }
 
 postfix_expression
     : primary
-        {
-            $$ = new PostfixExpressionPrimary($1);
-        }
     | postfix_expression '.' identifier_all
         {
-            $$ = new PostfixExpressionDot($1, $3);
+            throw new NotImplementedException();
         }
     | postfix_expression Increment
         {
-            $$ = new PostfixExpressionIncrement($1);
+            $$ = this.BuildUnaryAssign($1, UnaryAssignOperator.IncrementPostfix);
         }
     | postfix_expression Decrement
         {
-            $$ = new PostfixExpressionDecrement($1);
+            $$ = this.BuildUnaryAssign($1, UnaryAssignOperator.DecrementPostfix);
         }
     | postfix_expression '(' ')'
         {
-            $$ = new PostfixExpressionCallNoArg($1);
+            $$ = this.Call($1);
         }
     | postfix_expression '(' argument_list ')'
         {
-            $$ = new PostfixExpressionCall($1, $3);
+            $$ = this.Call($1, $3);
         }
 
 argument_list
     : argument
         {
-            $$ = new CallArgumentList($1);
+            $$ = new List<LuryObject>() { this.Dereference($1) };
         }
     | argument_list ',' argument
         {
-            $$ = new CallArgumentList($1, $3);
+            var list = (List<LuryObject>)$1;
+            var newList = new List<LuryObject>(list);
+            newList.Add(this.Dereference($3));
+            $$ = newList;
         }
 
 argument
     : assignment_expression
-        {
-            $$ = new CallArgument($1);
-        }
     | named_argument
 
 named_argument
     : identifier_all ':' expression
         {
-            $$ = new NamedCallArgument($1, $3);
+            throw new NotImplementedException();
         }
 
 primary
     : identifier_all
         {
-            $$ = new Identifier($1);
+            $$ = new LValue($1);
         }
     | literal
     | KeywordTrue
         {
-            $$ = new BooleanLiteral($1, true);
+            $$ = this.CreateBoolean(true);
         }
     | KeywordFalse
         {
-            $$ = new BooleanLiteral($1, false);
+            $$ = this.CreateBoolean(false);
         }
     | KeywordNil
         {
-            $$ = new NilLiteral($1);
+            throw new NotImplementedException();
         }
     | KeywordThis
         {
-            $$ = new ThisLiteral($1);
+            throw new NotImplementedException();
         }
     | KeywordSuper
         {
-            $$ = new SuperLiteral($1);
+            throw new NotImplementedException();
         }
     | '(' expression ')'
         {
-            $$ = new ExpressionPrimary($2);
+            $$ = $2;
         }
 
 literal
     : StringLiteral
         {
-            $$ = new StringLiteral($1, '\'');
+            $$ = this.CreateString($1, '\'');
         }
     | EmbedStringLiteral
         {
-            $$ = new StringLiteral($1, '"');
+            $$ = this.CreateString($1, '"');
         }
     | WysiwygStringLiteral
         {
-            $$ = new StringLiteral($1, '`');
+            $$ = this.CreateString($1, '`');
         }
     | ImaginaryNumber
         {
-            $$ = new ImaginaryNumberLiteral($1);
+            $$ = this.CreateComplex($1);
         }
     | FloatNumber
         {
-            $$ = new FloatingNumberLiteral($1);
+            $$ = this.CreateReal($1);
         }
     | Integer
         {
-            $$ = new IntegerLiteral($1);
+            $$ = this.CreateInteger($1);
         }
     
 %%
