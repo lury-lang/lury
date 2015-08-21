@@ -105,6 +105,7 @@ namespace Lury.Compiling
         Power,
         Multiplication,
         Division,
+        IntDivision,
         Modulo,
         Addition,
         Subtraction,
@@ -116,12 +117,33 @@ namespace Lury.Compiling
         ArithmeticOr,
         LogicalAnd,
         LogicalOr,
+        LessThan,
+        GreaterThan,
+        LessThanEqual,
+        GreaterThanEqual,
+        Equal,
+        NotEqual,
+        Is,
+        IsNot,
     }
 
     enum BinaryAssignOperator 
     {
         Unknown,
         Assign,
+        Power,
+        Multiplication,
+        Division,
+        IntDivision,
+        Modulo,
+        Addition,
+        Subtraction,
+        Concatenation,
+        LeftShift,
+        RightShift,
+        ArithmeticAnd,
+        ArithmeticXor,
+        ArithmeticOr,
     }
 
     static class StringHelper
