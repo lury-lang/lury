@@ -118,7 +118,7 @@ namespace Lury.Compiling
         LogicalOr,
     }
 
-    enum AssignOperator 
+    enum BinaryAssignOperator 
     {
         Unknown,
         Assign,
