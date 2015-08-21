@@ -124,31 +124,6 @@ namespace Lury.Compiling
         Assign,
     }
 
-    class LValue
-    {
-        private string reference;
-
-        public LValue(object reference)
-        {
-            this.reference = ((Lexer.Token)reference).Text;
-        }
-
-        public LValue(string reference)
-        {
-            this.reference = reference;
-        }
-
-        public LuryObject Dereference(LuryObject context)
-        {
-            return context[this.reference];
-        }
-
-        public void Assign(LuryObject value, LuryObject context)
-        {
-            context[this.reference] = value;
-        }
-    }
-
     static class StringHelper
     {
         #region -- Private Static Fields --
