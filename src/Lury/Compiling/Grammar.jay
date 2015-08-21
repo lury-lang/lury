@@ -100,17 +100,45 @@ namespace Lury.Compiling
 program
     :
         {
-            $$ = null;
+            $$ = new Routine();
         }
     | program_lines
+        {
+            $$ = new Routine((IEnumerable<Statement>)$1);
+        }
 
 program_lines
     : program_line
-    | program_line program_lines
+        {
+            var list = new List<Statement>();
+
+            if ($1 != null)
+            	list.Add((Statement)$1);
+
+           	$$ = list;
+        }
+    | program_lines program_line
+        {
+        	if ($2 == null)
+        	{
+        		$$ = $1;
+        	}
+        	else
+        	{
+	            var list = (List<Statement>)$1;
+	            var newList = new List<Statement>(list);
+	            newList.Add((Statement)$2);
+	            $$ = newList;
+            }
+        }
+
 
 program_line
     : statement
     | NewLine
+    	{
+    		$$ = null;
+    	}
 
 
 statement
@@ -129,19 +157,19 @@ statement_list
 
 simple_statements
     : ';'
-        {
-            throw new NotImplementedException();
-        }
     | ';' simple_statement simple_statements
-        {
-            throw new NotImplementedException();
-        }
 
 compound_statement
     : if_statement
     | while_statement
     | function_definition
+        {
+            throw new NotImplementedException();
+        }
     | class_definition
+        {
+            throw new NotImplementedException();
+        }
 
 suite
     : statement_list NewLine
@@ -150,51 +178,56 @@ suite
         }
     | NewLine Indent statements Dedent
         {
-            throw new NotImplementedException();
+            $$ = new Routine((IEnumerable<Statement>)$3);
         }
 
 statements
     : statement
-    | statement statements
         {
-            throw new NotImplementedException();
+            $$ = new List<Statement>() { (Statement)$1 };
         }
-
+    | statements statement
+        {
+            var list = (List<Statement>)$1;
+            var newList = new List<Statement>(list);
+            newList.Add((Statement)$2);
+            $$ = newList;
+        }
 
 if_statement
     : KeywordIf expression ':' suite
         {
-            throw new NotImplementedException();
+            $$ = new IfStatement((Node)$2, (Routine)$4);
         }
     | KeywordIf expression ':' suite elif_statements
         {
-            throw new NotImplementedException();
+            $$ = new IfStatement((Node)$2, (Routine)$4, (IfStatement)$5);
         }
 
 elif_statements
     : KeywordElif expression ':' suite
         {
-            throw new NotImplementedException();
+            $$ = new IfStatement((Node)$2, (Routine)$4);
         }
     | KeywordElif expression ':' suite elif_statements
         {
-            throw new NotImplementedException();
+            $$ = new IfStatement((Node)$2, (Routine)$4, (IfStatement)$5);
         }
     | else_statement
         {
-            throw new NotImplementedException();
+            $$ = new IfStatement((Routine)$1);
         }
 
 else_statement
     : KeywordElse ':' suite
         {
-            throw new NotImplementedException();
+            $$ = $3;
         }
 
 while_statement
     : KeywordWhile expression ':' suite
         {
-            throw new NotImplementedException();
+            $$ = new WhileStatement((Node)$2, (Routine)$4);
         }
     | KeywordWhile expression ':' suite else_statement
         {
@@ -203,13 +236,7 @@ while_statement
 
 function_definition
     : KeywordDef function_name '(' parameter_list ')' ':' suite
-        {
-            throw new NotImplementedException();
-        }
     | KeywordDef function_name ':' suite
-        {
-            throw new NotImplementedException();
-        }
 
 function_name
     : identifier_all
@@ -224,13 +251,7 @@ parameter
 
 class_definition
     : KeywordClass class_name '(' inheritance_list ')' ':' suite
-        {
-            throw new NotImplementedException();
-        }
     | KeywordClass class_name ':' suite
-        {
-            throw new NotImplementedException();
-        }
 
 class_name
     : identifier_all
@@ -246,49 +267,49 @@ object_name
 
 simple_statement
     : pass_statement
+        {
+            throw new NotImplementedException();
+        }
     | expression_statement
     | return_statement
+        {
+            throw new NotImplementedException();
+        }
     | break_statement
+        {
+            throw new NotImplementedException();
+        }
     | continue_statement
+        {
+            throw new NotImplementedException();
+        }
     | import_statement
+        {
+            throw new NotImplementedException();
+        }
 
 pass_statement
     : KeywordPass
 
 expression_statement
     : expression
+    	{
+    		$$ = new ExpressionStatement((Node)$1);
+    	}
 
 return_statement
     : KeywordReturn
-        {
-            throw new NotImplementedException();
-        }
     | KeywordReturn expression
-        {
-            throw new NotImplementedException();
-        }
 
 break_statement
     : KeywordBreak
-        {
-            throw new NotImplementedException();
-        }
 
 continue_statement
     : KeywordContinue
-        {
-            throw new NotImplementedException();
-        }
 
 import_statement
     : KeywordImport import_names
-        {
-            throw new NotImplementedException();
-        }
     | KeywordPublic KeywordImport import_names
-        {
-            throw new NotImplementedException();
-        }
 
 import_names
     : import_name
@@ -329,59 +350,59 @@ assignment_expression
     : conditional_expression
     | conditional_expression '=' assignment_expression
         {
-            $$ = this.BuildAssign($1, $3, AssignOperator.Assign);
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.Assign);
         }
     | conditional_expression AssignmentAdd assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.Addition);
         }
     | conditional_expression AssignmentSub assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.Subtraction);
         }
     | conditional_expression AssignmentMultiply assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.Multiplication);
         }
     | conditional_expression AssignmentDivide assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.Division);
         }
     | conditional_expression AssignmentIntDivide assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.IntDivision);
         }
     | conditional_expression AssignmentPower assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.Power);
         }
     | conditional_expression AssignmentModulo assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.Modulo);
         }
     | conditional_expression AssignmentAnd assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.ArithmeticAnd);
         }
     | conditional_expression AssignmentOr assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.ArithmeticOr);
         }
     | conditional_expression AssignmentXor assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.ArithmeticXor);
         }
     | conditional_expression AssignmentConcat assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.Concatenation);
         }
     | conditional_expression AssignmentLeftShift assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.LeftShift);
         }
     | conditional_expression AssignmentRightShift assignment_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryAssignNode((Node)$1, (Node)$3, BinaryAssignOperator.RightShift);
         }
 
 conditional_expression
@@ -399,147 +420,174 @@ bool_or_expression
     : bool_and_expression
     | bool_or_expression KeywordOr bool_and_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.LogicalOr);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.LogicalOr);
         }
     | bool_or_expression OrShort bool_and_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.LogicalOr);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.LogicalOr);
         }
 
 bool_and_expression
     : bool_not_expression
     | bool_and_expression KeywordAnd bool_not_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.LogicalAnd);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.LogicalAnd);
         }
     | bool_and_expression AndShort bool_not_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.LogicalAnd);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.LogicalAnd);
         }
 
 bool_not_expression
     : comparison_expression
     | KeywordNot bool_not_expression
         {
-            $$ = this.BuildUnary($2, UnaryOperator.LogicalNot);
+            $$ = new UnaryNode((Node)$2, UnaryOperator.LogicalNot);
         }
     | '!' bool_not_expression
         {
-            $$ = this.BuildUnary($2, UnaryOperator.LogicalNot);
+            $$ = new UnaryNode((Node)$2, UnaryOperator.LogicalNot);
         }
 
 comparison_expression
     : or_expression
     | or_expression comparison_operator or_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryNode((Node)$1, (Node)$3, (BinaryOperator)$2);
         }
 
 comparison_operator
     : '<'
+        {
+            $$ = BinaryOperator.LessThan;
+        }
     | '>'
-    | Equal
+        {
+            $$ = BinaryOperator.GreaterThan;
+        }
     | LessThan
+        {
+            $$ = BinaryOperator.LessThanEqual;
+        }
     | MoreThan
+        {
+            $$ = BinaryOperator.GreaterThanEqual;
+        }
+    | Equal
+        {
+            $$ = BinaryOperator.Equal;
+        }
     | NotEqual
+        {
+            $$ = BinaryOperator.NotEqual;
+        }
     | KeywordIs
+        {
+            $$ = BinaryOperator.Is;
+        }
     | IsNot
+        {
+            $$ = BinaryOperator.IsNot;
+        }
     | KeywordIs KeywordNot
+        {
+            $$ = BinaryOperator.IsNot;
+        }
 
 or_expression
     : xor_expression
     | or_expression '|' xor_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.ArithmeticOr);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.ArithmeticOr);
         }
 
 xor_expression
     : and_expression
     | xor_expression '^' and_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.ArithmeticXor);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.ArithmeticXor);
         }
 
 and_expression
     : shift_expression
     | and_expression '&' shift_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.ArithmeticAnd);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.ArithmeticAnd);
         }
 
 shift_expression
     : addition_expression
     | shift_expression LeftShift addition_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.LeftShift);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.LeftShift);
         }
     | shift_expression RightShift addition_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.RightShift);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.RightShift);
         }
 
 addition_expression
     : multiplication_expression
     | addition_expression '+' multiplication_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.Addition);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.Addition);
         }
     | addition_expression '-' multiplication_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.Subtraction);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.Subtraction);
         }
     | addition_expression '~' multiplication_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.Concatenation);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.Concatenation);
         }
 
 multiplication_expression 
     : unary_expression
     | multiplication_expression '*' unary_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.Multiplication);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.Multiplication);
         }
     | multiplication_expression IntDivide unary_expression
         {
-            throw new NotImplementedException();
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.IntDivision);
         }
     | multiplication_expression '/' unary_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.Division);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.Division);
         }
     | multiplication_expression '%' unary_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.Modulo);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.Modulo);
         }
 
 unary_expression
     : power_expression
     | Increment unary_expression
         {
-            $$ = this.BuildUnaryAssign($2, UnaryAssignOperator.IncrementPrefix);
+            $$ = new UnaryAssignNode((Node)$2, UnaryAssignOperator.IncrementPrefix);
         }
     | Decrement unary_expression
         {
-            $$ = this.BuildUnaryAssign($2, UnaryAssignOperator.DecrementPrefix);
+            $$ = new UnaryAssignNode((Node)$2, UnaryAssignOperator.DecrementPrefix);
         }
     | '-' unary_expression
         {
-            $$ = this.BuildUnary($2, UnaryOperator.SignNegative);
+            $$ = new UnaryNode((Node)$2, UnaryOperator.SignNegative);
         }
     | '+' unary_expression
         {
-            $$ = this.BuildUnary($2, UnaryOperator.SignPositive);
+            $$ = new UnaryNode((Node)$2, UnaryOperator.SignPositive);
         }
     | '~' unary_expression
         {
-            $$ = this.BuildUnary($2, UnaryOperator.BitwiseNot);
+            $$ = new UnaryNode((Node)$2, UnaryOperator.BitwiseNot);
         }
 
 power_expression
     : postfix_expression
     | power_expression Power postfix_expression
         {
-            $$ = this.BuildBinary($1, $3, BinaryOperator.Power);
+            $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.Power);
         }
 
 postfix_expression
@@ -550,31 +598,31 @@ postfix_expression
         }
     | postfix_expression Increment
         {
-            $$ = this.BuildUnaryAssign($1, UnaryAssignOperator.IncrementPostfix);
+            $$ = new UnaryAssignNode((Node)$1, UnaryAssignOperator.IncrementPostfix);
         }
     | postfix_expression Decrement
         {
-            $$ = this.BuildUnaryAssign($1, UnaryAssignOperator.DecrementPostfix);
+            $$ = new UnaryAssignNode((Node)$1, UnaryAssignOperator.DecrementPostfix);
         }
     | postfix_expression '(' ')'
         {
-            $$ = this.Call($1);
+            $$ = new CallNode((Node)$1);
         }
     | postfix_expression '(' argument_list ')'
         {
-            $$ = this.Call($1, $3);
+            $$ = new CallNode((Node)$1, (IEnumerable<Node>)$3);
         }
 
 argument_list
     : argument
         {
-            $$ = new List<LuryObject>() { this.Dereference($1) };
+            $$ = new List<Node>() { (Node)$1 };
         }
     | argument_list ',' argument
         {
-            var list = (List<LuryObject>)$1;
-            var newList = new List<LuryObject>(list);
-            newList.Add(this.Dereference($3));
+            var list = (List<Node>)$1;
+            var newList = new List<Node>(list);
+            newList.Add((Node)$3);
             $$ = newList;
         }
 
@@ -591,28 +639,28 @@ named_argument
 primary
     : identifier_all
         {
-            $$ = new LValue($1);
+            $$ = new LValueNode($1);
         }
     | literal
     | KeywordTrue
         {
-            $$ = this.CreateBoolean(true);
+            $$ = new ConstantNode(this.CreateBoolean(true));
         }
     | KeywordFalse
         {
-            $$ = this.CreateBoolean(false);
+            $$ = new ConstantNode(this.CreateBoolean(false));
         }
     | KeywordNil
         {
-            throw new NotImplementedException();
+            $$ = new ConstantNode(null);
         }
     | KeywordThis
         {
-            throw new NotImplementedException();
+            $$ = new LValueNode("this");
         }
     | KeywordSuper
         {
-            throw new NotImplementedException();
+            $$ = new LValueNode("super");
         }
     | '(' expression ')'
         {
@@ -622,27 +670,27 @@ primary
 literal
     : StringLiteral
         {
-            $$ = this.CreateString($1, '\'');
+            $$ = new ConstantNode(this.CreateString($1, '\''));
         }
     | EmbedStringLiteral
         {
-            $$ = this.CreateString($1, '"');
+            $$ = new ConstantNode(this.CreateString($1, '"'));
         }
     | WysiwygStringLiteral
         {
-            $$ = this.CreateString($1, '`');
+            $$ = new ConstantNode(this.CreateString($1, '`'));
         }
     | ImaginaryNumber
         {
-            $$ = this.CreateComplex($1);
+            $$ = new ConstantNode(this.CreateComplex($1));
         }
     | FloatNumber
         {
-            $$ = this.CreateReal($1);
+            $$ = new ConstantNode(this.CreateReal($1));
         }
     | Integer
         {
-            $$ = this.CreateInteger($1);
+            $$ = new ConstantNode(this.CreateInteger($1));
         }
     
 %%
