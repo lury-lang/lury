@@ -32,6 +32,19 @@ namespace Lury.Objects
 {
     public class LuryReal : LuryNumber
     {
+        private readonly double value;
+
+        public double Value　{ get { return this.value; } }
+
+        public LuryReal(double value)
+        {
+            this.value = value;  
+        }
+
+        public override string ToString()
+        {
+            return this.value.ToString();
+        }
     }
 }
 

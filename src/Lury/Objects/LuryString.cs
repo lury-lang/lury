@@ -34,6 +34,8 @@ namespace Lury.Objects
     {
         private readonly string value;
 
+        public string Value　{ get { return this.value; } }
+
         public LuryString(string value)
         {
             this.value = value;

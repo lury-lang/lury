@@ -34,6 +34,8 @@ namespace Lury.Objects
     {
         private readonly long value;
 
+        public long Value　{ get { return this.value; } }
+
         public LuryInteger(long value)
         {
             this.value = value;  

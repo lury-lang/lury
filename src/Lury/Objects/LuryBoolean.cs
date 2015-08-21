@@ -37,6 +37,8 @@ namespace Lury.Objects
 
         private readonly bool value;
 
+        public bool Value　{ get { return this.value; } }
+
         private LuryBoolean(bool value)
         {
             this.value = value;
