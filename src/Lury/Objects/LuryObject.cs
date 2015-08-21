@@ -148,17 +148,17 @@ namespace Lury.Objects
             throw new NotSupportedException();
         }
 
-        public virtual LuryObject LNot()
+        public virtual LuryBoolean LNot()
         {
             throw new NotSupportedException();
         }
 
-        public virtual LuryObject LAnd(LuryObject other)
+        public virtual LuryBoolean LAnd(LuryObject other)
         {
             throw new NotSupportedException();
         }
 
-        public virtual LuryObject LOr(LuryObject other)
+        public virtual LuryBoolean LOr(LuryObject other)
         {
             throw new NotSupportedException();
         }

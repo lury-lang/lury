@@ -44,12 +44,12 @@ namespace Lury.Objects
             this.value = value;
         }
 
-        public override LuryObject LNot()
+        public override LuryBoolean LNot()
         {
             return this.value ? False : True;
         }
 
-        public override LuryObject LAnd(LuryObject other)
+        public override LuryBoolean LAnd(LuryObject other)
         {
             if (!(other is LuryBoolean))
                 throw new NotSupportedException();
@@ -57,7 +57,7 @@ namespace Lury.Objects
             return this.value && ((LuryBoolean)other).value ? True : False;
         }
 
-        public override LuryObject LOr(LuryObject other)
+        public override LuryBoolean LOr(LuryObject other)
         {
             if (!(other is LuryBoolean))
                 throw new NotSupportedException();
