@@ -173,6 +173,7 @@
     <Compile Include="Objects\LuryReal.cs" />
     <Compile Include="Objects\LuryComplex.cs" />
     <Compile Include="Objects\Intrinsic.cs" />
+    <Compile Include="Compiling\IR.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
