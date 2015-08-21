@@ -65,6 +65,14 @@ namespace Lury.Objects
             return this.value || ((LuryBoolean)other).value ? True : False;
         }
 
+        public override LuryBoolean CEq(LuryObject other)
+        {
+            if (!(other is LuryBoolean))
+                throw new NotSupportedException();
+
+            return this.value == ((LuryBoolean)other).value ? True : False;
+        }
+
         public override string ToString()
         {
             return this.value ? "true" : "false";

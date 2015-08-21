@@ -159,6 +159,39 @@ namespace Lury.Objects
             throw new NotSupportedException();
         }
 
+        public override LuryBoolean CLt(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return this.value < ((LuryInteger)other).value ? LuryBoolean.True : LuryBoolean.False;
+
+            if (other is LuryReal)
+                return (double)this.value < ((LuryReal)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryBoolean CGt(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return this.value > ((LuryInteger)other).value ? LuryBoolean.True : LuryBoolean.False;
+
+            if (other is LuryReal)
+                return (double)this.value > ((LuryReal)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryBoolean CEq(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return this.value == ((LuryInteger)other).value ? LuryBoolean.True : LuryBoolean.False;
+
+            if (other is LuryReal)
+                return (double)this.value == ((LuryReal)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            throw new NotSupportedException();
+        }
+
         public override string ToString()
         {
             return this.value.ToString();

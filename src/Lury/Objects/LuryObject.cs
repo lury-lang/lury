@@ -162,6 +162,46 @@ namespace Lury.Objects
         {
             throw new NotSupportedException();
         }
+
+        public virtual LuryBoolean CLt(LuryObject other)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual LuryBoolean CGt(LuryObject other)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual LuryBoolean CELt(LuryObject other)
+        {
+            return this.CLt(other).LOr(this.CEq(other));
+        }
+
+        public virtual LuryBoolean CEGt(LuryObject other)
+        {
+            return this.CGt(other).LOr(this.CEq(other));
+        }
+
+        public virtual LuryBoolean CEq(LuryObject other)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual LuryBoolean CNe(LuryObject other)
+        {
+            return this.CEq(other).LNot();
+        }
+
+        public LuryBoolean Is(LuryObject other)
+        {
+            throw new NotSupportedException();
+        }
+
+        public LuryBoolean IsNot(LuryObject other)
+        {
+            return this.Is(other).LNot();
+        }
     }
 }
 
