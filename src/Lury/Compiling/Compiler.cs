@@ -82,15 +82,16 @@ namespace Lury.Compiling
             if (!succeedTokenize)
                 return null;
 
-            var globalObject = new LuryObject();
-            Intrinsic.SetBuiltInFunctions(globalObject);
-            var parser = new Parser(globalObject);
-            LuryObject luryObject = null;
+            var globalContext = new LuryObject();
+            Intrinsic.SetBuiltInFunctions(globalContext);
 
+            var parser = new Parser();
+            Routine routine = null;
+
+            // parsing
             try
             {
-                var result = parser.yyparse(new Lex2yyInput(lexer), new yydebug.yyDebugSimple());
-                luryObject = (result is LValue) ? ((LValue)result).Dereference(globalObject) : (LuryObject)result;
+                routine = (Routine)parser.yyparse(new Lex2yyInput(lexer), new yydebug.yyDebugSimple());
             }
             catch (yyParser.yyException ex)
             {
@@ -98,7 +99,13 @@ namespace Lury.Compiling
                 return null;
             }
 
-            return luryObject;
+            // running
+            if (routine == null)
+                return null;
+            else
+            {
+                return routine.Evaluate(globalContext);
+            }
         }
 
         #endregion
