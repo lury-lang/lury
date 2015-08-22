@@ -67,7 +67,10 @@ namespace Lury.Compiling
 
         private LuryObject CreateReal(object token)
         {
-            throw new NotImplementedException();
+            var value = ((Lexer.Token)token).Text;
+            value = value.Replace("_", "");
+
+            return new LuryReal(double.Parse(value));
         }
 
         private LuryObject CreateComplex(object token)
