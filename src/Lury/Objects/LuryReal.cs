@@ -41,6 +41,142 @@ namespace Lury.Objects
             this.value = value;  
         }
 
+        public override LuryObject Inc()
+        {
+            return new LuryReal(this.value + 1.0);
+        }
+
+        public override LuryObject Dec()
+        {
+            return new LuryReal(this.value - 1.0);
+        }
+
+        public override LuryObject Pow(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryReal(Math.Pow(this.value, ((LuryInteger)other).Value));
+
+            if (other is LuryReal)
+                return new LuryReal(Math.Pow(this.value, ((LuryReal)other).value));
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Pos()
+        {
+            return this;
+        }
+
+        public override LuryObject Neg()
+        {
+            return new LuryReal(-this.value);
+        }
+
+        public override LuryObject Mul(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryReal(this.value * ((LuryInteger)other).Value);
+
+            if (other is LuryReal)
+                return new LuryReal(this.value　* ((LuryReal)other).value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.value　* ((LuryComplex)other).Real, this.value * ((LuryComplex)other).Imag);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Div(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryReal(this.value / ((LuryInteger)other).Value);
+
+            if (other is LuryReal)
+                return new LuryReal(this.value　/ ((LuryReal)other).value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.value　/ ((LuryComplex)other).Real, this.value / ((LuryComplex)other).Imag);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject IDiv(LuryObject other)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Mod(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryReal(this.value % ((LuryInteger)other).Value);
+
+            if (other is LuryReal)
+                return new LuryReal(this.value　% ((LuryReal)other).value);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Add(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryReal(this.value + ((LuryInteger)other).Value);
+
+            if (other is LuryReal)
+                return new LuryReal(this.value　+ ((LuryReal)other).value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.value　+ ((LuryComplex)other).Real, ((LuryComplex)other).Imag);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Sub(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryReal(this.value - ((LuryInteger)other).Value);
+
+            if (other is LuryReal)
+                return new LuryReal(this.value　- ((LuryReal)other).value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.value　- ((LuryComplex)other).Real, ((LuryComplex)other).Imag);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryBoolean CLt(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return this.value < (double)((LuryInteger)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            if (other is LuryReal)
+                return this.value < ((LuryReal)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryBoolean CGt(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return this.value > (double)((LuryInteger)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            if (other is LuryReal)
+                return this.value > ((LuryReal)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryBoolean CEq(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return this.value == (double)((LuryInteger)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            if (other is LuryReal)
+                return this.value == ((LuryReal)other).Value ? LuryBoolean.True : LuryBoolean.False;
+
+            throw new NotSupportedException();
+        }
+
         public override string ToString()
         {
             return this.value.ToString();
