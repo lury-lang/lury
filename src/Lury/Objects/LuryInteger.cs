@@ -56,6 +56,9 @@ namespace Lury.Objects
             if (other is LuryInteger)
                 return new LuryInteger((long)Math.Pow(this.value, ((LuryInteger)other).value));
 
+            if (other is LuryReal)
+                return new LuryReal(Math.Pow(this.value, ((LuryReal)other).Value));
+
             throw new NotSupportedException();
         }
 
@@ -79,6 +82,12 @@ namespace Lury.Objects
             if (other is LuryInteger)
                 return new LuryInteger(this.value * ((LuryInteger)other).value);
 
+            if (other is LuryReal)
+                return new LuryReal(this.value　* ((LuryReal)other).Value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.value　* ((LuryComplex)other).Real, this.value * ((LuryComplex)other).Imag);
+
             throw new NotSupportedException();
         }
 
@@ -86,6 +95,12 @@ namespace Lury.Objects
         {
             if (other is LuryInteger)
                 return new LuryInteger(this.value / ((LuryInteger)other).value);
+
+            if (other is LuryReal)
+                return new LuryReal(this.value　/ ((LuryReal)other).Value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.value　/ ((LuryComplex)other).Real, this.value / ((LuryComplex)other).Imag);
 
             throw new NotSupportedException();
         }
@@ -100,6 +115,9 @@ namespace Lury.Objects
             if (other is LuryInteger)
                 return new LuryInteger(this.value % ((LuryInteger)other).value);
 
+            if (other is LuryReal)
+                return new LuryReal(this.value　% ((LuryReal)other).Value);
+
             throw new NotSupportedException();
         }
 
@@ -108,6 +126,12 @@ namespace Lury.Objects
             if (other is LuryInteger)
                 return new LuryInteger(this.value + ((LuryInteger)other).value);
 
+            if (other is LuryReal)
+                return new LuryReal(this.value　+ ((LuryReal)other).Value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.value　+ ((LuryComplex)other).Real, ((LuryComplex)other).Imag);
+
             throw new NotSupportedException();
         }
 
@@ -115,6 +139,12 @@ namespace Lury.Objects
         {
             if (other is LuryInteger)
                 return new LuryInteger(this.value - ((LuryInteger)other).value);
+
+            if (other is LuryReal)
+                return new LuryReal(this.value　- ((LuryReal)other).Value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.value　- ((LuryComplex)other).Real, ((LuryComplex)other).Imag);
 
             throw new NotSupportedException();
         }
