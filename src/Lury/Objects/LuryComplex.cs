@@ -32,6 +32,107 @@ namespace Lury.Objects
 {
     public class LuryComplex : LuryNumber
     {
+        private readonly double real, imag;
+
+        public double Real　{ get { return this.real; } }
+
+        public double Imag　{ get { return this.imag; } }
+
+        public LuryComplex(double real, double imag)
+        {
+            this.real = real;
+            this.imag = imag;
+        }
+
+        public override LuryObject Pow(LuryObject other)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Pos()
+        {
+            return this;
+        }
+
+        public override LuryObject Neg()
+        {
+            return new LuryComplex(-this.real, -this.imag);
+        }
+
+        public override LuryObject Mul(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryComplex(this.real　* ((LuryInteger)other).Value, this.imag * ((LuryInteger)other).Value);
+
+            if (other is LuryReal)
+                return new LuryComplex(this.real　* ((LuryReal)other).Value, this.imag * ((LuryReal)other).Value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.real　* ((LuryComplex)other).Real, this.imag * ((LuryComplex)other).Imag);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Div(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryComplex(this.real　/ ((LuryInteger)other).Value, this.imag * ((LuryInteger)other).Value);
+
+            if (other is LuryReal)
+                return new LuryComplex(this.real　/ ((LuryReal)other).Value, this.imag * ((LuryReal)other).Value);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.real　/ ((LuryComplex)other).Real, this.imag * ((LuryComplex)other).Imag);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject IDiv(LuryObject other)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Add(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryComplex(this.real　+ ((LuryInteger)other).Value, this.imag);
+
+            if (other is LuryReal)
+                return new LuryComplex(this.real　+ ((LuryReal)other).Value, this.imag);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.real　+ ((LuryComplex)other).Real, this.imag　+ ((LuryComplex)other).Imag);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryObject Sub(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return new LuryComplex(this.real　- ((LuryInteger)other).Value, this.imag);
+
+            if (other is LuryReal)
+                return new LuryComplex(this.real　- ((LuryReal)other).Value, this.imag);
+
+            if (other is LuryComplex)
+                return new LuryComplex(this.real　- ((LuryComplex)other).Real, this.imag　+ ((LuryComplex)other).Imag);
+
+            throw new NotSupportedException();
+        }
+
+        public override LuryBoolean CEq(LuryObject other)
+        {
+            if (other is LuryInteger)
+                return this.real == (double)((LuryInteger)other).Value && this.imag == 0.0 ? LuryBoolean.True : LuryBoolean.False;
+
+            if (other is LuryReal)
+                return this.real == ((LuryReal)other).Value && this.imag == 0.0 ? LuryBoolean.True : LuryBoolean.False;
+
+            if (other is LuryComplex)
+                return this.real == ((LuryComplex)other).real && this.imag == ((LuryComplex)other).imag ? LuryBoolean.True : LuryBoolean.False;
+
+            throw new NotSupportedException();
+        }
     }
 }
 
