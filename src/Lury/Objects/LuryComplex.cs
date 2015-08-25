@@ -135,7 +135,7 @@ namespace Lury.Objects
                 return new LuryComplex(this.real　- ((LuryReal)other).Value, this.imag);
 
             if (other is LuryComplex)
-                return new LuryComplex(this.real　- ((LuryComplex)other).Real, this.imag　+ ((LuryComplex)other).Imag);
+                return new LuryComplex(this.real　- ((LuryComplex)other).Real, this.imag　- ((LuryComplex)other).Imag);
 
             throw new NotSupportedException();
         }
