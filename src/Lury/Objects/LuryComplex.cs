@@ -153,6 +153,15 @@ namespace Lury.Objects
 
             throw new NotSupportedException();
         }
+
+        public override string ToString()
+        {
+            if (double.IsNaN(this.real) || double.IsNaN(this.imag))
+                return "NaN";
+
+            var imag = this.imag >= 0.0 ? '+' + this.imag.ToString() : this.imag.ToString();
+            return '(' + this.real.ToString() + imag + "i)";
+        }
     }
 }
 
