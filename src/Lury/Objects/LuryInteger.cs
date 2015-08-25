@@ -111,6 +111,19 @@ namespace Lury.Objects
 
         public override LuryObject IDiv(LuryObject other)
         {
+            if (other is LuryInteger)
+                return new LuryInteger(this.value / ((LuryInteger)other).value);
+
+            if (other is LuryReal)
+                return new LuryReal((double)(long)((double)this.value　/ ((LuryReal)other).Value));
+
+            if (other is LuryComplex)
+            {
+                var o = (LuryComplex)other;
+                var icd2 = 1.0 / (o.Real * o.Real + o.Imag * o.Imag);
+                return new LuryComplex((double)(long)((this.value * o.Real) * icd2), (double)(long)((-this.value * o.Imag) * icd2));
+            }
+
             throw new NotSupportedException();
         }
 
