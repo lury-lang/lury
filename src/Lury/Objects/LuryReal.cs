@@ -95,7 +95,11 @@ namespace Lury.Objects
                 return new LuryReal(this.value　/ ((LuryReal)other).value);
 
             if (other is LuryComplex)
-                return new LuryComplex(this.value　/ ((LuryComplex)other).Real, this.value / ((LuryComplex)other).Imag);
+            {
+                var o = (LuryComplex)other;
+                var icd2 = 1.0 / (o.Real * o.Real + o.Imag * o.Imag);
+                return new LuryComplex((this.value * o.Real) * icd2, (-this.value * o.Imag) * icd2);
+            }
 
             throw new NotSupportedException();
         }

@@ -68,7 +68,10 @@ namespace Lury.Objects
                 return new LuryComplex(this.real　* ((LuryReal)other).Value, this.imag * ((LuryReal)other).Value);
 
             if (other is LuryComplex)
-                return new LuryComplex(this.real　* ((LuryComplex)other).Real, this.imag * ((LuryComplex)other).Imag);
+            {
+                var o = (LuryComplex)other;
+                return new LuryComplex(this.real * o.Real - this.imag * o.imag, this.imag * o.real + this.real * o.imag);
+            }
 
             throw new NotSupportedException();
         }
@@ -76,13 +79,17 @@ namespace Lury.Objects
         public override LuryObject Div(LuryObject other)
         {
             if (other is LuryInteger)
-                return new LuryComplex(this.real　/ ((LuryInteger)other).Value, this.imag * ((LuryInteger)other).Value);
+                return new LuryComplex(this.real　/ ((LuryInteger)other).Value, this.imag / ((LuryInteger)other).Value);
 
             if (other is LuryReal)
-                return new LuryComplex(this.real　/ ((LuryReal)other).Value, this.imag * ((LuryReal)other).Value);
+                return new LuryComplex(this.real　/ ((LuryReal)other).Value, this.imag / ((LuryReal)other).Value);
 
             if (other is LuryComplex)
-                return new LuryComplex(this.real　/ ((LuryComplex)other).Real, this.imag * ((LuryComplex)other).Imag);
+            {
+                var o = (LuryComplex)other;
+                var icd2 = 1.0 / (o.real * o.real + o.imag * o.imag);
+                return new LuryComplex((this.real * o.Real + this.imag * o.imag) * icd2, (this.imag * o.real - this.real * o.imag) * icd2);
+            }
 
             throw new NotSupportedException();
         }
