@@ -75,7 +75,10 @@ namespace Lury.Compiling
 
         private LuryObject CreateComplex(object token)
         {
-            throw new NotImplementedException();
+            var value = ((Lexer.Token)token).Text;
+            value = value.Replace("_", "").TrimEnd('i');
+
+            return new LuryComplex(0.0, double.Parse(value));
         }
 
         private LuryObject CreateString(object token, char marker)
