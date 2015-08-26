@@ -4,6 +4,3 @@
 [submodule "submodule/JayLauncher"]
 	path = submodule/JayLauncher
 	url = git@github.com:lury-lang/JayLauncher.git
-[submodule "submodule/LLVMSharpBinary"]
-	path = submodule/LLVMSharpBinary
-	url = git@github.com:nanase/LLVMSharpBinary.git
