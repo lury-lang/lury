@@ -111,3 +111,4 @@ UpgradeLog*.XML
 
 # custom files
 tools/JayLauncher.exe
+tools/jay
