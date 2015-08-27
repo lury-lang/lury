@@ -292,7 +292,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
-    <PreBuildEvent>..\..\tools\JayLauncher.exe "-c" $(ProjectDir)\Compiling\Grammar.jay $(ProjectDir)\Compiling\skeleton.cs $(ProjectDir)\Compiling\Parser.cs</PreBuildEvent>
+    <PreBuildEvent>mono ..\..\tools\JayLauncher.exe "-c" $(ProjectDir)Compiling\Grammar.jay $(ProjectDir)Compiling\skeleton.cs $(ProjectDir)Compiling\Parser.cs</PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Objects\" />
