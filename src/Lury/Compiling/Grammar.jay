@@ -35,7 +35,7 @@ using Lury.Objects;
 
 namespace Lury.Compiling
 {
-    partial　class Parser
+    partial class Parser
     {
         private int yacc_verbose_flag = 0;
 
