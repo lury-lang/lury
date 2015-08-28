@@ -108,7 +108,7 @@ namespace Lury.Objects
         public override LuryObject Div(LuryObject other)
         {
             if (other is LuryInteger)
-                return new LuryInteger(this.value / ((LuryInteger)other).value);
+                return new LuryReal((double)this.value / (double)((LuryInteger)other).value);
 
             if (other is LuryReal)
                 return new LuryReal(this.value　/ ((LuryReal)other).Value);
