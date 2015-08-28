@@ -122,13 +122,6 @@ namespace Lury.Objects
             if (other is LuryReal)
                 return new LuryComplex((double)(long)(this.real　/ ((LuryReal)other).Value), (double)(long)(this.imag / ((LuryReal)other).Value));
 
-            if (other is LuryComplex)
-            {
-                var o = (LuryComplex)other;
-                var icd2 = 1.0 / (o.real * o.real + o.imag * o.imag);
-                return new LuryComplex((double)(long)((this.real * o.Real + this.imag * o.imag) * icd2), (double)(long)((this.imag * o.real - this.real * o.imag) * icd2));
-            }
-
             throw new NotSupportedException();
         }
 
