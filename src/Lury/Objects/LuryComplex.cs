@@ -46,7 +46,27 @@ namespace Lury.Objects
 
         public override LuryObject Pow(LuryObject other)
         {
-            throw new NotSupportedException();
+            double　or = 0.0, oi = 0.0;
+
+            if (other is LuryInteger)
+                or = ((LuryInteger)other).Value;
+            else if (other is LuryReal)
+                or = ((LuryReal)other).Value;
+            else if (other is LuryComplex)
+            {
+                or = ((LuryComplex)other).real;
+                oi = ((LuryComplex)other).imag;
+            }
+            else
+                throw new NotSupportedException();
+
+            var log_zr = Math.Log(Math.Sqrt(this.real * this.real + this.imag * this.imag));
+            var log_zi = Math.Atan2(this.imag, this.real);
+
+            var a_log_zr = or * log_zr - log_zi * oi;
+            var a_log_zi = oi * log_zr + or * log_zi;
+
+            return new LuryComplex(Math.Exp(a_log_zr) * Math.Cos(a_log_zi), Math.Exp(a_log_zr) * Math.Sin(a_log_zi));
         }
 
         public override LuryObject Pos()

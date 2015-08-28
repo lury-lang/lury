@@ -59,6 +59,20 @@ namespace Lury.Objects
             if (other is LuryReal)
                 return new LuryReal(Math.Pow(this.value, ((LuryReal)other).Value));
 
+            if (other is LuryComplex)
+            {
+                var or = ((LuryComplex)other).Real;
+                var oi = ((LuryComplex)other).Imag;
+
+                var log_zr = Math.Log(this.value);
+                var log_zi = Math.Atan2(0.0, this.value);
+
+                var a_log_zr = or * log_zr - log_zi * oi;
+                var a_log_zi = oi * log_zr + or * log_zi;
+
+                return new LuryComplex(Math.Exp(a_log_zr) * Math.Cos(a_log_zi), Math.Exp(a_log_zr) * Math.Sin(a_log_zi));
+            }
+
             throw new NotSupportedException();
         }
 
