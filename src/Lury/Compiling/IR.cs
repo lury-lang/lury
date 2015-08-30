@@ -177,7 +177,6 @@ namespace Lury.Compiling
                 if (!(cond is LuryBoolean))
                     throw new InvalidOperationException();
 
-                // TODO: else block?
                 if (cond == LuryBoolean.True)
                 {
                     var exit = this.suite.Evaluate(context);
@@ -186,7 +185,11 @@ namespace Lury.Compiling
                         break;
                 }
                 else
+                {
+                    if (this.elseSuite != null)
+                        this.elseSuite.Evaluate(context);
                     break;
+                }
             }
             
             return StatementExit.NormalExit;

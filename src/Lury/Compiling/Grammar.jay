@@ -231,7 +231,7 @@ while_statement
         }
     | KeywordWhile expression ':' suite else_statement
         {
-            throw new NotImplementedException();
+            $$ = new WhileStatement((Node)$2, (Routine)$4, (Routine)$5);
         }
 
 function_definition
