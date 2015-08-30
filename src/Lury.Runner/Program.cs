@@ -34,9 +34,9 @@ using Lury;
 using Lury.Compiling;
 using Lury.Compiling.Logger;
 using Lury.Compiling.Utils;
-using Lury.SampleRunner.Resources;
+using Lury.Runner.Resources;
 
-namespace Lury.SampleRunner
+namespace Lury.Runner
 {
     /// <summary>
     /// プログラムのエントリポイントとなるクラスです。

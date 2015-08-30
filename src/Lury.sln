@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lury", "Lury\Lury.csproj", 
 		{C9300F63-58BB-49A4-B6B7-112DD43E59E8} = {C9300F63-58BB-49A4-B6B7-112DD43E59E8}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lury.SampleRunner", "Lury.SampleRunner\Lury.SampleRunner.csproj", "{21940659-48CF-4512-8D23-6DBDA091B3EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lury.Runner", "Lury.Runner\Lury.Runner.csproj", "{21940659-48CF-4512-8D23-6DBDA091B3EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "submodule", "submodule", "{80D3E9CF-ED00-435A-83BA-2ECF1813C4C5}"
 EndProject
@@ -76,7 +76,7 @@ Global
 		{C9300F63-58BB-49A4-B6B7-112DD43E59E8} = {80D3E9CF-ED00-435A-83BA-2ECF1813C4C5}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Lury.SampleRunner\Lury.SampleRunner.csproj
+		StartupItem = Lury.Runner\Lury.Runner.csproj
 		Policies = $0
 		$0.StandardHeader = $1
 		$1.Text = @\n${FileName}\n \nAuthor:\n      ${AuthorName} <${AuthorEmail}>\n\nThe MIT License (MIT)\n\nCopyright (c) ${Year} ${CopyrightHolder}\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.

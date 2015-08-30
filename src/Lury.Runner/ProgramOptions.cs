@@ -30,7 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lury.SampleRunner
+namespace Lury.Runner
 {
     class ProgramOptions
     {
@@ -102,7 +102,7 @@ namespace Lury.SampleRunner
 
         /// <summary>
         /// コマンドライン引数を指定して
-        /// 新しい <see cref="Lury.SampleRunner.ProgramOptions"/> クラスのインスタンスを初期化します。
+        /// 新しい <see cref="Lury.Runner.ProgramOptions"/> クラスのインスタンスを初期化します。
         /// </summary>
         /// <param name="args">コマンドライン引数。</param>
         public ProgramOptions(string[] args)

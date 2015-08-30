@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{21940659-48CF-4512-8D23-6DBDA091B3EB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Lury.SampleRunner</RootNamespace>
-    <AssemblyName>Lury.SampleRunner</AssemblyName>
+    <RootNamespace>Lury.Runner</RootNamespace>
+    <AssemblyName>lury</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -82,12 +82,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Language.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>Lury.SampleRunner.Resources</CustomToolNamespace>
+      <CustomToolNamespace>Lury.Runner.Resources</CustomToolNamespace>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Language.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>Lury.SampleRunner.Resources</CustomToolNamespace>
+      <CustomToolNamespace>Lury.Runner.Resources</CustomToolNamespace>
       <LastGenOutput>Language.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

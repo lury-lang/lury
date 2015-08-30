@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Lury.SampleRunner
+namespace Lury.Runner
 {
     /// <summary>
     /// 終了コードを格納したクラスです。
