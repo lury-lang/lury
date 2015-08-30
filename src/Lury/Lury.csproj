@@ -6,9 +6,9 @@
     <ProjectGuid>{1428DED1-B614-44A3-A57D-BC91C8D6B5B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Lury</RootNamespace>
-    <AssemblyName>lury</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <AssemblyName>luryCore</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug (Windows)|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
