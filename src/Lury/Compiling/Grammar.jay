@@ -267,9 +267,6 @@ object_name
 
 simple_statement
     : pass_statement
-        {
-            throw new NotImplementedException();
-        }
     | expression_statement
     | return_statement
         {
@@ -290,6 +287,9 @@ simple_statement
 
 pass_statement
     : KeywordPass
+        {
+            $$ = new PassStatement();
+        }
 
 expression_statement
     : expression

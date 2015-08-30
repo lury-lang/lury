@@ -148,6 +148,14 @@ namespace Lury.Compiling
         }
     }
 
+    class PassStatement : Statement
+    {
+        public override StatementExit Evaluate(LuryObject context)
+        {
+            return StatementExit.NormalExit;
+        }
+    }
+    
     class WhileStatement : Statement
     {
         private readonly Node condition;
