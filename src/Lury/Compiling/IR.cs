@@ -155,7 +155,15 @@ namespace Lury.Compiling
             return StatementExit.NormalExit;
         }
     }
-　　　　
+
+    class BreakStatement : Statement
+    {
+        public override StatementExit Evaluate(LuryObject context)
+        {
+            return new StatementExit(null, StatementExitReason.Break);
+        }
+    }
+
     class ContinueStatement : Statement
     {
         public override StatementExit Evaluate(LuryObject context)

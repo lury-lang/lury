@@ -270,9 +270,6 @@ simple_statement
     | expression_statement
     | return_statement
     | break_statement
-        {
-            throw new NotImplementedException();
-        }
     | continue_statement
     | import_statement
         {
@@ -303,6 +300,9 @@ return_statement
 
 break_statement
     : KeywordBreak
+        {
+            $$ = new BreakStatement();
+        }
 
 continue_statement
     : KeywordContinue
