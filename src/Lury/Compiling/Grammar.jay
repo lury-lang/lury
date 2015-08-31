@@ -274,9 +274,6 @@ simple_statement
             throw new NotImplementedException();
         }
     | continue_statement
-        {
-            throw new NotImplementedException();
-        }
     | import_statement
         {
             throw new NotImplementedException();
@@ -309,6 +306,9 @@ break_statement
 
 continue_statement
     : KeywordContinue
+        {
+            $$ = new ContinueStatement();
+        }
 
 import_statement
     : KeywordImport import_names

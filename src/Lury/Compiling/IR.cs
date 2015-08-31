@@ -156,6 +156,14 @@ namespace Lury.Compiling
         }
     }
 　　　　
+    class ContinueStatement : Statement
+    {
+        public override StatementExit Evaluate(LuryObject context)
+        {
+            return new StatementExit(null, StatementExitReason.Continue);
+        }
+    }
+
     class ReturnStatement : Statement
     {
         private readonly Node returnValue;
