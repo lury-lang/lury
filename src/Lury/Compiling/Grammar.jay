@@ -269,9 +269,6 @@ simple_statement
     : pass_statement
     | expression_statement
     | return_statement
-        {
-            throw new NotImplementedException();
-        }
     | break_statement
         {
             throw new NotImplementedException();
@@ -299,7 +296,13 @@ expression_statement
 
 return_statement
     : KeywordReturn
+		{
+			$$ = new ReturnStatement(null);
+		}
     | KeywordReturn expression
+    	{
+			$$ = new ReturnStatement((Node)$2);
+		}
 
 break_statement
     : KeywordBreak

@@ -155,7 +155,25 @@ namespace Lury.Compiling
             return StatementExit.NormalExit;
         }
     }
-    
+　　　　
+    class ReturnStatement : Statement
+    {
+        private readonly Node returnValue;
+
+        public ReturnStatement(Node returnValue)
+        {
+            this.returnValue = returnValue;
+        }
+
+        public override StatementExit Evaluate(LuryObject context)
+        {
+            if (this.returnValue == null)
+                return new StatementExit(null, StatementExitReason.Return);
+            else
+                return new StatementExit(this.returnValue.Evaluate(context), StatementExitReason.Return);
+        }
+    }
+
     class WhileStatement : Statement
     {
         private readonly Node condition;
