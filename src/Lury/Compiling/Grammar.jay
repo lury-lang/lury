@@ -163,9 +163,6 @@ compound_statement
     : if_statement
     | while_statement
     | function_definition
-        {
-            throw new NotImplementedException();
-        }
     | class_definition
         {
             throw new NotImplementedException();
@@ -236,11 +233,20 @@ while_statement
 
 function_definition
     : KeywordDef function_name '(' parameter_list ')' ':' suite
+		{
+            throw new NotImplementedException();
+        }
     | KeywordDef function_name ':' suite
+		{
+            $$ = new FunctionDefinition(((Lexer.Token)$2).Text, (Routine)$4);
+        }
 
 function_name
     : identifier_all
     | function_name '.' identifier_all
+    	{
+            throw new NotImplementedException();
+        }
 
 parameter_list
     : parameter
