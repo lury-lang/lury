@@ -96,6 +96,36 @@ namespace Lury.Compiling
         }
     }
 
+    class FunctionDefinition : Statement
+    {
+        private readonly string name;
+        private readonly Routine suite;
+
+        public FunctionDefinition(string name, Routine suite)
+        {
+            this.name = name;
+            this.suite = suite;
+        }
+
+        public override StatementExit Evaluate(LuryObject context)
+        {
+            context[this.name] = new LuryFunction(_ => this.Invoke(context));
+            return StatementExit.NormalExit;
+        }
+  
+        private LuryObject Invoke(LuryObject context)
+        {
+            var exit = this.suite.Evaluate(context);
+
+            if (exit.ExitReason == StatementExitReason.Return)
+                return exit.ReturnValue;
+            else if (exit.ExitReason == StatementExitReason.NormalExit)
+                return null;
+            else
+                throw new InvalidOperationException();
+        }
+    }
+
     class IfStatement : Statement
     {
         private readonly Node condition;
