@@ -154,6 +154,7 @@
     <Compile Include="Resources\Language.ja.Designer.cs">
       <DependentUpon>Language.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="Objects\LuryContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
