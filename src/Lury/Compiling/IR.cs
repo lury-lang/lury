@@ -262,6 +262,7 @@ namespace Lury.Compiling
 
         public override StatementExit Evaluate(LuryContext context)
         {
+            StatementExit exit;
             var newContext = new LuryContext(context);
 
             while (true)
@@ -273,15 +274,20 @@ namespace Lury.Compiling
 
                 if (cond == LuryBoolean.True)
                 {
-                    var exit = this.suite.Evaluate(newContext);
+                    exit = this.suite.Evaluate(newContext);
 
                     if (exit.ExitReason == StatementExitReason.Break)
                         break;
+                    else if (exit.ExitReason == StatementExitReason.Continue)
+                        continue;
+                    else
+                        return exit;
                 }
                 else
                 {
                     if (this.elseSuite != null)
-                    this.elseSuite.Evaluate(new LuryContext(context));
+                        return this.elseSuite.Evaluate(new LuryContext(context));
+                        
                     break;
                 }
             }
