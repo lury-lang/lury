@@ -234,7 +234,11 @@ while_statement
 function_definition
     : KeywordDef function_name '(' parameter_list ')' ':' suite
 		{
-            throw new NotImplementedException();
+            $$ = new FunctionDefinition(((Lexer.Token)$2).Text, (List<string>)$4, (Routine)$7);
+        }
+     | KeywordDef function_name '(' ')' ':' suite
+        {
+            $$ = new FunctionDefinition(((Lexer.Token)$2).Text, (Routine)$6);
         }
     | KeywordDef function_name ':' suite
 		{
@@ -250,7 +254,16 @@ function_name
 
 parameter_list
     : parameter
+        {
+            $$ = new List<string>() { ((Lexer.Token)$1).Text };
+        }
     | parameter_list ',' parameter
+        {
+            var list = (List<string>)$1;
+            var newList = new List<string>(list);
+            newList.Add(((Lexer.Token)$3).Text);
+            $$ = newList;
+        }
 
 parameter
     : identifier_all

@@ -33,9 +33,9 @@ namespace Lury.Objects
 {
     public class LuryObject
     {
-        private readonly Dictionary<string, LuryObject> members = new Dictionary<string, LuryObject>(0);
+        protected readonly Dictionary<string, LuryObject> members = new Dictionary<string, LuryObject>(0);
 
-        public LuryObject this [string member]
+        public virtual LuryObject this [string member]
         {
             get
             {

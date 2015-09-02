@@ -99,21 +99,41 @@ namespace Lury.Compiling
     class FunctionDefinition : Statement
     {
         private readonly string name;
+        private readonly List<string> parameters;
         private readonly Routine suite;
 
-        public FunctionDefinition(string name, Routine suite)
+        public FunctionDefinition(string name, List<string> parameters, Routine suite)
         {
             this.name = name;
+            this.parameters = parameters;
             this.suite = suite;
         }
 
-        public override StatementExit Evaluate(LuryObject context)
+        public FunctionDefinition(string name, Routine suite)
+            : this(name, null, suite)
         {
-            context[this.name] = new LuryFunction(_ => this.Invoke(context));
+        }
+
+        public override StatementExit Evaluate(LuryContext context)
+        {
+            context[this.name] = new LuryFunction(args =>
+            {
+                var newContext = new LuryContext(context);
+                var paramCount = (this.parameters == null ? 0 : this.parameters.Count);
+
+                if (args.Length != paramCount)
+                    throw new InvalidOperationException();
+
+                for (int i = 0; i < args.Length; i++)
+                    newContext.SetMemberNoRecursion(this.parameters[i], args[i]);
+
+                return this.Invoke(newContext);
+            });
+
             return StatementExit.NormalExit;
         }
-  
-        private LuryObject Invoke(LuryObject context)
+
+        private LuryObject Invoke(LuryContext context)
         {
             var exit = this.suite.Evaluate(context);
 
