@@ -42,14 +42,14 @@ namespace Lury
 
         private static LuryObject PrintLine(params LuryObject[] param)
         {
-            string str = string.Join(" ", param.Select(p => p.ToString()));
+            string str = string.Join(" ", param.Select(p => p == null ? "(nil)" : p.ToString()));
             Console.WriteLine(str);
             return new LuryString(str + "\n");
         }
 
         private static LuryObject Print(params LuryObject[] param)
         {
-            string str = string.Join(" ", param.Select(p => p.ToString()));
+            string str = string.Join(" ", param.Select(p => p == null ? "(nil)" : p.ToString()));
             Console.Write(str);
             return new LuryString(str);
         }
