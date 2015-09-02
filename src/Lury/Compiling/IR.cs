@@ -278,7 +278,8 @@ namespace Lury.Compiling
 
                     if (exit.ExitReason == StatementExitReason.Break)
                         break;
-                    else if (exit.ExitReason == StatementExitReason.Continue)
+                    else if (exit.ExitReason == StatementExitReason.Continue ||
+                             exit.ExitReason == StatementExitReason.NormalExit)
                         continue;
                     else
                         return exit;
