@@ -47,7 +47,7 @@ namespace Lury.Compiling
             this.statements = Enumerable.Empty<Statement>();
         }
 
-        public StatementExit Evaluate(LuryObject context)
+        public StatementExit Evaluate(LuryContext context)
         {
             var ret = StatementExit.NormalExit;
 
@@ -90,7 +90,7 @@ namespace Lury.Compiling
 
     abstract class Statement
     {
-        public virtual StatementExit Evaluate(LuryObject context)
+        public virtual StatementExit Evaluate(LuryContext context)
         {
             return null;
         }
@@ -153,25 +153,25 @@ namespace Lury.Compiling
             this.nextIf = null;
         }
 
-        public override StatementExit Evaluate(LuryObject context)
+        public override StatementExit Evaluate(LuryContext context)
         {
             if (this.condition == null)
             {
                 // else block
-                return this.suite.Evaluate(context);
+                return this.suite.Evaluate(new LuryContext(context));
             }
             else
             {
                 // if block
-                var cond = this.condition.Evaluate(context);
+                var cond = this.condition.Evaluate(new LuryContext(context));
 
                 if (!(cond is LuryBoolean))
                     throw new InvalidOperationException();
 
                 if (cond == LuryBoolean.True)           // if suite
-                    return this.suite.Evaluate(context);
+                        return this.suite.Evaluate(new LuryContext(context));
                 else if (this.nextIf != null)           // elif block
-                    return this.nextIf.Evaluate(context);
+                        return this.nextIf.Evaluate(new LuryContext(context));
             }
 
             return StatementExit.NormalExit;
@@ -180,7 +180,7 @@ namespace Lury.Compiling
 
     class PassStatement : Statement
     {
-        public override StatementExit Evaluate(LuryObject context)
+        public override StatementExit Evaluate(LuryContext context)
         {
             return StatementExit.NormalExit;
         }
@@ -188,7 +188,7 @@ namespace Lury.Compiling
 
     class BreakStatement : Statement
     {
-        public override StatementExit Evaluate(LuryObject context)
+        public override StatementExit Evaluate(LuryContext context)
         {
             return new StatementExit(null, StatementExitReason.Break);
         }
@@ -196,7 +196,7 @@ namespace Lury.Compiling
 
     class ContinueStatement : Statement
     {
-        public override StatementExit Evaluate(LuryObject context)
+        public override StatementExit Evaluate(LuryContext context)
         {
             return new StatementExit(null, StatementExitReason.Continue);
         }
@@ -211,7 +211,7 @@ namespace Lury.Compiling
             this.returnValue = returnValue;
         }
 
-        public override StatementExit Evaluate(LuryObject context)
+        public override StatementExit Evaluate(LuryContext context)
         {
             if (this.returnValue == null)
                 return new StatementExit(null, StatementExitReason.Return);
@@ -240,18 +240,20 @@ namespace Lury.Compiling
             this.elseSuite = null;
         }
 
-        public override StatementExit Evaluate(LuryObject context)
+        public override StatementExit Evaluate(LuryContext context)
         {
+            var newContext = new LuryContext(context);
+
             while (true)
             {
-                var cond = this.condition.Evaluate(context);
+                var cond = this.condition.Evaluate(newContext);
 
                 if (!(cond is LuryBoolean))
                     throw new InvalidOperationException();
 
                 if (cond == LuryBoolean.True)
                 {
-                    var exit = this.suite.Evaluate(context);
+                    var exit = this.suite.Evaluate(newContext);
 
                     if (exit.ExitReason == StatementExitReason.Break)
                         break;
@@ -259,7 +261,7 @@ namespace Lury.Compiling
                 else
                 {
                     if (this.elseSuite != null)
-                        this.elseSuite.Evaluate(context);
+                    this.elseSuite.Evaluate(new LuryContext(context));
                     break;
                 }
             }
@@ -277,7 +279,7 @@ namespace Lury.Compiling
             this.expression = expression;
         }
 
-        public override StatementExit Evaluate(LuryObject context)
+        public override StatementExit Evaluate(LuryContext context)
         {
             this.expression.Evaluate(context);
             return StatementExit.NormalExit;
@@ -286,7 +288,7 @@ namespace Lury.Compiling
 
     abstract class Node
     {
-        public abstract LuryObject Evaluate(LuryObject context);
+        public abstract LuryObject Evaluate(LuryContext context);
     }
 
     class LValueNode : Node
@@ -303,12 +305,12 @@ namespace Lury.Compiling
             this.reference = reference;
         }
 
-        public override LuryObject Evaluate(LuryObject context)
+        public override LuryObject Evaluate(LuryContext context)
         {
             return context[this.reference];
         }
 
-        public void Assign(LuryObject value, LuryObject context)
+        public void Assign(LuryObject value, LuryContext context)
         {
             context[this.reference] = value;
         }
@@ -323,7 +325,7 @@ namespace Lury.Compiling
             this.constant = constant;
         }
 
-        public override LuryObject Evaluate(LuryObject context)
+        public override LuryObject Evaluate(LuryContext context)
         {
             return this.constant;
         }
@@ -340,7 +342,7 @@ namespace Lury.Compiling
             this.operation = operation;
         }
 
-        public override LuryObject Evaluate(LuryObject context)
+        public override LuryObject Evaluate(LuryContext context)
         {
             var value = this.target.Evaluate(context);
 
@@ -375,7 +377,7 @@ namespace Lury.Compiling
             this.operation = operation;
         }
 
-        public override LuryObject Evaluate(LuryObject context)
+        public override LuryObject Evaluate(LuryContext context)
         {
             if (!(this.target is LValueNode))
                 throw new InvalidOperationException();
@@ -422,7 +424,7 @@ namespace Lury.Compiling
             this.operation = operation;
         }
 
-        public override LuryObject Evaluate(LuryObject context)
+        public override LuryObject Evaluate(LuryContext context)
         {
             var x = this.x.Evaluate(context);
             var y = this.y.Evaluate(context);
@@ -517,7 +519,7 @@ namespace Lury.Compiling
             this.operation = operation;
         }
 
-        public override LuryObject Evaluate(LuryObject context)
+        public override LuryObject Evaluate(LuryContext context)
         {
             if (!(this.lvalue is LValueNode))
                 throw new InvalidOperationException();
@@ -613,7 +615,7 @@ namespace Lury.Compiling
             this.param = Enumerable.Empty<Node>();
         }
 
-        public override LuryObject Evaluate(LuryObject context)
+        public override LuryObject Evaluate(LuryContext context)
         {
             var objects = this.param.Select(p => p == null ? null : p.Evaluate(context)).ToArray();
 

@@ -82,7 +82,7 @@ namespace Lury.Compiling
             if (!succeedTokenize)
                 return null;
 
-            var globalContext = new LuryObject();
+            var globalContext = new LuryContext();
             Intrinsic.SetBuiltInFunctions(globalContext);
 
             var parser = new Parser();
