@@ -332,6 +332,11 @@ namespace Lury.Compiling
             this.reference = reference;
         }
 
+        protected LValueNode(LValueNode copy)
+        {
+            this.reference = copy.reference;
+        }
+
         public override LuryObject Evaluate(LuryContext context)
         {
             return context[this.reference];
@@ -340,6 +345,24 @@ namespace Lury.Compiling
         public void Assign(LuryObject value, LuryContext context)
         {
             context[this.reference] = value;
+        }
+    }
+
+    class CalledLValueNode : LValueNode
+    {
+        public CalledLValueNode(LValueNode lvalue)
+            : base(lvalue)
+        {
+        }
+
+        public override LuryObject Evaluate(LuryContext context)
+        {
+            var obj = base.Evaluate(context);
+
+            if (obj is LuryFunction)
+                return obj.Call();
+            else
+                return obj;
         }
     }
 
