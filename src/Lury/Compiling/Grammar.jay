@@ -606,11 +606,24 @@ unary_expression
         }
 
 power_expression
-    : postfix_expression
-    | power_expression Power postfix_expression
+    : callref_expression
+    | power_expression Power callref_expression
         {
             $$ = new BinaryNode((Node)$1, (Node)$3, BinaryOperator.Power);
         }
+
+callref_expression
+    : postfix_expression
+		{
+			if ($1 is LValueNode)
+				$$ = new CalledLValueNode((LValueNode)$1);
+			else
+				$$ = $1;
+		}
+    | KeywordRef postfix_expression
+    	{
+			$$ = new UnaryNode((Node)$2, UnaryOperator.Reference);
+		}
 
 postfix_expression
     : primary

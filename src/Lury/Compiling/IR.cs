@@ -394,6 +394,14 @@ namespace Lury.Compiling
 
         public override LuryObject Evaluate(LuryContext context)
         {
+            if (this.operation == UnaryOperator.Reference)
+            {
+                if (!(this.target is LValueNode))
+                    throw new InvalidOperationException();
+                
+                return this.target.Evaluate(context);
+            }
+
             var value = this.target.Evaluate(context);
 
             switch (this.operation)

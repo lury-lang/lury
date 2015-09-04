@@ -94,6 +94,7 @@ namespace Lury.Compiling
         SignPositive,
         BitwiseNot,
         LogicalNot,
+        Reference,
     }
 
     enum UnaryAssignOperator
