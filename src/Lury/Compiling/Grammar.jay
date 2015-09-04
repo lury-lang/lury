@@ -431,11 +431,11 @@ conditional_expression
     : bool_or_expression
     | bool_or_expression '?' bool_or_expression ':' bool_or_expression
         {
-            throw new NotImplementedException();
+            $$ = new TernaryNode((Node)$1, (Node)$3, (Node)$5, TernaryOperator.Condition);
         }
     | bool_or_expression KeywordIf bool_or_expression KeywordElse bool_or_expression
         {
-            throw new NotImplementedException();
+            $$ = new TernaryNode((Node)$3, (Node)$1, (Node)$5, TernaryOperator.Condition);
         }
 
 bool_or_expression

@@ -152,6 +152,12 @@ namespace Lury.Compiling
         ArithmeticOr,
     }
 
+    enum TernaryOperator 
+    {
+        Unknown,
+        Condition,
+    }
+
     static class StringHelper
     {
         #region -- Private Static Fields --

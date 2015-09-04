@@ -648,6 +648,42 @@ namespace Lury.Compiling
         }
     }
 
+    class TernaryNode : Node
+    {
+        private readonly Node x;
+        private readonly Node y;
+        private readonly Node z;
+        private readonly TernaryOperator operation;
+
+        public TernaryNode(Node x, Node y, Node z, TernaryOperator operation)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.operation = operation;
+        }
+
+        public override LuryObject Evaluate(LuryContext context)
+        {
+            var x = this.x.Evaluate(context);
+
+            switch (this.operation)
+            {
+                case TernaryOperator.Condition:
+                    if (!(x is LuryBoolean))
+                        throw new InvalidOperationException();
+
+                    if (((LuryBoolean)x).Value)
+                        return this.y.Evaluate(context);
+                    else
+                        return this.z.Evaluate(context);
+
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+    }
+
     class CallNode : Node
     {
         private readonly Node function;
