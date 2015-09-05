@@ -155,6 +155,8 @@
       <DependentUpon>Language.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Objects\LuryContext.cs" />
+    <Compile Include="Runtime\Exception\LuryException.cs" />
+    <Compile Include="Runtime\Exception\LuryExceptionType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -277,5 +279,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Objects\" />
+    <Folder Include="Runtime\" />
+    <Folder Include="Runtime\Exception\" />
   </ItemGroup>
 </Project>
