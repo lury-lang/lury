@@ -110,34 +110,20 @@ program
 program_lines
     : program_line
         {
-            var list = new List<Statement>();
-
-            if ($1 != null)
-            	list.Add((Statement)$1);
-
-           	$$ = list;
+            $$ = new List<Statement>((IEnumerable<Statement>)$1);
         }
     | program_lines program_line
         {
-        	if ($2 == null)
-        	{
-        		$$ = $1;
-        	}
-        	else
-        	{
-	            var list = (List<Statement>)$1;
-	            var newList = new List<Statement>(list);
-	            newList.Add((Statement)$2);
-	            $$ = newList;
-            }
+	        var newList = new List<Statement>((IEnumerable<Statement>)$1);
+	        newList.AddRange((IEnumerable<Statement>)$2);
+	        $$ = newList;
         }
-
 
 program_line
     : statement
     | NewLine
     	{
-    		$$ = null;
+    		$$ = new Statement[0];
     	}
 
 
@@ -147,17 +133,47 @@ statement
             $$ = $1;
         }
     | compound_statement
+        {
+            $$ = new Statement[] { (Statement)$1 };
+        }
 
 statement_list
     : simple_statement
+        {
+            $$ = new Statement[] { (Statement)$1 };
+        }
     | simple_statement simple_statements
         {
-            throw new NotImplementedException();
+            if ($2 == null)
+                $$ = new Statement[] { (Statement)$1 };
+            else
+            {
+                var newList = new List<Statement>() { (Statement)$1 };
+                newList.AddRange((IEnumerable<Statement>)$2);
+                $$ = newList;
+            }
         }
 
 simple_statements
     : ';'
+        {
+            $$ = null;
+        }
+    | ';' simple_statement
+        {
+            $$ = new Statement[] { (Statement)$2 };
+        }
     | ';' simple_statement simple_statements
+        {
+            if ($3 == null)
+                $$ = new Statement[] { (Statement)$2 };
+            else
+            {
+                var newList = new List<Statement>() { (Statement)$1 };
+                newList.AddRange((IEnumerable<Statement>)$2);
+                $$ = newList;
+            }
+        }
 
 compound_statement
     : if_statement
@@ -171,7 +187,7 @@ compound_statement
 suite
     : statement_list NewLine
         {
-            throw new NotImplementedException();
+            $$ = new Routine((IEnumerable<Statement>)$1);
         }
     | NewLine Indent statements Dedent
         {
@@ -181,13 +197,13 @@ suite
 statements
     : statement
         {
-            $$ = new List<Statement>() { (Statement)$1 };
+            $$ = new List<Statement>((IEnumerable<Statement>)$1);
         }
     | statements statement
         {
-            var list = (List<Statement>)$1;
+            var list = (IEnumerable<Statement>)$1;
             var newList = new List<Statement>(list);
-            newList.Add((Statement)$2);
+            newList.AddRange((IEnumerable<Statement>)$2);
             $$ = newList;
         }
 
