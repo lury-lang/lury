@@ -635,7 +635,7 @@ callref_expression
     : postfix_expression
 		{
 			if ($1 is LValueNode)
-				$$ = new CalledLValueNode((LValueNode)$1);
+				$$ = new CallingLValueNode((LValueNode)$1);
 			else
 				$$ = $1;
 		}
@@ -648,7 +648,7 @@ postfix_expression
     : primary
     | postfix_expression '.' identifier_all
         {
-            throw new NotImplementedException();
+            $$ = new ExpandLValueNode((LValueNode)$1, $3);
         }
     | postfix_expression Increment
         {
@@ -693,7 +693,7 @@ named_argument
 primary
     : identifier_all
         {
-            $$ = new LValueNode($1);
+            $$ = new NormalLValueNode($1);
         }
     | literal
     | KeywordTrue
@@ -710,11 +710,11 @@ primary
         }
     | KeywordThis
         {
-            $$ = new LValueNode("this");
+            $$ = new NormalLValueNode("this");
         }
     | KeywordSuper
         {
-            $$ = new LValueNode("super");
+            $$ = new NormalLValueNode("super");
         }
     | '(' expression ')'
         {
