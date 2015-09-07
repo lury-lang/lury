@@ -348,21 +348,28 @@ namespace Lury.Compiling
         }
     }
 
-    class CalledLValueNode : LValueNode
+    class CallingLValueNode : LValueNode
     {
-        public CalledLValueNode(LValueNode lvalue)
-            : base(lvalue)
+        private readonly LValueNode lvalue;
+
+        public CallingLValueNode(LValueNode lvalue)
         {
+            this.lvalue = lvalue;
         }
 
         public override LuryObject Evaluate(LuryContext context)
         {
-            var obj = base.Evaluate(context);
+            var obj = this.lvalue.Evaluate(context);
 
             if (obj is LuryFunction)
                 return obj.Call();
             else
                 return obj;
+        }
+
+        public override void Assign(LuryObject value, LuryContext context)
+        {
+            this.lvalue.Assign(value, context);
         }
     }
 
