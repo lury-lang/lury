@@ -318,23 +318,23 @@ namespace Lury.Compiling
         public abstract LuryObject Evaluate(LuryContext context);
     }
 
-    class LValueNode : Node
+    abstract class LValueNode : Node
+    {
+        public abstract void Assign(LuryObject value, LuryContext context);
+    }
+
+    class NormalLValueNode : LValueNode
     {
         private readonly string reference;
 
-        public LValueNode(object reference)
+        public NormalLValueNode(object reference)
         {
             this.reference = ((Lexer.Token)reference).Text;
         }
 
-        public LValueNode(string reference)
+        public NormalLValueNode(string reference)
         {
             this.reference = reference;
-        }
-
-        protected LValueNode(LValueNode copy)
-        {
-            this.reference = copy.reference;
         }
 
         public override LuryObject Evaluate(LuryContext context)
@@ -342,7 +342,7 @@ namespace Lury.Compiling
             return context[this.reference];
         }
 
-        public void Assign(LuryObject value, LuryContext context)
+        public override void Assign(LuryObject value, LuryContext context)
         {
             context[this.reference] = value;
         }
