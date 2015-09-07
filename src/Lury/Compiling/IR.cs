@@ -348,6 +348,38 @@ namespace Lury.Compiling
         }
     }
 
+    class ExpandLValueNode : LValueNode
+    {
+        private readonly LValueNode parent;
+        private readonly string child;
+
+        public ExpandLValueNode(LValueNode parent, string child)
+        {
+            this.parent = parent;
+            this.child = child;
+        }
+
+        public ExpandLValueNode(LValueNode parent, object child)
+            : this(parent, ((Lexer.Token)child).Text)
+        {
+        }
+
+        public override LuryObject Evaluate(LuryContext context)
+        {
+            return this.parent.Evaluate(context)[this.child];
+        }
+
+        public override void Assign(LuryObject value, LuryContext context)
+        {
+            var parentObj = this.parent.Evaluate(context);
+
+            if (parentObj.Has(this.child))
+                this.parent.Evaluate(context)[this.child] = value;
+            else
+                throw new InvalidOperationException();
+        }
+    }
+
     class CallingLValueNode : LValueNode
     {
         private readonly LValueNode lvalue;
