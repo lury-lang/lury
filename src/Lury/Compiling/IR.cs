@@ -98,25 +98,25 @@ namespace Lury.Compiling
 
     class FunctionDefinition : Statement
     {
-        private readonly string name;
+        private readonly LValueNode name;
         private readonly List<string> parameters;
         private readonly Routine suite;
 
-        public FunctionDefinition(string name, List<string> parameters, Routine suite)
+        public FunctionDefinition(LValueNode name, List<string> parameters, Routine suite)
         {
             this.name = name;
             this.parameters = parameters;
             this.suite = suite;
         }
 
-        public FunctionDefinition(string name, Routine suite)
+        public FunctionDefinition(LValueNode name, Routine suite)
             : this(name, null, suite)
         {
         }
 
         public override StatementExit Evaluate(LuryContext context)
         {
-            context[this.name] = new LuryFunction(args =>
+            this.name.Assign(new LuryFunction(args =>
             {
                 var newContext = new LuryContext(context);
                 var paramCount = (this.parameters == null ? 0 : this.parameters.Count);
@@ -128,7 +128,7 @@ namespace Lury.Compiling
                     newContext.SetMemberNoRecursion(this.parameters[i], args[i]);
 
                 return this.Invoke(newContext);
-            });
+            }), context);
 
             return StatementExit.NormalExit;
         }
