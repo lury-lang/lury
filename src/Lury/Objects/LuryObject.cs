@@ -53,6 +53,11 @@ namespace Lury.Objects
             }
         }
 
+        public bool Has(string member)
+        {
+            return this.members.ContainsKey(member);
+        }
+
         public virtual LuryObject Inc()
         {
             throw new NotSupportedException();
