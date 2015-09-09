@@ -35,12 +35,16 @@ namespace Lury.Runtime
 
         NilReference,
         DivideByZero,
-        NotSupportedOperation,
+        NotSupportedOperationUnary,
+        NotSupportedOperationBinary,
+        UnableToCall,
         NotEnoughFunctionArgumentNumber,
         WrongBreak,
         ConditionValueIsNotBoolean,
         AttributeIsNotFound,
+        NameIsNotFound,
         WrongLValue,
+        WrongRefReference,
     }
 
     public static class LuryExceptionStrings
