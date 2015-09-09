@@ -44,35 +44,38 @@ namespace Lury.Runtime
 
         public int CharLength { get; private set; }
 
+        public override string Message
+        {
+            get
+            {
+                return this.ExceptionType.GetMessage();
+            }
+        }
+
         #endregion
 
         #region -- Constructors --
 
-        public LuryException(LuryExceptionType type,
-                             params object[] messageParams)
-            : this(type, null, CharPosition.Empty, 0, messageParams)
+        public LuryException(LuryExceptionType type)
+            : this(type, null, CharPosition.Empty, 0)
         {
         }
-
+        
         public LuryException(LuryExceptionType type,
-                             Token token,
-                             params object[] messageParams)
-            : this(type, token.SourceCode, token.Position, token.Length, messageParams)
+                             Token token)
+            : this(type, token.SourceCode, token.Position, token.Length)
         {
         }
 
         public LuryException(LuryExceptionType type,
                              string sourceCode,
                              CharPosition position,
-                             int length,
-                             params object[] messageParams)
+                             int length)
         {
             this.ExceptionType = type;
             this.SourceCode = sourceCode;
             this.Position = position;
             this.CharLength = length;
-
-            this.Message = type.GetMessage(messageParams);
         }
 
         #endregion
