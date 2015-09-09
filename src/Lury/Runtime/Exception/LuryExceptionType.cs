@@ -49,9 +49,9 @@ namespace Lury.Runtime
 
     public static class LuryExceptionStrings
     {
-        public static string GetMessage(this LuryExceptionType type, params object[] messageParams)
+        public static string GetMessage(this LuryExceptionType type)
         {
-            return String.Format(GetRawMessage(type), messageParams);
+            return GetRawMessage(type);
         }
 
         private static string GetRawMessage(LuryExceptionType type)
@@ -64,23 +64,35 @@ namespace Lury.Runtime
                 case LuryExceptionType.DivideByZero:
                     return "整数値はゼロで除算できません.";
 
-                case LuryExceptionType.NotSupportedOperation:
-                    return "'{0}' 操作を '{1}' と '{2}' 型の値に適用できません.";
+                case LuryExceptionType.NotSupportedOperationUnary:
+                    return "定義されていない演算が試行されました.";
+
+                case LuryExceptionType.NotSupportedOperationBinary:
+                    return "定義されていない演算が試行されました.";
+
+                case LuryExceptionType.UnableToCall:
+                    return "Function 型でないオブジェクトを関数として呼び出すことはできません.";
 
                 case LuryExceptionType.NotEnoughFunctionArgumentNumber:
-                    return "関数の引数の数が一致しません. '{0}' 関数は {1} 個の引数を受けますが、{2} 個の引数で呼び出されています.";
+                    return "関数の引数の数が一致しません.";
 
                 case LuryExceptionType.WrongBreak:
                     return "不正な break が存在します.";
 
                 case LuryExceptionType.ConditionValueIsNotBoolean:
-                    return "条件の式は Boolean 型である必要があります. {0} 型が指定されています.";
+                    return "条件の式は Boolean 型である必要があります.";
 
                 case LuryExceptionType.AttributeIsNotFound:
-                    return "存在しないオブジェクトを参照しました. '{0}' に属性 '{1}' は存在しません.";
+                    return "存在しないオブジェクトを参照しました.";
+
+                case LuryExceptionType.NameIsNotFound:
+                    return "存在しないオブジェクトを参照しました.";
 
                 case LuryExceptionType.WrongLValue:
-                    return "'{0}' に代入できません.";
+                    return "非左辺値に代入できません.";
+
+                case LuryExceptionType.WrongRefReference:
+                    return "非左辺値は ref による参照はできません.";
 
                 default:
                     return "不明なエラーです.";
