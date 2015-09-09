@@ -32,22 +32,51 @@ using Lury.Compiling.Utils;
 
 namespace Lury.Runtime
 {
-    public abstract class LuryException : Exception
+    public class LuryException : Exception
     {
-        public LuryException(LuryExceptionType type) 
+        #region -- Public Methods --
+
+        public LuryExceptionType ExceptionType { get; private set; }
+
+        public string SourceCode { get; private set; }
+
+        public CharPosition Position { get; private set; }
+
+        public int CharLength { get; private set; }
+
+        #endregion
+
+        #region -- Constructors --
+
+        public LuryException(LuryExceptionType type,
+                             params object[] messageParams)
+            : this(type, null, CharPosition.Empty, 0, messageParams)
         {
-            throw new NotImplementedException();
         }
 
-        public LuryException(LuryExceptionType type, Token token) 
+        public LuryException(LuryExceptionType type,
+                             Token token,
+                             params object[] messageParams)
+            : this(type, token.SourceCode, token.Position, token.Length, messageParams)
         {
-            throw new NotImplementedException();
         }
 
-        public LuryException(LuryExceptionType type, string source, CharPosition position, int length) 
+        public LuryException(LuryExceptionType type,
+                             string sourceCode,
+                             CharPosition position,
+                             int length,
+                             params object[] messageParams)
         {
-            throw new NotImplementedException();
+            this.ExceptionType = type;
+            this.SourceCode = sourceCode;
+            this.Position = position;
+            this.CharLength = length;
+
+            this.Message = type.GetMessage(messageParams);
         }
+
+        #endregion
+
     }
 }
 
