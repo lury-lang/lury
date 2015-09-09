@@ -42,5 +42,46 @@ namespace Lury.Runtime
         AttributeIsNotFound,
         WrongLValue,
     }
+
+    public static class LuryExceptionStrings
+    {
+        public static string GetMessage(this LuryExceptionType type, params object[] messageParams)
+        {
+            return String.Format(GetRawMessage(type), messageParams);
+        }
+
+        private static string GetRawMessage(LuryExceptionType type)
+        {
+            switch (type)
+            {
+                case LuryExceptionType.NilReference:
+                    return "nil オブジェクトにはアクセスできません.";
+
+                case LuryExceptionType.DivideByZero:
+                    return "整数値はゼロで除算できません.";
+
+                case LuryExceptionType.NotSupportedOperation:
+                    return "'{0}' 操作を '{1}' と '{2}' 型の値に適用できません.";
+
+                case LuryExceptionType.NotEnoughFunctionArgumentNumber:
+                    return "関数の引数の数が一致しません. '{0}' 関数は {1} 個の引数を受けますが、{2} 個の引数で呼び出されています.";
+
+                case LuryExceptionType.WrongBreak:
+                    return "不正な break が存在します.";
+
+                case LuryExceptionType.ConditionValueIsNotBoolean:
+                    return "条件の式は Boolean 型である必要があります. {0} 型が指定されています.";
+
+                case LuryExceptionType.AttributeIsNotFound:
+                    return "存在しないオブジェクトを参照しました. '{0}' に属性 '{1}' は存在しません.";
+
+                case LuryExceptionType.WrongLValue:
+                    return "'{0}' に代入できません.";
+
+                default:
+                    return "不明なエラーです.";
+            }
+        }
+    }
 }
 
