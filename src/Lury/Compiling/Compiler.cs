@@ -35,6 +35,7 @@ using Lury.Compiling.Logger;
 using Lury.Compiling.Utils;
 using Lury.Resources;
 using Lury.Objects;
+using Lury.Runtime;
 
 namespace Lury.Compiling
 {
@@ -104,12 +105,20 @@ namespace Lury.Compiling
                 return null;
             else
             {
-                var exit = routine.Evaluate(globalContext);
+                try
+                {
+                    var exit = routine.Evaluate(globalContext);
 
-                if (exit.ExitReason == StatementExitReason.Break)
-                    throw new InvalidOperationException();
+                    if (exit.ExitReason == StatementExitReason.Break)
+                        throw new LuryException(LuryExceptionType.WrongBreak);
 
-                return exit.ReturnValue;
+                    return exit.ReturnValue;
+                }
+                catch (LuryException ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                    return null;
+                }
             }
         }
 

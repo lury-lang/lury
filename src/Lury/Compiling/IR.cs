@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lury.Objects;
+using Lury.Runtime;
 
 namespace Lury.Compiling
 {
@@ -122,7 +123,7 @@ namespace Lury.Compiling
                 var paramCount = (this.parameters == null ? 0 : this.parameters.Count);
 
                 if (args.Length != paramCount)
-                    throw new InvalidOperationException();
+                    throw new LuryException(LuryExceptionType.NotEnoughFunctionArgumentNumber);
 
                 for (int i = 0; i < args.Length; i++)
                     newContext.SetMemberNoRecursion(this.parameters[i], args[i]);
@@ -142,7 +143,7 @@ namespace Lury.Compiling
             else if (exit.ExitReason == StatementExitReason.NormalExit)
                 return null;
             else
-                throw new InvalidOperationException();
+                throw new LuryException(LuryExceptionType.WrongBreak);
         }
     }
 
@@ -186,7 +187,7 @@ namespace Lury.Compiling
                 var cond = this.condition.Evaluate(new LuryContext(context));
 
                 if (!(cond is LuryBoolean))
-                    throw new InvalidOperationException();
+                    throw new LuryException(LuryExceptionType.ConditionValueIsNotBoolean);
 
                 if (cond == LuryBoolean.True)           // if suite
                         return this.suite.Evaluate(new LuryContext(context));
@@ -270,7 +271,7 @@ namespace Lury.Compiling
                 var cond = this.condition.Evaluate(newContext);
 
                 if (!(cond is LuryBoolean))
-                    throw new InvalidOperationException();
+                    throw new LuryException(LuryExceptionType.ConditionValueIsNotBoolean);
 
                 if (cond == LuryBoolean.True)
                 {
@@ -376,7 +377,7 @@ namespace Lury.Compiling
             if (parentObj.Has(this.child))
                 this.parent.Evaluate(context)[this.child] = value;
             else
-                throw new InvalidOperationException();
+                throw new LuryException(LuryExceptionType.AttributeIsNotFound);
         }
     }
 
@@ -436,7 +437,7 @@ namespace Lury.Compiling
             if (this.operation == UnaryOperator.Reference)
             {
                 if (!(this.target is LValueNode))
-                    throw new InvalidOperationException();
+                    throw new LuryException(LuryExceptionType.WrongRefReference);
                 
                 return this.target.Evaluate(context);
             }
@@ -477,7 +478,7 @@ namespace Lury.Compiling
         public override LuryObject Evaluate(LuryContext context)
         {
             if (!(this.target is LValueNode))
-                throw new InvalidOperationException();
+                throw new LuryException(LuryExceptionType.WrongLValue);
 
             var lvalue = (LValueNode)this.target;
             var dr_value = lvalue.Evaluate(context);
@@ -619,7 +620,7 @@ namespace Lury.Compiling
         public override LuryObject Evaluate(LuryContext context)
         {
             if (!(this.lvalue is LValueNode))
-                throw new InvalidOperationException();
+                throw new LuryException(LuryExceptionType.WrongLValue);
 
             var dst = (LValueNode)lvalue;
             var value = this.rvalue.Evaluate(context);
@@ -718,7 +719,7 @@ namespace Lury.Compiling
             {
                 case TernaryOperator.Condition:
                     if (!(x is LuryBoolean))
-                        throw new InvalidOperationException();
+                        throw new LuryException(LuryExceptionType.ConditionValueIsNotBoolean);
 
                     if (((LuryBoolean)x).Value)
                         return this.y.Evaluate(context);

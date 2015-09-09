@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using Lury.Runtime;
 
 namespace Lury.Objects
 {
@@ -52,7 +53,7 @@ namespace Lury.Objects
         public override LuryBoolean LAnd(LuryObject other)
         {
             if (!(other is LuryBoolean))
-                throw new NotSupportedException();
+                throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 
             return this.value && ((LuryBoolean)other).value ? True : False;
         }
@@ -60,7 +61,7 @@ namespace Lury.Objects
         public override LuryBoolean LOr(LuryObject other)
         {
             if (!(other is LuryBoolean))
-                throw new NotSupportedException();
+                throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 
             return this.value || ((LuryBoolean)other).value ? True : False;
         }
@@ -68,7 +69,7 @@ namespace Lury.Objects
         public override LuryBoolean CEq(LuryObject other)
         {
             if (!(other is LuryBoolean))
-                throw new NotSupportedException();
+                throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 
             return this.value == ((LuryBoolean)other).value ? True : False;
         }

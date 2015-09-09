@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using Lury.Runtime;
 
 namespace Lury.Objects
 {
@@ -58,7 +59,7 @@ namespace Lury.Objects
                 oi = ((LuryComplex)other).imag;
             }
             else
-                throw new NotSupportedException();
+                throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 
             var log_zr = Math.Log(Math.Sqrt(this.real * this.real + this.imag * this.imag));
             var log_zi = Math.Atan2(this.imag, this.real);
@@ -93,7 +94,7 @@ namespace Lury.Objects
                 return new LuryComplex(this.real * o.Real - this.imag * o.imag, this.imag * o.real + this.real * o.imag);
             }
 
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public override LuryObject Div(LuryObject other)
@@ -111,7 +112,7 @@ namespace Lury.Objects
                 return new LuryComplex((this.real * o.Real + this.imag * o.imag) * icd2, (this.imag * o.real - this.real * o.imag) * icd2);
             }
 
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public override LuryObject IDiv(LuryObject other)
@@ -122,7 +123,7 @@ namespace Lury.Objects
             if (other is LuryReal)
                 return new LuryComplex((double)(long)(this.real　/ ((LuryReal)other).Value), (double)(long)(this.imag / ((LuryReal)other).Value));
 
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public override LuryObject Add(LuryObject other)
@@ -136,7 +137,7 @@ namespace Lury.Objects
             if (other is LuryComplex)
                 return new LuryComplex(this.real　+ ((LuryComplex)other).Real, this.imag　+ ((LuryComplex)other).Imag);
 
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public override LuryObject Sub(LuryObject other)
@@ -150,7 +151,7 @@ namespace Lury.Objects
             if (other is LuryComplex)
                 return new LuryComplex(this.real　- ((LuryComplex)other).Real, this.imag　- ((LuryComplex)other).Imag);
 
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public override LuryBoolean CEq(LuryObject other)
@@ -164,7 +165,7 @@ namespace Lury.Objects
             if (other is LuryComplex)
                 return this.real == ((LuryComplex)other).real && this.imag == ((LuryComplex)other).imag ? LuryBoolean.True : LuryBoolean.False;
 
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public override string ToString()

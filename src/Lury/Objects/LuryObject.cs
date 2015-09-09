@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using Lury.Runtime;
 
 namespace Lury.Objects
 {
@@ -42,7 +43,7 @@ namespace Lury.Objects
                 if (this.members.ContainsKey(member))
                     return this.members[member];
                 else
-                    throw new InvalidOperationException();
+                    throw new LuryException(LuryExceptionType.NameIsNotFound);
             }
             set
             {
@@ -60,17 +61,17 @@ namespace Lury.Objects
 
         public virtual LuryObject Inc()
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationUnary);
         }
 
         public virtual LuryObject Dec()
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationUnary);
         }
 
         public virtual LuryObject Call(params LuryObject[] param)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.UnableToCall);
         }
 
         public virtual LuryObject Pow(LuryObject other)
@@ -80,102 +81,102 @@ namespace Lury.Objects
 
         public virtual LuryObject Pos()
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationUnary);
         }
 
         public virtual LuryObject Neg()
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationUnary);
         }
 
         public virtual LuryObject BNot()
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationUnary);
         }
 
         public virtual LuryObject Mul(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject Div(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject IDiv(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject Mod(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject Add(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject Sub(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject Con(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject Shl(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject Shr(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject BAnd(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject BXor(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryObject BOr(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryBoolean LNot()
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationUnary);
         }
 
         public virtual LuryBoolean LAnd(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryBoolean LOr(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryBoolean CLt(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryBoolean CGt(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryBoolean CELt(LuryObject other)
@@ -190,7 +191,7 @@ namespace Lury.Objects
 
         public virtual LuryBoolean CEq(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
 
         public virtual LuryBoolean CNe(LuryObject other)
@@ -200,7 +201,7 @@ namespace Lury.Objects
 
         public LuryBoolean Is(LuryObject other)
         {
-            throw new NotSupportedException();
+            throw new NotImplementedException();
         }
 
         public LuryBoolean IsNot(LuryObject other)

@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using Lury.Runtime;
 
 namespace Lury.Objects
 {
@@ -49,7 +50,7 @@ namespace Lury.Objects
         public override LuryBoolean CEq(LuryObject other)
         {
             if (!(other is LuryString))
-                throw new NotSupportedException();
+                throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 
             return this.value == ((LuryString)other).value ? LuryBoolean.True : LuryBoolean.False;
         }

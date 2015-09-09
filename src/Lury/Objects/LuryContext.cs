@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using Lury.Runtime;
 
 namespace Lury.Objects
 {
@@ -59,7 +60,7 @@ namespace Lury.Objects
                         context = context.parent;
                 }
 
-                throw new InvalidOperationException();
+                throw new LuryException(LuryExceptionType.NameIsNotFound);
             }
             set
             {

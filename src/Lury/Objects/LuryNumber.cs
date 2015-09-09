@@ -30,7 +30,7 @@ using System;
 
 namespace Lury.Objects
 {
-    public class LuryNumber : LuryObject
+    public abstract class LuryNumber : LuryObject
     {
     }
 }
