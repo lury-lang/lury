@@ -27,10 +27,20 @@
 // THE SOFTWARE.
 using System;
 
-namespace Lury
+namespace Lury.Runtime
 {
     public enum LuryExceptionType
     {
+        Unknown = -1,
+
+        NilReference,
+        DivideByZero,
+        NotSupportedOperation,
+        NotEnoughFunctionArgumentNumber,
+        WrongBreak,
+        ConditionValueIsNotBoolean,
+        AttributeIsNotFound,
+        WrongLValue,
     }
 }
 
