@@ -125,7 +125,14 @@ namespace Lury.Objects
                 return new LuryReal(this.value / ((LuryInteger)other).Value);
 
             if (other is LuryReal)
-                return new LuryReal((double)(long)((double)this.value　/ ((LuryReal)other).Value));
+            {
+                var o = ((LuryReal)other).Value;
+
+                if (o == 0.0)
+                    throw new LuryException(LuryExceptionType.DivideByZero);
+                
+                return new LuryReal((double)((long)((double)this.value　/ o)));
+            }
 
             throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }

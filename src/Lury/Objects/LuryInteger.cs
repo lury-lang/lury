@@ -127,10 +127,24 @@ namespace Lury.Objects
         public override LuryObject IDiv(LuryObject other)
         {
             if (other is LuryInteger)
-                return new LuryInteger(this.value / ((LuryInteger)other).value);
+            {
+                var o = ((LuryInteger)other).value;
+
+                if (o == 0)
+                    throw new LuryException(LuryExceptionType.DivideByZero);
+
+                return new LuryInteger(this.value / o);
+            }
 
             if (other is LuryReal)
-                return new LuryReal((double)(long)((double)this.value　/ ((LuryReal)other).Value));
+            {
+                var o = ((LuryReal)other).Value;
+
+                if (o == 0.0)
+                    throw new LuryException(LuryExceptionType.DivideByZero);
+
+                return new LuryReal((double)((long)(this.value / o)));
+            }
 
             throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
         }
