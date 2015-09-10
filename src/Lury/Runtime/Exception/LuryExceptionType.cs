@@ -62,7 +62,7 @@ namespace Lury.Runtime
                     return "nil オブジェクトにはアクセスできません.";
 
                 case LuryExceptionType.DivideByZero:
-                    return "整数値はゼロで除算できません.";
+                    return "ゼロで除算できません.";
 
                 case LuryExceptionType.NotSupportedOperationUnary:
                     return "定義されていない演算が試行されました.";
