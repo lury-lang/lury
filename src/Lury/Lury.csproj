@@ -226,52 +226,52 @@
     <EmbeddedResource Include="Compiling\Logger\Resources\Message\Error.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.Message</CustomToolNamespace>
-      <LastGenOutput>Error.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Error.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Compiling\Logger\Resources\Message\Info.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.Message</CustomToolNamespace>
-      <LastGenOutput>Info.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Info.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Compiling\Logger\Resources\Message\Warn.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.Message</CustomToolNamespace>
-      <LastGenOutput>Warn.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Warn.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Compiling\Logger\Resources\SiteLink\Error.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.SiteLink</CustomToolNamespace>
-      <LastGenOutput>Error.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Error.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Compiling\Logger\Resources\SiteLink\Info.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.SiteLink</CustomToolNamespace>
-      <LastGenOutput>Info.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Info.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Compiling\Logger\Resources\SiteLink\Warn.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.SiteLink</CustomToolNamespace>
-      <LastGenOutput>Warn.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Warn.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Compiling\Logger\Resources\Suggestion\Error.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.Suggestion</CustomToolNamespace>
-      <LastGenOutput>Error.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Error.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Compiling\Logger\Resources\Suggestion\Info.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.Suggestion</CustomToolNamespace>
-      <LastGenOutput>Info.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Info.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Compiling\Logger\Resources\Suggestion\Warn.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Compiling.Logger.Resources.Suggestion</CustomToolNamespace>
-      <LastGenOutput>Warn.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Warn.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Language.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <CustomToolNamespace>Lury.Resources</CustomToolNamespace>
-      <LastGenOutput>Language.ja-JP.Designer.cs</LastGenOutput>
+      <LastGenOutput>Language.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
