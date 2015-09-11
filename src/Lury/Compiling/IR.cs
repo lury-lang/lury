@@ -367,7 +367,9 @@ namespace Lury.Compiling
 
         public override LuryObject Evaluate(LuryContext context)
         {
-            return this.parent.Evaluate(context)[this.child];
+            var parentObj = this.parent.Evaluate(context);
+
+            return parentObj[this.child];
         }
 
         public override void Assign(LuryObject value, LuryContext context)
@@ -375,7 +377,7 @@ namespace Lury.Compiling
             var parentObj = this.parent.Evaluate(context);
 
             if (parentObj.Has(this.child))
-                this.parent.Evaluate(context)[this.child] = value;
+                parentObj[this.child] = value;
             else
                 throw new LuryException(LuryExceptionType.AttributeIsNotFound);
         }
