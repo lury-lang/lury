@@ -52,6 +52,9 @@ namespace Lury.Objects
 
         public override LuryBoolean LAnd(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (!(other is LuryBoolean))
                 throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 
@@ -60,6 +63,9 @@ namespace Lury.Objects
 
         public override LuryBoolean LOr(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (!(other is LuryBoolean))
                 throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 
@@ -68,6 +74,9 @@ namespace Lury.Objects
 
         public override LuryBoolean CEq(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (!(other is LuryBoolean))
                 throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 

@@ -186,6 +186,9 @@ namespace Lury.Compiling
                 // if block
                 var cond = this.condition.Evaluate(new LuryContext(context));
 
+                if (cond == null)
+                    throw new LuryException(LuryExceptionType.NilReference);
+
                 if (!(cond is LuryBoolean))
                     throw new LuryException(LuryExceptionType.ConditionValueIsNotBoolean);
 
@@ -269,6 +272,9 @@ namespace Lury.Compiling
             while (true)
             {
                 var cond = this.condition.Evaluate(newContext);
+                
+                if (cond == null)
+                    throw new LuryException(LuryExceptionType.NilReference);
 
                 if (!(cond is LuryBoolean))
                     throw new LuryException(LuryExceptionType.ConditionValueIsNotBoolean);
@@ -369,12 +375,18 @@ namespace Lury.Compiling
         {
             var parentObj = this.parent.Evaluate(context);
 
+            if (parentObj == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             return parentObj[this.child];
         }
 
         public override void Assign(LuryObject value, LuryContext context)
         {
             var parentObj = this.parent.Evaluate(context);
+
+            if (parentObj == null)
+                throw new LuryException(LuryExceptionType.NilReference);
 
             if (parentObj.Has(this.child))
                 parentObj[this.child] = value;
@@ -395,6 +407,9 @@ namespace Lury.Compiling
         public override LuryObject Evaluate(LuryContext context)
         {
             var obj = this.lvalue.Evaluate(context);
+
+            if (obj == null)
+                throw new LuryException(LuryExceptionType.NilReference);
 
             if (obj is LuryFunction)
                 return obj.Call();
@@ -445,6 +460,9 @@ namespace Lury.Compiling
             }
 
             var value = this.target.Evaluate(context);
+
+            if (value == null)
+                throw new LuryException(LuryExceptionType.NilReference);
 
             switch (this.operation)
             {
@@ -528,6 +546,9 @@ namespace Lury.Compiling
         {
             var x = this.x.Evaluate(context);
             var y = this.y.Evaluate(context);
+
+            if (x == null)
+                throw new LuryException(LuryExceptionType.NilReference);
 
             switch (this.operation)
             {
@@ -717,6 +738,9 @@ namespace Lury.Compiling
         {
             var x = this.x.Evaluate(context);
 
+            if (x == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             switch (this.operation)
             {
                 case TernaryOperator.Condition:
@@ -754,8 +778,12 @@ namespace Lury.Compiling
         public override LuryObject Evaluate(LuryContext context)
         {
             var objects = this.param.Select(p => p == null ? null : p.Evaluate(context)).ToArray();
+            var func = this.function.Evaluate(context);
 
-            return this.function.Evaluate(context).Call(objects);
+            if (func == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
+            return func.Call(objects);
         }
     }
 }

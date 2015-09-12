@@ -54,6 +54,9 @@ namespace Lury.Objects
 
         public override LuryObject Pow(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger((long)Math.Pow(this.value, ((LuryInteger)other).value));
 
@@ -94,6 +97,9 @@ namespace Lury.Objects
 
         public override LuryObject Mul(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value * ((LuryInteger)other).value);
 
@@ -108,6 +114,9 @@ namespace Lury.Objects
 
         public override LuryObject Div(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryReal((double)this.value / (double)((LuryInteger)other).value);
 
@@ -126,6 +135,9 @@ namespace Lury.Objects
 
         public override LuryObject IDiv(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
             {
                 var o = ((LuryInteger)other).value;
@@ -151,6 +163,9 @@ namespace Lury.Objects
 
         public override LuryObject Mod(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value % ((LuryInteger)other).value);
 
@@ -162,6 +177,9 @@ namespace Lury.Objects
 
         public override LuryObject Add(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value + ((LuryInteger)other).value);
 
@@ -176,6 +194,9 @@ namespace Lury.Objects
 
         public override LuryObject Sub(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value - ((LuryInteger)other).value);
 
@@ -190,6 +211,9 @@ namespace Lury.Objects
 
         public override LuryObject Shl(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value << (int)((LuryInteger)other).value);
 
@@ -198,6 +222,9 @@ namespace Lury.Objects
 
         public override LuryObject Shr(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value >> (int)((LuryInteger)other).value);
 
@@ -206,6 +233,9 @@ namespace Lury.Objects
 
         public override LuryObject BAnd(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value & ((LuryInteger)other).value);
 
@@ -214,6 +244,9 @@ namespace Lury.Objects
 
         public override LuryObject BXor(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value ^ ((LuryInteger)other).value);
             
@@ -222,6 +255,9 @@ namespace Lury.Objects
 
         public override LuryObject BOr(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryInteger(this.value | ((LuryInteger)other).value);
             
@@ -230,6 +266,9 @@ namespace Lury.Objects
 
         public override LuryBoolean CLt(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return this.value < ((LuryInteger)other).value ? LuryBoolean.True : LuryBoolean.False;
 
@@ -241,6 +280,9 @@ namespace Lury.Objects
 
         public override LuryBoolean CGt(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return this.value > ((LuryInteger)other).value ? LuryBoolean.True : LuryBoolean.False;
 
@@ -252,6 +294,9 @@ namespace Lury.Objects
 
         public override LuryBoolean CEq(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return this.value == ((LuryInteger)other).value ? LuryBoolean.True : LuryBoolean.False;
 

@@ -44,11 +44,17 @@ namespace Lury.Objects
 
         public override LuryObject Con(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             return new LuryString(this.value + other.ToString());
         }
 
         public override LuryBoolean CEq(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (!(other is LuryString))
                 throw new LuryException(LuryExceptionType.NotSupportedOperationBinary);
 

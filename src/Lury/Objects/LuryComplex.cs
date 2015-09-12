@@ -47,6 +47,9 @@ namespace Lury.Objects
 
         public override LuryObject Pow(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             double　or = 0.0, oi = 0.0;
 
             if (other is LuryInteger)
@@ -82,6 +85,9 @@ namespace Lury.Objects
 
         public override LuryObject Mul(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryComplex(this.real　* ((LuryInteger)other).Value, this.imag * ((LuryInteger)other).Value);
 
@@ -99,6 +105,9 @@ namespace Lury.Objects
 
         public override LuryObject Div(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryComplex(this.real　/ ((LuryInteger)other).Value, this.imag / ((LuryInteger)other).Value);
 
@@ -117,6 +126,9 @@ namespace Lury.Objects
 
         public override LuryObject IDiv(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryComplex((double)(long)(this.real　/ ((LuryInteger)other).Value), (double)(long)(this.imag / ((LuryInteger)other).Value));
 
@@ -128,6 +140,9 @@ namespace Lury.Objects
 
         public override LuryObject Add(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryComplex(this.real　+ ((LuryInteger)other).Value, this.imag);
 
@@ -142,6 +157,9 @@ namespace Lury.Objects
 
         public override LuryObject Sub(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return new LuryComplex(this.real　- ((LuryInteger)other).Value, this.imag);
 
@@ -156,6 +174,9 @@ namespace Lury.Objects
 
         public override LuryBoolean CEq(LuryObject other)
         {
+            if (other == null)
+                throw new LuryException(LuryExceptionType.NilReference);
+
             if (other is LuryInteger)
                 return this.real == (double)((LuryInteger)other).Value && this.imag == 0.0 ? LuryBoolean.True : LuryBoolean.False;
 
