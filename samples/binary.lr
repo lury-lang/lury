@@ -1,0 +1,24 @@
+a = 0b1_0_1_0
+b = 0b1_1_0_0
+
+println('a:', a)
+println('b:', b)
+
+println('~a:', ~a)
+println('~b:', ~b)
+
+println('a + b:', a + b)
+println('a - b:', a - b)
+println('a * b:', a * b)
+println('a / b:', a / b)
+println('a // b:', a // b)
+println('a % b:', a % b)
+
+println('a ** b:', a ** b)
+
+println('a << b:', a << b)
+println('a >> b:', a >> b)
+
+println('a & b:', a & b)
+println('a | b:', a | b)
+println('a ^ b:', a ^ b)

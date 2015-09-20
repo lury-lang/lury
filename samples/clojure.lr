@@ -1,0 +1,14 @@
+def createCounter:
+    c = 0
+    def runner:
+        println(++c)
+
+    return ref runner
+
+a = createCounter
+b = createCounter
+
+a                   # 1
+a                   # 2
+a                   # 3
+b                   # 1
