@@ -47,6 +47,9 @@
     <Compile Include="Compiler\NumberHelper.cs" />
     <Compile Include="Compiler\StringHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\Type\IntrinsicAttribute.cs" />
+    <Compile Include="Runtime\Type\IntrinsicClassAttribute.cs" />
+    <Compile Include="Runtime\Type\IntrinsicConstants.cs" />
     <Compile Include="Runtime\Type\LuryNil.cs" />
   </ItemGroup>
   <ItemGroup>
