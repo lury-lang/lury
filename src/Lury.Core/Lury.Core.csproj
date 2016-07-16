@@ -50,6 +50,7 @@
     <Compile Include="Runtime\LuryContext.cs" />
     <Compile Include="Runtime\LuryObject.cs" />
     <Compile Include="Runtime\Type\IntrinsicAttribute.cs" />
+    <Compile Include="Runtime\Type\LuryList.cs" />
     <Compile Include="Runtime\Type\LuryBoolean.cs" />
     <Compile Include="Runtime\Type\IntrinsicClassAttribute.cs" />
     <Compile Include="Runtime\Type\LuryFunction.cs" />
