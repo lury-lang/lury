@@ -57,6 +57,7 @@
     <Compile Include="Runtime\Type\LuryInteger.cs" />
     <Compile Include="Runtime\Type\IntrinsicConstants.cs" />
     <Compile Include="Runtime\Type\LuryReal.cs" />
+    <Compile Include="Runtime\Type\LuryReference.cs" />
     <Compile Include="Runtime\Type\LuryString.cs" />
     <Compile Include="Runtime\Type\LuryNil.cs" />
   </ItemGroup>
