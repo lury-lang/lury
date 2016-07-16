@@ -53,6 +53,12 @@ namespace Lury.Core.Runtime.Type
 
         #endregion
 
+        #region -- Public Methods --
+
+        public LuryBoolean Toggle() => (bool)Value ? False : True;
+
+        #endregion
+
         #region -- Public Static Methods --
 
         [Intrinsic(OperatorEq)]
