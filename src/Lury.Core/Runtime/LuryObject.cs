@@ -99,6 +99,21 @@ namespace Lury.Core.Runtime
 
         public override string ToString() => Value.ToString();
 
+        public override bool Equals(object obj)
+        {
+            var other = obj as LuryObject;
+
+            if (other == null)
+                return false;
+
+            return Value.Equals(other.Value) && LuryTypeName.Equals(other.LuryTypeName);
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode() ^ LuryTypeName.GetHashCode();
+        }
+
         #endregion
 
         #region -- Private Methods --
