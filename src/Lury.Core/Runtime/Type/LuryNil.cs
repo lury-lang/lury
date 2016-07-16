@@ -28,17 +28,18 @@
 
 namespace Lury.Core.Runtime.Type
 {
-    public class Nil : LuryObject
+    public class LuryNil : LuryObject
     {
         #region -- Public Static Members --
 
         public const string TypeName = "Nil";
+        public static readonly LuryNil Nil = new LuryNil();
 
         #endregion
 
         #region -- Constructors --
 
-        public Nil()
+        private LuryNil()
             : base(TypeName, null, true)
         {
         }

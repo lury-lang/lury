@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Runtime\Type\Nil.cs" />
+    <Compile Include="Runtime\Type\LuryNil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="Compiler\Lury.g4">
