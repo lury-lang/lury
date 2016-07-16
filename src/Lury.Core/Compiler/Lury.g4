@@ -137,7 +137,7 @@ using System.Text.RegularExpressions;
  */
 
 program
- : ( NEWLINE | statement )* EOF
+ : ( NEWLINE | Statements=statement )* EOF
  ;
 
 function_definition
@@ -157,12 +157,12 @@ parameter
  ;
 
 statement
- : simple_statement 
- | compound_statement
+ : Simple=simple_statement 
+ | Compound=compound_statement
  ;
 
 simple_statement
- : small_statement ( ';' small_statement )* ';'? NEWLINE
+ : First=small_statement ( ';' Succession=small_statement )* ';'? NEWLINE
  ;
 
 small_statement
@@ -216,191 +216,131 @@ expression
  ;
 
 assignment_expression
- : comma_expression (assignment_operator assignment_expression)?
- ;
-
-assignment_operator
- : ASSIGN
- | ADD_ASSIGN
- | SUB_ASSIGN
- | MULT_ASSIGN
- | DIV_ASSIGN
- | MOD_ASSIGN
- | AND_ASSIGN
- | OR_ASSIGN
- | AND_ASSIGN
- | XOR_ASSIGN
- | LEFT_SHIFT_ASSIGN
- | RIGHT_SHIFT_ASSIGN
- | POWER_ASSIGN
- | IDIV_ASSIGN
- | LEFT_SHIFT_ASSIGN
- | CONCAT_ASSIGN
+ : comma_expression
+ | // right-associative
+   Left=unary_expression
+	 Op=(ASSIGN |
+         ADD_ASSIGN |
+         SUB_ASSIGN |
+         MULT_ASSIGN |
+         DIV_ASSIGN |
+         MOD_ASSIGN |
+         AND_ASSIGN |
+         OR_ASSIGN |
+         AND_ASSIGN |
+         XOR_ASSIGN |
+         LEFT_SHIFT_ASSIGN |
+         RIGHT_SHIFT_ASSIGN |
+         POWER_ASSIGN |
+         IDIV_ASSIGN |
+         CONCAT_ASSIGN) Right=assignment_expression
  ;
 
 comma_expression
- : bool_not_expression (COMMA bool_not_expression)*
+ : Left=bool_not_expression (COMMA Right=bool_not_expression)*
  ;
 
 bool_not_expression
- : comparison_expression
- | NOT bool_not_expression
+ : Left=comparison_expression
+ | NOT Right=bool_not_expression
  ;
 
 comparison_expression
- : range_expression (comparison_operator range_expression)* 
- ;
-
-comparison_operator
- : GREATER_THAN
- | LESS_THAN
- | EQUALS
- | LT_EQ
- | GT_EQ
- | NOT_EQ
+ : Left=range_expression (Op=(GREATER_THAN|LESS_THAN|EQUALS|LT_EQ|GT_EQ|NOT_EQ) Right=range_expression)* 
  ;
 
 range_expression
- : or_expression (range_operator or_expression)* 
+ : Left=in_expression (Op=(RANGE_OPEN|RANGE_CLOSE) Right=in_expression)* 
  ;
 
-range_operator
- : RANGE_OPEN
- | RANGE_CLOSE
+in_expression
+ : Left=or_expression (Op=(IN|NOT_IN) Right=or_expression)?
  ;
 
 or_expression
- : xor_expression (OR_OP xor_expression)*
+ : Left=xor_expression (OR_OP Right=xor_expression)*
  ;
 
 xor_expression
- : and_expression (XOR and_expression)*
+ : Left=and_expression (XOR Right=and_expression)*
  ;
 
 and_expression
- : shift_expression (AND_OP shift_expression)*
+ : Left=shift_expression (AND_OP Right=shift_expression)*
  ;
 
 shift_expression
- : addition_expression (shift_operator addition_expression)* 
- ;
-
-shift_operator
- : LEFT_SHIFT
- | RIGHT_SHIFT
+ : Left=addition_expression (Op=(LEFT_SHIFT|RIGHT_SHIFT) Right=addition_expression)* 
  ;
 
 addition_expression
- : left=multiplication_expression (op=addition_operator right=multiplication_expression)*
- ;
-
-addition_operator
- : ADD
- | MINUS
- | NOT_OP
+ : Left=multiplication_expression (Op=(ADD|MINUS|NOT_OP) Right=multiplication_expression)*
  ;
 
 multiplication_expression
- : unary_expression (multiplication_operator unary_expression)*
- ;
-
-multiplication_operator
- : STAR
- | DIV
- | IDIV
- | MOD
- ;
-
-unary_expression
- : power_expression
- | unary_operator unary_expression
- ;
-
-unary_operator
- : INCLEMENT
- | DECREMENT
- | ADD
- | MINUS
- | NOT_OP
+ : Left=unary_expression (Op=(STAR|DIV|IDIV|MOD) Right=unary_expression)*
  ;
 
 power_expression
- : postfix_expression (POWER power_expression)?
+ : // right-associative
+   Left=unary_expression (POWER Right=power_expression)?
+ ;
+
+unary_expression
+ : postfix_expression
+ | // right-associative
+   Op=(INCLEMENT|DECREMENT|ADD|MINUS|INV) Right=unary_expression
  ;
 
 postfix_expression
  : primary
- | postfix_expression '.' NAME
- | postfix_expression postfix_operator
- | postfix_expression '(' argument_list? ')'
- | postfix_expression '[' argument_list? ']'
- ;
-
-postfix_operator
- : INCLEMENT
- | DECREMENT
- ;
-
-argument_list
- : argument (',' argument)* 
+ | Left=postfix_expression Dot='.' NAME
+ | Left=postfix_expression Op=(INCLEMENT|DECREMENT)
+ | Left=postfix_expression Call='(' argument? ')'
+ | Left=postfix_expression Key='[' key? ']'
  ;
 
 argument
+ : expression (',' expression)* 
+ ;
+
+key
  : expression
  ;
 
 primary
- : NAME
- | literal
- | TRUE
- | FALSE
- | NIL
+ : Name=NAME
+ | Literal=literal
+ | True=TRUE
+ | False=FALSE
+ | Nil=NIL
+ | '(' Expression=expression ')' 
  ;
 
 literal
- : STRING_LITERAL
- | FLOAT_NUMBER
- | ( DECIMAL_INTEGER | OCT_INTEGER | HEX_INTEGER | BIN_INTEGER )
- | list_literal
- | tuple_literal
- | hash_literal
+ : String=STRING_LITERAL
+ | Real=FLOAT_NUMBER
+ | Integer=( DECIMAL_INTEGER | OCT_INTEGER | HEX_INTEGER | BIN_INTEGER )
+ | List=list_literal
+// | Tuple=tuple_literal
+// | Hash=hash_literal
  ;
 
 list_literal
- : '[' list_element_list? ']'
+ : '[' (First=bool_not_expression (',' Succession=bool_not_expression)* ','? )? ']'
  ;
 
-list_element_list
- : list_element (',' list_element_list)* 
- ;
+//tuple_literal
+// : '(' (expression ',' (expression ','?)* )? ')'
+// ;
 
-list_element
- : expression
- ;
+//hash_literal
+// : '{' (hash_element (',' hash_element)* ','? )? '}'
+// ;
 
-tuple_literal
- : '(' tuple_element_list? ')'
- ;
-
-tuple_element_list
- : tuple_element (',' tuple_element)* 
- ;
-
-tuple_element
- : expression
- ;
-
-hash_literal
- : '{' hash_element_list? '}'
- ;
-
-hash_element_list
- : hash_element (',' hash_element)* 
- ;
-
-hash_element
- : expression ':' expression
- ;
+//hash_element
+// : expression ':' expression
+// ;
 
 /*
  * lexer rules
@@ -412,6 +352,7 @@ IF : 'if';
 ELSE : 'else';
 FOR : 'for';
 IN : 'in';
+NOT_IN : '!in';
 NIL : 'bil';
 TRUE : 'true';
 FALSE : 'false';
@@ -513,7 +454,7 @@ MINUS : '-';
 DIV : '/';
 MOD : '%';
 IDIV : '//';
-NOT_OP : '~';
+INV : '~';
 OPEN_BRACE : '{' {opened++;};
 CLOSE_BRACE : '}' {opened--;};
 LESS_THAN : '<';
