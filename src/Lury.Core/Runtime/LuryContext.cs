@@ -151,7 +151,6 @@ namespace Lury.Core.Runtime
                 .GetTypes()
                 .Where(t =>
                     t.IsClass &&
-                    t.Namespace == "Lury.Core.Runtime.Type" &&
                     Attribute.GetCustomAttribute(t, typeof(IntrinsicClassAttribute)) != null);
 
             foreach (var type in intrinsicTypes)
