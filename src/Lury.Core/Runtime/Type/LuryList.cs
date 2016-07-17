@@ -29,6 +29,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using static Lury.Core.Runtime.Type.IntrinsicConstants;
 using static Lury.Core.Runtime.Type.LuryBoolean;
 using LList = System.Collections.Generic.List<Lury.Core.Runtime.LuryObject>;
@@ -122,7 +123,7 @@ namespace Lury.Core.Runtime.Type
             if (other.LuryTypeName != TypeName)
                 throw new ArgumentException();
 
-            var or = ((LList) self.Value).Union((LList) other.Value);
+            var or = ((LList)self.Value).Union((LList)other.Value);
             var and = ((LList)self.Value).Intersect((LList)other.Value);
 
             return GetObject(or.Except(and));
@@ -141,6 +142,40 @@ namespace Lury.Core.Runtime.Type
         public static LuryObject In(LuryObject self, LuryObject other)
         {
             return ((LList)self.Value).Contains(other) ? True : False;
+        }
+
+        [Intrinsic(OperatorGetIdx)]
+        public static LuryObject GetIndex(LuryObject self, LuryObject other)
+        {
+            var indexObject = other as LuryInteger;
+
+            if (indexObject == null)
+                throw new InvalidOperationException();
+
+            var index = (BigInteger)indexObject.Value;
+            var llist = (LList)self.Value;
+
+            if (index < 0 || index >= llist.Count)
+                throw new InvalidOperationException();
+
+            return llist[(int)index];
+        }
+
+        [Intrinsic(OperatorSetIdx)]
+        public static LuryObject SetIndex(LuryObject self, LuryObject other, LuryObject element)
+        {
+            var indexObject = other as LuryInteger;
+
+            if (indexObject == null)
+                throw new InvalidOperationException();
+
+            var index = (BigInteger)indexObject.Value;
+            var llist = (LList)self.Value;
+
+            if (index < 0 || index > int.MaxValue)
+                throw new InvalidOperationException();
+
+            return llist[(int)index] = element;
         }
 
         #endregion
