@@ -178,6 +178,67 @@ namespace Lury.Core.Runtime.Type
             return llist[(int)index] = element;
         }
 
+        [Intrinsic(FunctionIterate)]
+        public static LuryObject GetIterator(LuryObject self)
+        {
+            return new LuryListIterator((LuryList)self);
+        }
+
         #endregion
+
+        [IntrinsicClass(FullName, TypeName)]
+        internal class LuryListIterator : LuryObject
+        {
+            #region -- Public Fields --
+
+            public const string FullName = "lury.core.`_listIterator";
+            public const string TypeName = "`_listIterator";
+
+            #endregion
+
+            #region -- Private Fields --
+
+            private int index = -1;
+
+            #endregion
+
+            #region -- Constructors --
+
+            public LuryListIterator(LuryList value)
+                : base(FullName, value, true)
+            {
+            }
+
+            #endregion
+
+            #region -- Public Methods --
+
+            [Intrinsic(FunctionMoveNext)]
+            public static LuryObject moveNext(LuryObject self)
+            {
+                var iterator = (LuryListIterator)self;
+                var llist = (LList)((LuryList)self.Value).Value;
+
+                if (llist.Count <= iterator.index + 1)
+                    return False;
+
+                iterator.index++;
+                return True;
+            }
+
+            [Intrinsic(FunctionFetch)]
+            public static LuryObject fetch(LuryObject self)
+            {
+                var iterator = (LuryListIterator)self;
+                var llist = (LList)((LuryList)self.Value).Value;
+
+                if (iterator.index < 0 || llist.Count < iterator.index + 1)
+                    throw new InvalidOperationException();
+
+                return llist[iterator.index];
+            }
+
+            #endregion
+        }
     }
 }
