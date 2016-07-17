@@ -27,7 +27,10 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using Lury.Core.Compiler;
 using static Lury.Core.Runtime.Type.IntrinsicConstants;
 
 namespace Lury.Core.Runtime.Type
@@ -48,6 +51,11 @@ namespace Lury.Core.Runtime.Type
         {
         }
 
+        private LuryFunction(UserFunctionInfo functionInfo)
+            : base(FullName, functionInfo, true)
+        {
+        }
+
         #endregion
 
         #region -- Public Static Methods --
@@ -55,6 +63,8 @@ namespace Lury.Core.Runtime.Type
         public static LuryFunction GetObject(MethodInfo methodInfo) => new LuryFunction(methodInfo);
 
         public static LuryFunction GetObject(Action action) => new LuryFunction(action.Method);
+
+        internal static LuryFunction GetObject(UserFunctionInfo functionInfo) => new LuryFunction(functionInfo);
 
         [Intrinsic(OperatorCall)]
         public static LuryObject Call(LuryObject self, params object[] others)
@@ -64,11 +74,50 @@ namespace Lury.Core.Runtime.Type
             if (methodInfo != null)
                 return (LuryObject)methodInfo.Invoke(null, BindingFlags.Default, null, others, null);
 
+            var functionInfo = self.Value as UserFunctionInfo;
+
+            if (functionInfo != null)
+            {
+                var param = functionInfo.ParameterNames.ToArray();
+
+                if (param.Length != others.Length)
+                    throw new InvalidOperationException();
+
+                var context = new LuryContext(functionInfo.ParentContext);
+
+                for (var i = 0; i < param.Length; i++)
+                    context[param[i]] = (LuryObject)others[i];
+
+                return new LuryVisitor(context).VisitSuite(functionInfo.BodySuite);
+            }
+
             throw new NotImplementedException();
         }
 
         #endregion
+    }
 
+    internal class UserFunctionInfo
+    {
+        #region -- Public Properties --
 
+        public LuryParser.SuiteContext BodySuite { get; }
+
+        public LuryContext ParentContext { get; }
+
+        public IEnumerable<string> ParameterNames { get; }
+
+        #endregion
+
+        #region -- Constructors --
+
+        public UserFunctionInfo(LuryParser.SuiteContext bodySuite, LuryContext parentContext, IEnumerable<string> parameterNames)
+        {
+            BodySuite = bodySuite;
+            ParentContext = parentContext;
+            ParameterNames = parameterNames;
+        }
+
+        #endregion
     }
 }
