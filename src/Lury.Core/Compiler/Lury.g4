@@ -140,22 +140,6 @@ program
  : ( NEWLINE | Statements=statement )* EOF
  ;
 
-function_definition
- : DEF NAME parameters? ':' suite
- ;
-
-parameters
- : '(' parameter_list? ')'
- ;
-
-parameter_list
- : parameter ( ',' parameter )*
- ;
-
-parameter
- : NAME
- ;
-
 statement
  : Simple=simple_statement 
  | Compound=compound_statement
@@ -199,16 +183,24 @@ compound_statement
  ;
 
 if_statement
- : IF expression ':' suite ( ELSE ':' suite )?
+ : IF Condition=expression ':' IfSuite=suite ( ELSE ':' ElseSuite=suite )?
  ;
 
 for_statement
- : FOR NAME IN expression ':' suite ( ELSE ':' suite )?
+ : FOR Variable=NAME IN Object=expression ':' ForSuite=suite ( ELSE ':' ElseSuite=suite )?
+ ;
+
+function_definition
+ : DEF Name=NAME ('(' Parameter=parameter? ')')? ':' FunctionSuite=suite
+ ;
+
+parameter
+ : NAME ( ',' NAME )*
  ;
 
 suite
  : simple_statement
- | NEWLINE INDENT statement+ DEDENT
+ | NEWLINE INDENT Statements=statement+ DEDENT
  ;
 
 expression
@@ -241,7 +233,7 @@ comma_expression
  ;
 
 bool_not_expression
- : Left=comparison_expression
+ : comparison_expression
  | NOT Right=bool_not_expression
  ;
 
@@ -250,7 +242,7 @@ comparison_expression
  ;
 
 range_expression
- : Left=in_expression (Op=(RANGE_OPEN|RANGE_CLOSE) Right=in_expression)* 
+ : Left=in_expression (Op=(RANGE_OPEN|RANGE_CLOSE) Right=in_expression)?
  ;
 
 in_expression
@@ -274,11 +266,11 @@ shift_expression
  ;
 
 addition_expression
- : Left=multiplication_expression (Op=(ADD|MINUS|NOT_OP) Right=multiplication_expression)*
+ : Left=multiplication_expression (Op=(ADD|MINUS|INV) Right=multiplication_expression)*
  ;
 
 multiplication_expression
- : Left=unary_expression (Op=(STAR|DIV|IDIV|MOD) Right=unary_expression)*
+ : Left=power_expression (Op=(STAR|DIV|IDIV|MOD) Right=power_expression)*
  ;
 
 power_expression
@@ -287,21 +279,21 @@ power_expression
  ;
 
 unary_expression
- : postfix_expression
+ : Ref=AND_OP? RefRight=postfix_expression
  | // right-associative
    Op=(INCLEMENT|DECREMENT|ADD|MINUS|INV) Right=unary_expression
  ;
 
 postfix_expression
  : primary
- | Left=postfix_expression Dot='.' NAME
+ | Left=postfix_expression '.' Dot=NAME
  | Left=postfix_expression Op=(INCLEMENT|DECREMENT)
- | Left=postfix_expression Call='(' argument? ')'
- | Left=postfix_expression Key='[' key? ']'
+ | Left=postfix_expression Call='(' Arguments=argument? ')'
+ | Left=postfix_expression '[' Key=key ']'
  ;
 
 argument
- : expression (',' expression)* 
+ : bool_not_expression (',' bool_not_expression)* 
  ;
 
 key
@@ -353,7 +345,7 @@ ELSE : 'else';
 FOR : 'for';
 IN : 'in';
 NOT_IN : '!in';
-NIL : 'bil';
+NIL : 'nil';
 TRUE : 'true';
 FALSE : 'false';
 PASS : 'pass';
