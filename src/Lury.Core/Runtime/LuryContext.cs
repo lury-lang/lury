@@ -132,6 +132,8 @@ namespace Lury.Core.Runtime
         {
             var context = new LuryContext();
 
+            #region Intrinsic Classes
+
             Action<string, string, IEnumerable<Tuple<string, MethodInfo>>> setFunctionMember = (t, n, f) =>
             {
                 var type = new LuryObject(t, null);
@@ -169,6 +171,37 @@ namespace Lury.Core.Runtime
                 if (funcnames.Count > 0)
                     setFunctionMember(attr.FullName, attr.TypeName, funcnames);
             }
+
+            #endregion
+
+            #region BuiltIn Functions
+
+            var builtInFunctions = Assembly
+                .GetExecutingAssembly()
+                .GetTypes()
+                .Where(t =>
+                    t.IsClass &&
+                    Attribute.GetCustomAttribute(t, typeof(BuiltInClass)) != null);
+
+            foreach (var type in builtInFunctions)
+            {
+                var attr = type.GetCustomAttribute<BuiltInClass>();
+                var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
+                var funcnames = methods
+                    .Select(
+                        method =>
+                            new
+                            {
+                                method,
+                                attributes = method.GetCustomAttributes<BuiltInAttribute>().Select(a => a.FunctionName)
+                            })
+                    .SelectMany(_ => _.attributes, (_, funcName) => Tuple.Create(funcName, _.method)).ToList();
+
+                foreach (var func in funcnames)
+                    context[func.Item1] = LuryFunction.GetObject(func.Item2);
+            }
+
+            #endregion
 
             return context;
         }
