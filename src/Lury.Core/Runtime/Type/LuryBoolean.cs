@@ -57,6 +57,8 @@ namespace Lury.Core.Runtime.Type
 
         public LuryBoolean Toggle() => (bool)Value ? False : True;
 
+        public bool ToBoolean() => (bool)Value;
+
         #endregion
 
         #region -- Public Static Methods --
