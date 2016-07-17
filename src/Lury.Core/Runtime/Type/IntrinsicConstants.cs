@@ -35,7 +35,7 @@ namespace Lury.Core.Runtime.Type
         //public const string FullName = "lury.core.implement.Intrinsic";
         //public const string TypeName = "Intrinsic";
 
-        #region Intrinsic Function Name
+        #region Intrinsic Operator Names
 
         public const string
             OperatorPow = "opPow",
@@ -73,7 +73,10 @@ namespace Lury.Core.Runtime.Type
 
             OperatorNot = "opNot",
 
-            OperatorCall = "opCall";
+            OperatorCall = "opCall",
+
+            OperatorGetIdx = "opGetIdx",
+            OperatorSetIdx = "opSetIdx";
 
         #endregion
 
