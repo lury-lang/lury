@@ -119,10 +119,10 @@ namespace Lury.Core.Runtime
             return members.ContainsKey(name);
         }
 
-        //public void SetMemberNoRecursion(string name, LuryObject value)
-        //{
-        //    this.Members.Add(name, value);
-        //}
+        public void SetMemberNoRecursion(string name, LuryObject value)
+        {
+            members.Add(name, value);
+        }
 
         #endregion
 
