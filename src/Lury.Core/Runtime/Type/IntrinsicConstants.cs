@@ -80,6 +80,15 @@ namespace Lury.Core.Runtime.Type
 
         #endregion
 
+        #region Intrinsic Function Names
+
+        public const string
+            FunctionIterate = "iterate",
+            FunctionMoveNext = "moveNext",
+            FunctionFetch = "fetch";
+
+        #endregion
+
         #endregion
     }
 }
