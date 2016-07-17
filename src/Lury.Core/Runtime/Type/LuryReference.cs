@@ -51,11 +51,17 @@ namespace Lury.Core.Runtime.Type
 
         #region -- Public Static Methods --
 
-        public static LuryReference Create(string @object, LuryObject key = null)
-            => new LuryReference(new Reference(@object, key));
+        public static LuryReference Create(string @object)
+            => new LuryReference(new Reference(@object));
 
-        public static LuryReference Create(LuryObject subject, string @object, LuryObject key = null)
-            => new LuryReference(new Reference(subject, @object, key));
+        public static LuryReference Create(LuryObject key)
+            => new LuryReference(new Reference(key));
+
+        public static LuryReference Create(LuryObject subject, string @object)
+            => new LuryReference(new Reference(subject, @object));
+
+        public static LuryReference Create(LuryObject subject, LuryObject key)
+            => new LuryReference(new Reference(subject, key));
 
         #endregion
 
@@ -65,26 +71,46 @@ namespace Lury.Core.Runtime.Type
         {
             var reference = (Reference)Value;
 
-            if (reference.Key != null)
-                throw new NotImplementedException();
-
-            if (reference.Subject != null)
-                return reference.Subject.GetMember(reference.Object, context);
-
-            return context[reference.Object];
+            if (reference.Subject == null)
+            {
+                if (reference.Key == null)
+                    return context[reference.Object];
+                else
+                {
+                    var obj = context[reference.Object];
+                    return LuryList.GetIndex(obj, reference.Key);
+                }
+            }
+            else
+            {
+                if (reference.Key == null)
+                    return reference.Subject.GetMember(reference.Object, context);
+                else
+                    return LuryList.GetIndex(reference.Subject, reference.Key);
+            }
         }
 
         public LuryObject Assign(LuryContext context, LuryObject @object)
         {
             var reference = (Reference)Value;
 
-            if (reference.Key != null)
-                throw new NotImplementedException();
-
-            if (reference.Subject != null)
-                reference.Subject.SetMember(reference.Object, @object);
+            if (reference.Subject == null)
+            {
+                if (reference.Key == null)
+                    context[reference.Object] = @object;
+                else
+                {
+                    var obj = context[reference.Object];
+                    LuryList.SetIndex(obj, reference.Key, @object);
+                }
+            }
             else
-                context[reference.Object] = @object;
+            {
+                if (reference.Key == null)
+                    reference.Subject.SetMember(reference.Object, @object);
+                else
+                    LuryList.SetIndex(reference.Subject, reference.Key, @object);
+            }
 
             return @object;
         }
@@ -105,12 +131,27 @@ namespace Lury.Core.Runtime.Type
 
             #region -- Constructors --
 
-            public Reference(string @object, LuryObject key = null)
-                : this(null, @object, key)
+            public Reference(string @object)
+                : this(null, @object, null)
             {
             }
 
-            public Reference(LuryObject subject, string @object, LuryObject key = null)
+            public Reference(LuryObject key)
+                : this(null, null, key)
+            {
+            }
+
+            public Reference(LuryObject subject, string @object)
+                : this(subject, @object, null)
+            {
+            }
+
+            public Reference(LuryObject subject, LuryObject key)
+                : this(subject, null, key)
+            {
+            }
+
+            private Reference(LuryObject subject, string @object, LuryObject key)
             {
                 Subject = subject;
                 Object = @object;
