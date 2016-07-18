@@ -40,9 +40,13 @@ namespace Lury
                         multiline = true;
 
                     input += line + "\n";
-                    emptyLine++;
 
-                } while (multiline && emptyLine < 3);
+                    if (string.IsNullOrWhiteSpace(line))
+                        emptyLine++;
+                    else
+                        emptyLine = 0;
+
+                } while (multiline && emptyLine < 1);
 
                 try
                 {
