@@ -230,7 +230,7 @@ namespace Lury.Core.Compiler
             if (context.Left == null)
                 return VisitChildren(context);
 
-            var left = VisitUnary_expression(context.Left) as LuryReference;
+            var left = VisitPostfix_expression(context.Left) as LuryReference;
 
             if (left == null)
                 throw new InvalidOperationException();

@@ -210,7 +210,7 @@ expression
 assignment_expression
  : comma_expression
  | // right-associative
-   Left=unary_expression
+   Left=postfix_expression
 	 Op=(ASSIGN |
          ADD_ASSIGN |
          SUB_ASSIGN |
