@@ -691,7 +691,7 @@ namespace Lury.Core.Compiler
             return LuryList.GetObject(
                 context.children
                 .OfType<LuryParser.Bool_not_expressionContext>()
-                .Select(VisitBool_not_expression));
+                .Select(_ => Dereference(VisitBool_not_expression(_))));
         }
 
         #endregion
