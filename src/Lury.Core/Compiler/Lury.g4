@@ -416,7 +416,14 @@ BIN_INTEGER
  ;
 
 FLOAT_NUMBER
- : POINT_FLOAT
+ : POINT_FLOAT {
+		if (Text.EndsWith(".", StringComparison.Ordinal) && InputStream.La(1) == 46)
+		{
+            Text = Text.Substring(0, Text.Length - 1);
+	        InputStream.Seek(InputStream.Index - 1);
+			Token = new CommonToken(_tokenFactorySourcePair, DECIMAL_INTEGER, Channel, InputStream.Index - Text.Length, InputStream.Index - 1);
+	    }
+   }
  | EXPONENT_FLOAT
  ;
 
