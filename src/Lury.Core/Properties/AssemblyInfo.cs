@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Lury")]
+[assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("Copyright © 2014-2016 Tomona Nanase")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // このプロジェクトが COM に公開される場合、次の GUID が typelib の ID になります
-[assembly: Guid("822c883f-0fd0-4ac8-926c-168469ec160d")]
+[assembly: Guid("1613236b-88a4-4da5-9914-e652c43cc24a")]
 
 // アセンブリのバージョン情報は次の 4 つの値で構成されています:
 //
@@ -34,3 +34,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.3")]
 [assembly: AssemblyFileVersion("0.3")]
+
+[assembly: System.CLSCompliant(false)]
