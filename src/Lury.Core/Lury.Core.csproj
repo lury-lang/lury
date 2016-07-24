@@ -44,6 +44,8 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compiler\PruningTreeNode.cs" />
+    <Compile Include="Compiler\PruningVisitor.cs" />
     <Compile Include="Compiler\NumberHelper.cs" />
     <Compile Include="Compiler\StringHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
