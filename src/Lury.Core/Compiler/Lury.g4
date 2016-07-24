@@ -160,7 +160,7 @@ expression_statement
  ;           
 
 pass_statement
- : PASS
+ : Mark=PASS
  ;
 
 flow_statement
@@ -169,11 +169,11 @@ flow_statement
  ;
 
 break_statement
- : BREAK
+ : Mark=BREAK
  ;
 
 return_statement
- : RETURN expression?
+ : Mark=RETURN Value=expression?
  ;
 
 compound_statement
@@ -183,15 +183,15 @@ compound_statement
  ;
 
 if_statement
- : IF Condition=expression ':' IfSuite=suite ( ELSE ':' ElseSuite=suite )?
+ : Mark=IF Condition=expression ':' IfSuite=suite ( ELSE ':' ElseSuite=suite )?
  ;
 
 for_statement
- : FOR Variable=NAME IN Object=expression ':' ForSuite=suite ( ELSE ':' ElseSuite=suite )?
+ : Mark=FOR Variable=NAME IN Object=expression ':' ForSuite=suite ( ELSE ':' ElseSuite=suite )?
  ;
 
 function_definition
- : DEF Name=NAME ('(' Parameter=parameter? ')')? ':' FunctionSuite=suite
+ : Mark=DEF Name=NAME ('(' Parameter=parameter? ')')? ':' FunctionSuite=suite
  ;
 
 parameter
@@ -234,7 +234,7 @@ comma_expression
 
 bool_not_expression
  : comparison_expression
- | NOT Right=bool_not_expression
+ | Op=NOT Right=bool_not_expression
  ;
 
 comparison_expression
@@ -275,7 +275,7 @@ multiplication_expression
 
 power_expression
  : // right-associative
-   Left=unary_expression (POWER Right=power_expression)?
+   Left=unary_expression (Op=POWER Right=power_expression)?
  ;
 
 unary_expression
@@ -286,18 +286,18 @@ unary_expression
 
 postfix_expression
  : primary
- | Left=postfix_expression '.' Dot=NAME
+ | Left=postfix_expression '.' Attribute=NAME
  | Left=postfix_expression Op=(INCLEMENT|DECREMENT)
  | Left=postfix_expression Call='(' Arguments=argument? ')'
- | Left=postfix_expression '[' Key=key ']'
+ | Left=postfix_expression Index='[' Key=key_index ']'
  ;
 
 argument
  : bool_not_expression (',' bool_not_expression)* 
  ;
 
-key
- : expression
+key_index
+ : primary
  ;
 
 primary
@@ -314,25 +314,25 @@ literal
  | Real=FLOAT_NUMBER
  | Integer=( DECIMAL_INTEGER | OCT_INTEGER | HEX_INTEGER | BIN_INTEGER )
  | List=list_literal
-// | Tuple=tuple_literal
-// | Hash=hash_literal
+ | Tuple=tuple_literal
+ | Hash=hash_literal
  ;
 
 list_literal
- : '[' (First=bool_not_expression (',' Succession=bool_not_expression)* ','? )? ']'
+ : '[' (bool_not_expression (',' bool_not_expression)* ','? )? ']'
  ;
 
-//tuple_literal
-// : '(' (expression ',' (expression ','?)* )? ')'
-// ;
+tuple_literal
+ : '(' (bool_not_expression ',' (bool_not_expression ','?)* )? ')'
+ ;
 
-//hash_literal
-// : '{' (hash_element (',' hash_element)* ','? )? '}'
-// ;
+hash_literal
+ : '{' (hash_element (',' hash_element)* ','? )? '}'
+ ;
 
-//hash_element
-// : expression ':' expression
-// ;
+hash_element
+ : Key=primary ':' Value=bool_not_expression
+ ;
 
 /*
  * lexer rules
