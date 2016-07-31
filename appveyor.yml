@@ -19,4 +19,4 @@ build:
   project: src/Lury.sln
 artifacts:
   - path: bin\$(configuration)
-    name: "Lury_bin_{version}_{branch}"
+    name: Lury_bin
