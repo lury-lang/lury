@@ -17,6 +17,7 @@ before_build:
 build:
   parallel: true
   project: src/Lury.sln
+verbosity: minimal
 artifacts:
   - path: bin\$(configuration)
     name: Lury_bin
