@@ -1,0 +1,22 @@
+version: 0.3.0.{build}
+skip_commits:
+  message: /\[no (build|bin)\]/
+image: Visual Studio 2015
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+platform: Any CPU
+configuration: Release
+before_build:
+  - cd src
+  - nuget restore
+  - cd ../
+build:
+  parallel: true
+  project: src/Lury.sln
+artifacts:
+  - path: bin\$(configuration)
+    name: "Lury_bin_{version}_{branch}"
