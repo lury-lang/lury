@@ -24,29 +24,10 @@ namespace Lury
 
             while (true)
             {
-                var multiline = false;
-                var emptyLine = 0;
-                var input = string.Empty;
+                var input = Prompt();
 
-                do
-                {
-                    Console.Write(input == string.Empty ? ">>> " : "... ");
-                    var line = Console.ReadLine();
-
-                    if (line == null)
-                        return;
-
-                    if (line.TrimEnd().EndsWith(":"))
-                        multiline = true;
-
-                    input += line + "\n";
-
-                    if (string.IsNullOrWhiteSpace(line))
-                        emptyLine++;
-                    else
-                        emptyLine = 0;
-
-                } while (multiline && emptyLine < 1);
+                if (input == null)
+                    break;
 
                 try
                 {
@@ -62,6 +43,35 @@ namespace Lury
                     Console.WriteLine("Error: {0}", ex.Message);
                 }
             }
+        }
+
+        private static string Prompt()
+        {
+            var multiline = false;
+            var emptyLine = 0;
+            var input = string.Empty;
+
+            do
+            {
+                Console.Write(input == string.Empty ? ">>> " : "... ");
+                var line = Console.ReadLine();
+
+                if (line == null)
+                    return null;
+
+                if (line.TrimEnd().EndsWith(":"))
+                    multiline = true;
+
+                input += line + "\n";
+
+                if (string.IsNullOrWhiteSpace(line))
+                    emptyLine++;
+                else
+                    emptyLine = 0;
+
+            } while (multiline && emptyLine < 1);
+
+            return input;
         }
     }
 }
