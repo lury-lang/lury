@@ -19,7 +19,7 @@ namespace Lury
 
         private static void RunAsIntaractiveMode()
         {
-            Console.WriteLine("Lury 0.3.0 (< Spec 0.3 phase 1), running on {0}", Environment.Is64BitProcess ? "x64" : "x86");
+            Console.WriteLine("{0}, running on {1}", BuildVersion.VersionString, Environment.Is64BitProcess ? "x64" : "x86");
             var engine = new LuryEngine();
 
             while (true)
