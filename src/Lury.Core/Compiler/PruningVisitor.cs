@@ -30,6 +30,7 @@ using System;
 using System.Linq;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using Lury.Core.Error;
 using static Lury.Core.Compiler.LuryParser;
 using static Lury.Core.Compiler.PruningTreeNodeType;
 using Node = Lury.Core.Compiler.PruningTreeNode;
@@ -150,7 +151,7 @@ namespace Lury.Core.Compiler
             if (context.Right == null)
                 return VisitChildren(context);
 
-            return new Node(GetOperatorType(context.Op.Text), context.Op, new NodeChildren
+            return new Node(GetOperatorType(context.Op), context.Op, new NodeChildren
             {
                 { "Left", VisitPostfix_expression(context.Left) },
                 { "Right", VisitAssignment_expression(context.Right) }
@@ -204,7 +205,7 @@ namespace Lury.Core.Compiler
                     return new Node(RangeClose, context.Op, rightNode);
 
                 default:
-                    throw new InvalidOperationException();
+                    throw new CodeBugException(context.Start);
             }
         }
 
@@ -223,7 +224,7 @@ namespace Lury.Core.Compiler
                     return new Node(NotIn, context.Op, rightNode);
 
                 default:
-                    throw new InvalidOperationException();
+                    throw new CodeBugException(context.Start);
             }
         }
 
@@ -316,7 +317,7 @@ namespace Lury.Core.Compiler
                     return new Node(UnaryInvert, context.Op, rightNode);
 
                 default:
-                    throw new InvalidOperationException();
+                    throw new CodeBugException(context.Start);
             }
         }
 
@@ -354,7 +355,7 @@ namespace Lury.Core.Compiler
                     { "Key", VisitKey_index(context.Key) }
                 });
 
-            throw new InvalidOperationException();
+            throw new CodeBugException(context.Start);
         }
 
         public override Node VisitArgument(ArgumentContext context)
@@ -392,7 +393,7 @@ namespace Lury.Core.Compiler
             if (context.Expression != null)
                 return VisitExpression(context.Expression);
 
-            throw new InvalidOperationException();
+            throw new CodeBugException(context.Start);
         }
 
         public override Node VisitLiteral(LiteralContext context)
@@ -415,7 +416,7 @@ namespace Lury.Core.Compiler
             if (context.Hash != null)
                 return VisitHash_literal(context.Hash);
 
-            throw new InvalidOperationException();
+            throw new CodeBugException(context.Start);
         }
 
         public override Node VisitList_literal(List_literalContext context)
@@ -461,9 +462,9 @@ namespace Lury.Core.Compiler
 
         #region -- Private Methods --
 
-        private static PruningTreeNodeType GetOperatorType(string text)
+        private static PruningTreeNodeType GetOperatorType(IToken token)
         {
-            switch (text)
+            switch (token.Text)
             {
                 case ",":
                     return Comma;
@@ -523,7 +524,7 @@ namespace Lury.Core.Compiler
                     return Modulo;
 
                 default:
-                    throw new InvalidOperationException();
+                    throw new CodeBugException(token);
             }
         }
 
@@ -544,8 +545,8 @@ namespace Lury.Core.Compiler
 
             for (var i = 0; i < ops.Length; i++)
                 lastNode = lastNode == null ?
-                    new Node(GetOperatorType(ops[i].Text), ops[i], new NodeChildren { { "Left", nodes[i] }, { "Right", nodes[i + 1] } }) :
-                    new Node(GetOperatorType(ops[i].Text), ops[i], new NodeChildren { { "Left", lastNode }, { "Right", nodes[i + 1] } });
+                    new Node(GetOperatorType(ops[i]), ops[i], new NodeChildren { { "Left", nodes[i] }, { "Right", nodes[i + 1] } }) :
+                    new Node(GetOperatorType(ops[i]), ops[i], new NodeChildren { { "Left", lastNode }, { "Right", nodes[i + 1] } });
 
             return lastNode;
         }
