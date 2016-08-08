@@ -49,7 +49,7 @@ namespace Lury.Core.Error
 
         #region -- Constructors --
 
-        protected LuryException(
+        protected internal LuryException(
             string message,
             int? column = null,
             int? line = null,
@@ -65,14 +65,14 @@ namespace Lury.Core.Error
             SourceName = sourceName;
         }
 
-        protected LuryException(string message, IToken token)
+        protected internal LuryException(string message, IToken token)
             : this(message,
                   token.Column,
                   token.Line,
                   token.StopIndex - token.StartIndex,
                   token.Text,
                   token.InputStream.SourceName)
-        {  
+        {
         }
 
         #endregion
