@@ -39,13 +39,13 @@ namespace Lury.Core.Compiler
         {
             input = input.Replace("_", "");
 
-            if (input.StartsWith("0x", true, null))
+			if (input.StartsWith("0x", StringComparison.Ordinal))
                 return Convert.ToInt64(input.Substring(2), 16);
 
-            if (input.StartsWith("0o", true, null))
+            if (input.StartsWith("0o", StringComparison.Ordinal))
                 return Convert.ToInt64(input.Substring(2), 8);
 
-            if (input.StartsWith("0b", true, null))
+            if (input.StartsWith("0b", StringComparison.Ordinal))
                 return Convert.ToInt64(input.Substring(2), 2);
 
             return BigInteger.Parse(input);

@@ -59,8 +59,7 @@ namespace Lury
                 if (line == null)
                     return null;
 
-                if (line.TrimEnd().EndsWith(":"))
-                    multiline = true;
+				multiline |= line.TrimEnd().EndsWith(":", StringComparison.Ordinal);
 
                 input += line + "\n";
 
