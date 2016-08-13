@@ -68,6 +68,7 @@
     <Compile Include="Runtime\Type\LuryReference.cs" />
     <Compile Include="Runtime\Type\LuryString.cs" />
     <Compile Include="Runtime\Type\LuryNil.cs" />
+    <Compile Include="Error\NotDefinedException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="Compiler\Lury.g4">
