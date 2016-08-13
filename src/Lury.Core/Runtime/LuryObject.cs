@@ -28,20 +28,24 @@
 
 using System;
 using System.Collections.Generic;
+using Antlr4.Runtime;
+using Lury.Core.Error;
 
 namespace Lury.Core.Runtime
 {
-    public class LuryObject
+    public abstract class LuryObject : ILuryAccessible
     {
         #region -- Private Fields --
 
-        private readonly Dictionary<string, LuryObject> members = new Dictionary<string, LuryObject>(0);
+        private readonly Dictionary<string, LuryObject> attributes = new Dictionary<string, LuryObject>(0);
 
         #endregion
 
         #region -- Public Properties --
 
-        public string LuryTypeName { get; }
+        public LuryObject BaseObject { get; }
+
+        public LuryObject Class { get; }
 
         public object Value { get; }
 
@@ -51,9 +55,10 @@ namespace Lury.Core.Runtime
 
         #region -- Constructors --
 
-        public LuryObject(string luryTypeName, object value, bool freeze = false)
+        protected LuryObject(LuryObject baseObject, LuryObject @class, object value = null, bool freeze = false)
         {
-            LuryTypeName = luryTypeName;
+            BaseObject = baseObject;
+            Class = @class;
             Value = value;
 
             if (freeze)
@@ -64,32 +69,49 @@ namespace Lury.Core.Runtime
 
         #region -- Public Methods --
 
-        public void SetMember(string name, LuryObject obj)
+        public void Assign(IToken target, LuryObject data)
         {
-            if (IsFrozen)
-                throw new InvalidOperationException();
+            var name = target.Text;
 
-            if (members.ContainsKey(name))
-                members[name] = obj;
-            else
-                members.Add(name, obj);
+            if (attributes.ContainsKey(name) ||
+                BaseObject == null ||
+                !CheckAndAssign(name, data))
+                AssignAttribute(name, data);
         }
 
-        public LuryObject GetMember(string name, LuryContext context)
+        public bool Has(IToken target) => Has(target.Text);
+
+        public bool Has(string name)
         {
-            if (members.ContainsKey(name))
-                return members[name];
+            var targetObject = this;
 
-            if (LuryTypeName != null && context.HasMember(LuryTypeName))
-                return context[LuryTypeName].GetMemberNoRecursion(name);
+            while (true)
+            {
+                if (targetObject.attributes.ContainsKey(name))
+                    return true;
 
-            //throw new LuryException(LuryExceptionType.NameIsNotFound);
-            throw new InvalidOperationException();
+                if (targetObject.BaseObject != null)
+                    targetObject = targetObject.BaseObject;
+                else
+                    return false;
+            }
         }
 
-        public bool HasMember(string member)
+        public LuryObject Fetch(IToken target, string ownerName = null)
         {
-            return members.ContainsKey(member);
+            var name = target.Text;
+            var targetObject = this;
+
+            while (true)
+            {
+                if (targetObject.attributes.ContainsKey(name))
+                    return targetObject.attributes[name];
+
+                if (targetObject.BaseObject != null)
+                    targetObject = targetObject.BaseObject;
+                else
+                    throw new NotDefinedException(target, ownerName);
+            }
         }
 
         public void Freeze()
@@ -99,6 +121,9 @@ namespace Lury.Core.Runtime
 
         public override string ToString() => Value.ToString();
 
+        public virtual string ToInspectString() => ToString();
+
+        // TODO: 新オブジェクトモデルに適合するよう書き換え
         public override bool Equals(object obj)
         {
             var other = obj as LuryObject;
@@ -106,25 +131,41 @@ namespace Lury.Core.Runtime
             if (other == null)
                 return false;
 
-            return Value.Equals(other.Value) && LuryTypeName.Equals(other.LuryTypeName);
+            return Value.Equals(other.Value);
         }
 
+        // TODO: 新オブジェクトモデルに適合するよう書き換え
         public override int GetHashCode()
         {
-            return Value.GetHashCode() ^ LuryTypeName.GetHashCode();
+            return Value.GetHashCode() ^ Class.GetHashCode();
         }
 
         #endregion
 
         #region -- Private Methods --
 
-        private LuryObject GetMemberNoRecursion(string name)
+        private bool CheckAndAssign(string name, LuryObject data)
         {
-            if (members.ContainsKey(name))
-                return members[name];
+            var target = this;
 
-            //throw new LuryException(LuryExceptionType.NameIsNotFound);
-            throw new InvalidOperationException();
+            while (true)
+            {
+                if (target.attributes.ContainsKey(name))
+                {
+                    target.AssignAttribute(name, data);
+                    return true;
+                }
+
+                if (target.BaseObject != null)
+                    target = target.BaseObject;
+                else
+                    return false;
+            }
+        }
+
+        private void AssignAttribute(string name, LuryObject data)
+        {
+            attributes[name] = data;
         }
 
         #endregion
