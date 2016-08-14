@@ -71,12 +71,10 @@ namespace Lury.Core.Runtime
 
         public void Assign(IToken target, LuryObject data)
         {
-            var name = target.Text;
-
-            if (attributes.ContainsKey(name) ||
+            if (attributes.ContainsKey(target.Text) ||
                 BaseObject == null ||
-                !CheckAndAssign(name, data))
-                AssignAttribute(name, data);
+                !CheckAndAssign(target, data))
+                AssignAttribute(target, data);
         }
 
         public bool Has(IToken target) => Has(target.Text);
@@ -144,28 +142,31 @@ namespace Lury.Core.Runtime
 
         #region -- Private Methods --
 
-        private bool CheckAndAssign(string name, LuryObject data)
+        private bool CheckAndAssign(IToken target, LuryObject data)
         {
-            var target = this;
+            var targetObject = this;
 
             while (true)
             {
-                if (target.attributes.ContainsKey(name))
+                if (targetObject.attributes.ContainsKey(target.Text))
                 {
-                    target.AssignAttribute(name, data);
+                    targetObject.AssignAttribute(target, data);
                     return true;
                 }
 
-                if (target.BaseObject != null)
-                    target = target.BaseObject;
+                if (targetObject.BaseObject != null)
+                    targetObject = targetObject.BaseObject;
                 else
                     return false;
             }
         }
 
-        private void AssignAttribute(string name, LuryObject data)
+        private void AssignAttribute(IToken target, LuryObject data)
         {
-            attributes[name] = data;
+            if (IsFrozen)
+                throw new CantModifyException(target);
+
+            attributes[target.Text] = data;
         }
 
         #endregion
