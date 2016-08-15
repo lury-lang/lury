@@ -53,6 +53,7 @@
     <Compile Include="Error\AttributeNotDefinedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\ILuryAccessible.cs" />
+    <Compile Include="Runtime\IObjectFetcher.cs" />
     <Compile Include="Runtime\LuryContext.cs" />
     <Compile Include="Runtime\LuryEngine.cs" />
     <Compile Include="Runtime\LuryObject.cs" />
