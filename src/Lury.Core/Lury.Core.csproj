@@ -50,6 +50,7 @@
     <Compile Include="Compiler\StringHelper.cs" />
     <Compile Include="Error\CodeBugException.cs" />
     <Compile Include="Error\LuryException.cs" />
+    <Compile Include="Error\AttributeNotDefinedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\ILuryAccessible.cs" />
     <Compile Include="Runtime\LuryContext.cs" />
