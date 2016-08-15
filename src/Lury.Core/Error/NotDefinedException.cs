@@ -32,30 +32,20 @@ namespace Lury.Core.Error
 {
     public class NotDefinedException : LuryException
     {
-        #region -- Public Properties --
-
-        public string OwnerName { get; }
-
-        #endregion
-
         #region -- Constructors --
 
-        internal NotDefinedException(IToken target, string ownerName) 
-            : base(CreateMessage(target, ownerName), target)
+        internal NotDefinedException(IToken target) 
+            : base(CreateMessage(target), target)
         {
-            OwnerName = ownerName;
         }
 
         #endregion
 
         #region -- Private Static Methods --
 
-        private static string CreateMessage(IToken target, string ownerName)
+        private static string CreateMessage(IToken target)
         {
-            if (string.IsNullOrWhiteSpace(ownerName))
-                return $"属性 '{target.Text}' は定義されていません。";
-
-            return $"オブジェクト '{ownerName}' に属性 '{target.Text}' は定義されていません。";
+            return $"オブジェクト '{target.Text}' は定義されていません。";
         }
 
         #endregion
