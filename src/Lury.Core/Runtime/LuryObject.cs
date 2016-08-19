@@ -108,7 +108,7 @@ namespace Lury.Core.Runtime
                 if (targetObject.BaseObject != null)
                     targetObject = targetObject.BaseObject;
                 else
-                    throw new NotDefinedException(target, ownerName);
+                    throw new AttributeNotDefinedException(target, ownerName);
             }
         }
 
