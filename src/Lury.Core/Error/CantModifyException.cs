@@ -45,7 +45,7 @@ namespace Lury.Core.Error
 
         private static string CreateMessage(IToken target)
         {
-            return $"凍結されたオブジェクト '{target.Text}' は変更できません。";
+            return $"凍結されたオブジェクト '{target.Text}' の属性は変更できません。";
         }
 
         #endregion
