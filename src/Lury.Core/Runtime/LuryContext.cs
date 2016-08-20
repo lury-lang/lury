@@ -30,7 +30,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Lury.Core.Runtime.Type;
 
 namespace Lury.Core.Runtime
 {
@@ -128,82 +127,7 @@ namespace Lury.Core.Runtime
 
         #region -- Public Static Methods --
 
-        public static LuryContext CreateGlobalContext()
-        {
-            var context = new LuryContext();
 
-            #region Intrinsic Classes
-
-            Action<string, string, IEnumerable<Tuple<string, MethodInfo>>> setFunctionMember = (t, n, f) =>
-            {
-                var type = new LuryObject(t, null);
-
-                foreach (var item in f)
-                    type.SetMember(item.Item1, new LuryObject(LuryFunction.FullName, item.Item2, true));
-
-                type.Freeze();
-                context[n] = type;
-                context[type.LuryTypeName] = type;
-            };
-
-            var intrinsicTypes = Assembly
-                .GetExecutingAssembly()
-                .GetTypes()
-                .Where(t =>
-                    t.IsClass &&
-                    Attribute.GetCustomAttribute(t, typeof(IntrinsicClassAttribute)) != null);
-
-            foreach (var type in intrinsicTypes)
-            {
-                var attr = type.GetCustomAttribute<IntrinsicClassAttribute>();
-                var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
-                var funcnames = methods
-                    .Select(
-                        method =>
-                            new
-                            {
-                                method,
-                                attributes = method.GetCustomAttributes<IntrinsicAttribute>().Select(a => a.TargetFunction)
-                            })
-                    .SelectMany(_ => _.attributes, (_, funcName) => Tuple.Create(funcName, _.method)).ToList();
-
-                if (funcnames.Count > 0)
-                    setFunctionMember(attr.FullName, attr.TypeName, funcnames);
-            }
-
-            #endregion
-
-            #region BuiltIn Functions
-
-            var builtInFunctions = Assembly
-                .GetExecutingAssembly()
-                .GetTypes()
-                .Where(t =>
-                    t.IsClass &&
-                    Attribute.GetCustomAttribute(t, typeof(BuiltInClass)) != null);
-
-            foreach (var type in builtInFunctions)
-            {
-                var attr = type.GetCustomAttribute<BuiltInClass>();
-                var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
-                var funcnames = methods
-                    .Select(
-                        method =>
-                            new
-                            {
-                                method,
-                                attributes = method.GetCustomAttributes<BuiltInAttribute>().Select(a => a.FunctionName)
-                            })
-                    .SelectMany(_ => _.attributes, (_, funcName) => Tuple.Create(funcName, _.method)).ToList();
-
-                foreach (var func in funcnames)
-                    context[func.Item1] = LuryFunction.GetObject(func.Item2);
-            }
-
-            #endregion
-
-            return context;
-        }
 
         #endregion
     }

@@ -44,7 +44,6 @@ namespace Lury.Core.Runtime
 
         public LuryEngine()
         {
-            Context = LuryContext.CreateGlobalContext();
         }
 
         #endregion

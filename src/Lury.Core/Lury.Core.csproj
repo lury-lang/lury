@@ -57,19 +57,6 @@
     <Compile Include="Runtime\LuryContext.cs" />
     <Compile Include="Runtime\LuryEngine.cs" />
     <Compile Include="Runtime\LuryObject.cs" />
-    <Compile Include="Runtime\BuiltInFunction.cs" />
-    <Compile Include="Runtime\Type\BuiltInAttribute.cs" />
-    <Compile Include="Runtime\Type\IntrinsicAttribute.cs" />
-    <Compile Include="Runtime\Type\LuryList.cs" />
-    <Compile Include="Runtime\Type\LuryBoolean.cs" />
-    <Compile Include="Runtime\Type\IntrinsicClassAttribute.cs" />
-    <Compile Include="Runtime\Type\LuryFunction.cs" />
-    <Compile Include="Runtime\Type\LuryInteger.cs" />
-    <Compile Include="Runtime\Type\IntrinsicConstants.cs" />
-    <Compile Include="Runtime\Type\LuryReal.cs" />
-    <Compile Include="Runtime\Type\LuryReference.cs" />
-    <Compile Include="Runtime\Type\LuryString.cs" />
-    <Compile Include="Runtime\Type\LuryNil.cs" />
     <Compile Include="Error\NotDefinedException.cs" />
     <Compile Include="Error\CantModifyException.cs" />
   </ItemGroup>
