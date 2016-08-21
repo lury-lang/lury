@@ -26,9 +26,9 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 using Antlr4.Runtime;
+using Lury.Core.Compiler;
 using Lury.Core.Error;
 
 namespace Lury.Core.Runtime
@@ -69,15 +69,10 @@ namespace Lury.Core.Runtime
 
         #region -- Public Methods --
 
-        public void Assign(IToken target, LuryObject data)
+        public void Assign(string target, LuryObject data)
         {
-            if (attributes.ContainsKey(target.Text) ||
-                BaseObject == null ||
-                !CheckAndAssign(target, data))
-                AssignAttribute(target, data);
+            Assign(new CommonToken(LuryLexer.NAME, target), data);
         }
-
-        public bool Has(IToken target) => Has(target.Text);
 
         public bool Has(string name)
         {
@@ -92,23 +87,6 @@ namespace Lury.Core.Runtime
                     targetObject = targetObject.BaseObject;
                 else
                     return false;
-            }
-        }
-
-        public LuryObject Fetch(IToken target, string ownerName = null)
-        {
-            var name = target.Text;
-            var targetObject = this;
-
-            while (true)
-            {
-                if (targetObject.attributes.ContainsKey(name))
-                    return targetObject.attributes[name];
-
-                if (targetObject.BaseObject != null)
-                    targetObject = targetObject.BaseObject;
-                else
-                    throw new AttributeNotDefinedException(target, ownerName);
             }
         }
 
@@ -136,6 +114,37 @@ namespace Lury.Core.Runtime
         public override int GetHashCode()
         {
             return Value.GetHashCode() ^ Class.GetHashCode();
+        }
+
+        #endregion
+
+        #region -- Internal Methods --
+
+        internal void Assign(IToken target, LuryObject data)
+        {
+            if (attributes.ContainsKey(target.Text) ||
+                BaseObject == null ||
+                !CheckAndAssign(target, data))
+                AssignAttribute(target, data);
+        }
+
+        internal bool Has(IToken target) => Has(target.Text);
+
+        internal LuryObject Fetch(IToken target, string ownerName = null)
+        {
+            var name = target.Text;
+            var targetObject = this;
+
+            while (true)
+            {
+                if (targetObject.attributes.ContainsKey(name))
+                    return targetObject.attributes[name];
+
+                if (targetObject.BaseObject != null)
+                    targetObject = targetObject.BaseObject;
+                else
+                    throw new AttributeNotDefinedException(target, ownerName);
+            }
         }
 
         #endregion
