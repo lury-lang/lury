@@ -33,7 +33,7 @@ using Lury.Core.Error;
 
 namespace Lury.Core.Runtime
 {
-    public abstract class LuryObject : ILuryAccessible
+    public class LuryObject : ILuryAccessible
     {
         #region -- Private Fields --
 
@@ -55,7 +55,7 @@ namespace Lury.Core.Runtime
 
         #region -- Constructors --
 
-        protected LuryObject(LuryObject baseObject, LuryObject @class, object value = null, bool freeze = false)
+        public LuryObject(LuryObject baseObject, LuryObject @class, object value = null, bool freeze = false)
         {
             BaseObject = baseObject;
             Class = @class;
