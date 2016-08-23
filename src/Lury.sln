@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lury.Core", "Lury.Core\Lury
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lury", "Lury\Lury.csproj", "{822C883F-0FD0-4AC8-926C-168469EC160D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A4381C3F-0AFF-4B2F-8227-5D20CBFFE91F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unittest", "..\test\Unittest\Unittest.csproj", "{D5E31E05-E490-46E8-A8D8-81A83EC4E10B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,15 @@ Global
 		{822C883F-0FD0-4AC8-926C-168469EC160D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{822C883F-0FD0-4AC8-926C-168469EC160D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{822C883F-0FD0-4AC8-926C-168469EC160D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5E31E05-E490-46E8-A8D8-81A83EC4E10B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5E31E05-E490-46E8-A8D8-81A83EC4E10B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5E31E05-E490-46E8-A8D8-81A83EC4E10B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5E31E05-E490-46E8-A8D8-81A83EC4E10B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D5E31E05-E490-46E8-A8D8-81A83EC4E10B} = {A4381C3F-0AFF-4B2F-8227-5D20CBFFE91F}
 	EndGlobalSection
 EndGlobal
