@@ -71,7 +71,7 @@ namespace Lury.Core.Error
                   token.Line,
                   token.StopIndex - token.StartIndex,
                   token.Text,
-                  token.InputStream.SourceName)
+                  token.InputStream?.SourceName)
         {
         }
 
