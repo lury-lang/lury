@@ -69,5 +69,24 @@ namespace Unittest
             Assert.Throws<AttributeNotDefinedException>(() => baseObject.Fetch("foo"));
             Assert.Throws<AttributeNotDefinedException>(() => baseObject.Fetch("bar"));
         }
+
+        [Test]
+        public void FreezeTest()
+        {
+            var baseObject = new LuryObject(null, null);
+            var classObject = new LuryObject(baseObject, null, "BaseClass");
+            var luryObject = new LuryObject(baseObject, classObject);
+
+            var attributeObject = new LuryObject(baseObject, null, 1);
+
+            luryObject.Assign("foo", attributeObject);
+            Assert.IsFalse(luryObject.IsFrozen);
+            Assert.IsFalse(attributeObject.IsFrozen);
+
+            luryObject.Freeze();
+            Assert.IsTrue(luryObject.IsFrozen);
+            Assert.IsFalse(attributeObject.IsFrozen);
+            Assert.Throws<CantModifyException>(() => luryObject.Assign("foo", attributeObject));
+        }
     }
 }
