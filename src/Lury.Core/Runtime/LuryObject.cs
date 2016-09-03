@@ -74,13 +74,13 @@ namespace Lury.Core.Runtime
             Assign(new CommonToken(LuryLexer.NAME, target), data);
         }
 
-        public bool Has(string name)
+        public bool Has(string target)
         {
             var targetObject = this;
 
             while (true)
             {
-                if (targetObject.attributes.ContainsKey(name))
+                if (targetObject.attributes.ContainsKey(target))
                     return true;
 
                 if (targetObject.BaseObject != null)
@@ -88,6 +88,11 @@ namespace Lury.Core.Runtime
                 else
                     return false;
             }
+        }
+
+        public LuryObject Fetch(string target)
+        {
+            return Fetch(new CommonToken(LuryLexer.NAME, target));
         }
 
         public void Freeze()

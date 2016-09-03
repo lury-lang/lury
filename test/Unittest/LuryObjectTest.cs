@@ -9,6 +9,29 @@ namespace Unittest
     public class LuryObjectTest
     {
         [Test]
+        public void CtorTest()
+        {
+            var baseObject = new LuryObject(null, null, freeze: true);
+            var classObject = new LuryObject(baseObject, null, "BaseClass");
+            var luryObject = new LuryObject(baseObject, classObject);
+
+            Assert.IsNull(baseObject.BaseObject);
+            Assert.IsNull(baseObject.Class);
+            Assert.IsNull(baseObject.Value);
+            Assert.IsTrue(baseObject.IsFrozen);
+
+            Assert.AreEqual(baseObject, classObject.BaseObject);
+            Assert.IsNull(classObject.Class);
+            Assert.AreEqual("BaseClass", classObject.Value);
+            Assert.IsFalse(classObject.IsFrozen);
+
+            Assert.AreEqual(baseObject, luryObject.BaseObject);
+            Assert.AreEqual(classObject, luryObject.Class);
+            Assert.IsNull(luryObject.Value);
+            Assert.IsFalse(luryObject.IsFrozen);
+        }
+
+        [Test]
         public void AssignTest()
         {
             var baseObject = new LuryObject(null, null);
