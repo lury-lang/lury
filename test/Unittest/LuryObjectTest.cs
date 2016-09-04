@@ -73,6 +73,7 @@ namespace Unittest
             var attributeObject2 = new LuryObject(baseObject, null, 2);
             var attributeObject3 = new LuryObject(baseObject, null, 3);
             var attributeObject4 = new LuryObject(baseObject, null, 4);
+            var attributeObject5 = new LuryObject(baseObject, null, 5);
 
             luryObject.Assign("foo", attributeObject1);
             classObject.Assign("bar", attributeObject2);
@@ -85,6 +86,10 @@ namespace Unittest
 
             Assert.AreEqual(attributeObject3, baseObject.Fetch("hoge"));
             Assert.AreEqual(attributeObject4, baseObject.Fetch("fuga"));
+
+            luryObject.Assign("hoge", attributeObject5);
+            Assert.AreEqual(attributeObject5, luryObject.Fetch("hoge"));
+            Assert.AreNotEqual(attributeObject3, luryObject.Fetch("hoge"));
 
             Assert.Throws<AttributeNotDefinedException>(() => luryObject.Fetch("bar"));
             Assert.Throws<AttributeNotDefinedException>(() => luryObject.Fetch("baz"));
