@@ -15,20 +15,20 @@ namespace Unittest
             var classObject = new LuryObject(baseObject, null, "BaseClass");
             var luryObject = new LuryObject(baseObject, classObject);
 
-            Assert.IsNull(baseObject.BaseObject);
-            Assert.IsNull(baseObject.Class);
-            Assert.IsNull(baseObject.Value);
-            Assert.IsTrue(baseObject.IsFrozen);
+            Assert.That(baseObject.BaseObject, Is.Null);
+            Assert.That(baseObject.Class, Is.Null);
+            Assert.That(baseObject.Value, Is.Null);
+            Assert.That(baseObject.IsFrozen);
 
-            Assert.AreEqual(baseObject, classObject.BaseObject);
-            Assert.IsNull(classObject.Class);
-            Assert.AreEqual("BaseClass", classObject.Value);
-            Assert.IsFalse(classObject.IsFrozen);
+            Assert.That(classObject.BaseObject, Is.EqualTo(baseObject));
+            Assert.That(classObject.Class, Is.Null);
+            Assert.That(classObject.Value, Is.EqualTo("BaseClass"));
+            Assert.That(classObject.IsFrozen, Is.False);
 
-            Assert.AreEqual(baseObject, luryObject.BaseObject);
-            Assert.AreEqual(classObject, luryObject.Class);
-            Assert.IsNull(luryObject.Value);
-            Assert.IsFalse(luryObject.IsFrozen);
+            Assert.That(luryObject.BaseObject, Is.EqualTo(baseObject));
+            Assert.That(luryObject.Class, Is.EqualTo(classObject));
+            Assert.That(luryObject.Value, Is.Null);
+            Assert.That(luryObject.IsFrozen, Is.False);
         }
 
         [Test]
@@ -48,18 +48,18 @@ namespace Unittest
             baseObject.Assign("hoge", attributeObject3);
             baseObject.Assign("fuga", attributeObject4);
 
-            Assert.True(luryObject.Has("foo"));
-            Assert.True(luryObject.Has("hoge"));
-            Assert.True(luryObject.Has("fuga"));
+            Assert.That(luryObject.Has("foo"));
+            Assert.That(luryObject.Has("hoge"));
+            Assert.That(luryObject.Has("fuga"));
             
-            Assert.True(baseObject.Has("hoge"));
-            Assert.True(baseObject.Has("fuga"));
+            Assert.That(baseObject.Has("hoge"));
+            Assert.That(baseObject.Has("fuga"));
 
-            Assert.False(luryObject.Has("bar"));
-            Assert.False(luryObject.Has("baz"));
+            Assert.That(luryObject.Has("bar"), Is.False);
+            Assert.That(luryObject.Has("baz"), Is.False);
 
-            Assert.False(baseObject.Has("foo"));
-            Assert.False(baseObject.Has("bar"));
+            Assert.That(baseObject.Has("foo"), Is.False);
+            Assert.That(baseObject.Has("bar"), Is.False);
         }
 
         [Test]
@@ -80,22 +80,21 @@ namespace Unittest
             baseObject.Assign("hoge", attributeObject3);
             baseObject.Assign("fuga", attributeObject4);
 
-            Assert.AreEqual(attributeObject1, luryObject.Fetch("foo"));
-            Assert.AreEqual(attributeObject3, luryObject.Fetch("hoge"));
-            Assert.AreEqual(attributeObject4, luryObject.Fetch("fuga"));
+            Assert.That(luryObject.Fetch("foo"), Is.EqualTo(attributeObject1));
+            Assert.That(luryObject.Fetch("hoge"), Is.EqualTo(attributeObject3));
+            Assert.That(luryObject.Fetch("fuga"), Is.EqualTo(attributeObject4));
 
-            Assert.AreEqual(attributeObject3, baseObject.Fetch("hoge"));
-            Assert.AreEqual(attributeObject4, baseObject.Fetch("fuga"));
+            Assert.That(baseObject.Fetch("hoge"), Is.EqualTo(attributeObject3));
+            Assert.That(baseObject.Fetch("fuga"), Is.EqualTo(attributeObject4));
 
             luryObject.Assign("hoge", attributeObject5);
-            Assert.AreEqual(attributeObject5, luryObject.Fetch("hoge"));
-            Assert.AreNotEqual(attributeObject3, luryObject.Fetch("hoge"));
+            Assert.That(luryObject.Fetch("hoge"), Is.EqualTo(attributeObject5).And.Not.EqualTo(attributeObject3));
 
-            Assert.Throws<AttributeNotDefinedException>(() => luryObject.Fetch("bar"));
-            Assert.Throws<AttributeNotDefinedException>(() => luryObject.Fetch("baz"));
+            Assert.That(() => baseObject.Fetch("bar"), Throws.TypeOf<AttributeNotDefinedException>());
+            Assert.That(() => baseObject.Fetch("baz"), Throws.TypeOf<AttributeNotDefinedException>());
 
-            Assert.Throws<AttributeNotDefinedException>(() => baseObject.Fetch("foo"));
-            Assert.Throws<AttributeNotDefinedException>(() => baseObject.Fetch("bar"));
+            Assert.That(() => baseObject.Fetch("foo"), Throws.TypeOf<AttributeNotDefinedException>());
+            Assert.That(() => baseObject.Fetch("bar"), Throws.TypeOf<AttributeNotDefinedException>());
         }
 
         [Test]
@@ -108,13 +107,13 @@ namespace Unittest
             var attributeObject = new LuryObject(baseObject, null, 1);
 
             luryObject.Assign("foo", attributeObject);
-            Assert.IsFalse(luryObject.IsFrozen);
-            Assert.IsFalse(attributeObject.IsFrozen);
+            Assert.That(luryObject.IsFrozen, Is.False);
+            Assert.That(attributeObject.IsFrozen, Is.False);
 
             luryObject.Freeze();
-            Assert.IsTrue(luryObject.IsFrozen);
-            Assert.IsFalse(attributeObject.IsFrozen);
-            Assert.Throws<CantModifyException>(() => luryObject.Assign("foo", attributeObject));
+            Assert.That(luryObject.IsFrozen);
+            Assert.That(attributeObject.IsFrozen, Is.False);
+            Assert.That(() => luryObject.Assign("foo", attributeObject), Throws.TypeOf<CantModifyException>());
         }
     }
 }
