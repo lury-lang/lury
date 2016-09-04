@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace Unittest
 {
+    [Parallelizable]
     [TestFixture]
     public class LuryObjectTest
     {
