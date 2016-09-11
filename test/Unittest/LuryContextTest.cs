@@ -26,6 +26,7 @@ namespace Unittest
             var object1 = new LuryObject(null, null, 1);
             var object2 = new LuryObject(null, null, 2);
             var object3 = new LuryObject(null, null, 3);
+            var object4 = new LuryObject(null, null, 4);
 
             context1["foo"] = object1;
             context2["bar"] = object2;
@@ -39,6 +40,13 @@ namespace Unittest
             Assert.That(context3.Has("bar"));
 
             Assert.That(context3.Has("hoge"));
+
+            Assert.That(context3.Has("fuga"), Is.False);
+
+            context3["foo"] = object4;
+            Assert.That(context3.Has("foo"));
+            Assert.That(context1.Has("foo"));
+            Assert.That(context3["foo"], Is.EqualTo(context1["foo"]).And.EqualTo(object4));
         }
     }
 }
