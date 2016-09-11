@@ -48,5 +48,35 @@ namespace Unittest
             Assert.That(context1.Has("foo"));
             Assert.That(context3["foo"], Is.EqualTo(context1["foo"]).And.EqualTo(object4));
         }
+
+        [Test]
+        public void FetchTest()
+        {
+            var context1 = new LuryContext();
+            var context2 = new LuryContext(context1);
+            var context3 = new LuryContext(context2);
+            var object1 = new LuryObject(null, null, 1);
+            var object2 = new LuryObject(null, null, 2);
+            var object3 = new LuryObject(null, null, 3);
+            var object4 = new LuryObject(null, null, 4);
+
+            context1["foo"] = object1;
+            context2["bar"] = object2;
+            context3["hoge"] = object3;
+
+            Assert.That(context1["foo"], Is.EqualTo(object1));
+            Assert.That(context2["foo"], Is.EqualTo(object1));
+            Assert.That(context3["foo"], Is.EqualTo(object1));
+
+            Assert.That(context2["bar"], Is.EqualTo(object2));
+            Assert.That(context3["bar"], Is.EqualTo(object2));
+
+            Assert.That(context3["hoge"], Is.EqualTo(object3));
+
+            context3["foo"] = object4;
+            Assert.That(context3["foo"], Is.EqualTo(context1["foo"]).And.EqualTo(object4));
+
+            Assert.That(() => context3["fuga"], Throws.InvalidOperationException);
+        }
     }
 }
