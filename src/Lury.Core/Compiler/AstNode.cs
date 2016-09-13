@@ -31,7 +31,7 @@ using Antlr4.Runtime;
 
 namespace Lury.Core.Compiler
 {
-    internal class PruningTreeNode
+    internal class AstNode
     {
         #region -- Public Properties --
 
@@ -39,26 +39,26 @@ namespace Lury.Core.Compiler
 
         public IToken TermToken { get; }
 
-        public IReadOnlyDictionary<object, PruningTreeNode> Children { get; }
+        public IReadOnlyDictionary<object, AstNode> Children { get; }
 
-        public PruningTreeNodeType NodeType { get; }
+        public AstNodeType NodeType { get; }
 
         #endregion
 
         #region -- Constructors --
 
-        public PruningTreeNode(PruningTreeNodeType nodeType, IToken termToken)
+        public AstNode(AstNodeType nodeType, IToken termToken)
         {
             TermToken = termToken;
             NodeType = nodeType;
             Children = null;
         }
 
-        public PruningTreeNode(PruningTreeNodeType nodeType, IToken termToken, IDictionary<object, PruningTreeNode> children)
+        public AstNode(AstNodeType nodeType, IToken termToken, IDictionary<object, AstNode> children)
         {
             TermToken = termToken;
             NodeType = nodeType;
-            Children = (IReadOnlyDictionary<object, PruningTreeNode>) children;
+            Children = (IReadOnlyDictionary<object, AstNode>) children;
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace Lury.Core.Compiler
         #endregion
     }
 
-    internal enum PruningTreeNodeType
+    internal enum AstNodeType
     {
         Term = 0,
         
