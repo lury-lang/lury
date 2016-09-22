@@ -57,8 +57,7 @@ namespace Lury.Core.Runtime
                     context = context.Parent;
                 }
 
-                //throw new LuryException(LuryExceptionType.NameIsNotFound);
-                throw new InvalidOperationException();
+                throw new NotDefinedException(new CommonToken(LuryLexer.NAME, member));
             }
             set
             {
