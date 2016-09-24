@@ -36,8 +36,6 @@ namespace Lury.Core.Runtime
     {
         #region -- Public Properties --
 
-        public LuryContext Context { get; }
-
         #endregion
 
         #region -- Constructors --
@@ -57,8 +55,8 @@ namespace Lury.Core.Runtime
             var commonTokenStream = new CommonTokenStream(luryLexer);
             var luryParser = new LuryParser(commonTokenStream);
             var programContext = luryParser.program();
-            
-            var luryVisitor = new LuryVisitor(Context);
+
+            var pruningVisitor = new AstVisitor();
 
             return luryVisitor.VisitProgram(programContext);
         }
