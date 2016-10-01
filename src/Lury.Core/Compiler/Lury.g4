@@ -391,7 +391,7 @@ NEWLINE
  ;
 
 NAME
- : ID_START ID_CONTINUE*
+ : ID_START ID_CONTINUE* ID_FLAG?
  ;
 
 STRING_LITERAL
@@ -425,6 +425,11 @@ FLOAT_NUMBER
 	    }
    }
  | EXPONENT_FLOAT
+ ;
+
+ID_FLAG
+ : '!'+
+ | '?'+
  ;
 
 DOT : '.';
