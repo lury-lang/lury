@@ -194,14 +194,18 @@ namespace Lury.Core.Compiler
             if (context.Right == null)
                 return VisitIn_expression(context.Left);
 
-            var rightNode = new NodeChildren { { "Right", VisitIn_expression(context.Right) } };
+            var children = new NodeChildren
+            {
+                { "Left", VisitIn_expression(context.Left) },
+                { "Right", VisitIn_expression(context.Right) }
+            };
 
             switch (context.Op?.Text)
             {
                 case "..":
-                    return new AstNode(RangeOpen, context.Op, rightNode);
+                    return new AstNode(RangeOpen, context.Op, children);
                 case "...":
-                    return new AstNode(RangeClose, context.Op, rightNode);
+                    return new AstNode(RangeClose, context.Op, children);
 
                 default:
                     throw new CodeBugException(context.Start);
