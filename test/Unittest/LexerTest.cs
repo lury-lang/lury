@@ -19,11 +19,8 @@ namespace Unittest
         [Test]
         public void IntegerTest()
         {
-            Assert.That(Tokens.From("0").Type, Are.EqualTo(DECIMAL_INTEGER));
-            Assert.That(Tokens.From("0").Text, Are.EqualTo("0"));
-
-            Assert.That(Tokens.From("1").Type, Are.EqualTo(DECIMAL_INTEGER));
-            Assert.That(Tokens.From("1").Text, Are.EqualTo("1"));
+            Assert.That("0", IsTokenized.Under(DECIMAL_INTEGER).And.Append(IsSeparated.Into("0")));
+            Assert.That("1", IsTokenized.Under(DECIMAL_INTEGER).And.Append(IsSeparated.Into("1")));
         }
     }
 }
