@@ -49,7 +49,7 @@ namespace Unittest
             this.types = types;
         }
 
-        public override string Description => "tokens tokenized under specified types";
+        public override string Description => $"Types: <{string.Join(", ", types)}>";
 
         public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
@@ -76,7 +76,7 @@ namespace Unittest
             this.texts = texts;
         }
 
-        public override string Description => "tokens separated into specified texts";
+        public override string Description => $"Texts: <{string.Join(", ", texts)}>";
 
         public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
