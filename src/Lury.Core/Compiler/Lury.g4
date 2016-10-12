@@ -395,7 +395,7 @@ NAME
  ;
 
 STRING_LITERAL
- : ( SHORT_STRING | LONG_STRING )
+ : STRING
  ;
 
 DECIMAL_INTEGER
@@ -493,22 +493,18 @@ UNKNOWN_CHAR
  * fragments 
  */
 
-fragment SHORT_STRING
+fragment STRING
  : '\'' ( STRING_ESCAPE_SEQ | ~[\\\r\n'] )* '\''
  | '"' ( STRING_ESCAPE_SEQ | ~[\\\r\n"] )* '"'
+ | '`' STRING_ITEM*? '`'
  ;
 
-fragment LONG_STRING
- : '\'\'\'' LONG_STRING_ITEM*? '\'\'\''
- | '"""' LONG_STRING_ITEM*? '"""'
- ;
-
-fragment LONG_STRING_ITEM
- : LONG_STRING_CHAR
+fragment STRING_ITEM
+ : STRING_CHAR
  | STRING_ESCAPE_SEQ
  ;
 
-fragment LONG_STRING_CHAR
+fragment STRING_CHAR
  : ~'\\'
  ;
 
