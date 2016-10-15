@@ -15,20 +15,20 @@
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KKEY_IND,
+ * EXPRESS OR IMPLIED, KEY_INCLUDKEY_ING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS KEY_FOR A PARTICULAR PURPOSE AND
+ * NONKEY_INFRKEY_INGEMENT. KEY_IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE KEY_FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER KEY_IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISKEY_ING
+ * FROM, OUT OF OR KEY_IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALKEY_INGS KEY_IN THE SOFTWARE.
  *
  */
 
 grammar Lury;
 
-tokens { INDENT, DEDENT }
+tokens { KEY_INDENT, DEDENT }
 
 @lexer::header {
 using System;
@@ -160,7 +160,7 @@ expression_statement
  ;           
 
 pass_statement
- : Mark=PASS
+ : Mark=KEY_PASS
  ;
 
 flow_statement
@@ -169,11 +169,11 @@ flow_statement
  ;
 
 break_statement
- : Mark=BREAK
+ : Mark=KEY_BREAK
  ;
 
 return_statement
- : Mark=RETURN Value=expression?
+ : Mark=KEY_RETURN Value=expression?
  ;
 
 compound_statement
@@ -183,15 +183,15 @@ compound_statement
  ;
 
 if_statement
- : Mark=IF Condition=expression ':' IfSuite=suite ( ELSE ':' ElseSuite=suite )?
+ : Mark=KEY_IF Condition=expression ':' IfSuite=suite ( KEY_ELSE ':' ElseSuite=suite )?
  ;
 
 for_statement
- : Mark=FOR Variable=NAME IN Object=expression ':' ForSuite=suite ( ELSE ':' ElseSuite=suite )?
+ : Mark=KEY_FOR Variable=NAME KEY_IN Object=expression ':' ForSuite=suite ( KEY_ELSE ':' ElseSuite=suite )?
  ;
 
 function_definition
- : Mark=DEF Name=NAME ('(' Parameter=parameter? ')')? ':' FunctionSuite=suite
+ : Mark=KEY_DEF Name=NAME ('(' Parameter=parameter? ')')? ':' FunctionSuite=suite
  ;
 
 parameter
@@ -200,7 +200,7 @@ parameter
 
 suite
  : simple_statement
- | NEWLINE INDENT Statements=statement+ DEDENT
+ | NEWLINE KEY_INDENT Statements=statement+ DEDENT
  ;
 
 expression
@@ -246,7 +246,7 @@ range_expression
  ;
 
 in_expression
- : Left=or_expression (Op=(IN|NOT_IN) Right=or_expression)?
+ : Left=or_expression (Op=(KEY_IN|KEY_NOT_IN) Right=or_expression)?
  ;
 
 or_expression
@@ -303,9 +303,9 @@ key_index
 primary
  : Name=NAME
  | Literal=literal
- | True=TRUE
- | False=FALSE
- | Nil=NIL
+ | True=KEY_TRUE
+ | False=KEY_FALSE
+ | Nil=KEY_NIL
  | '(' Expression=expression ')' 
  ;
 
@@ -338,21 +338,21 @@ hash_element
  * lexer rules
  */
 
-DEF : 'def';
-RETURN : 'return';
-IF : 'if';
-ELSE : 'else';
-FOR : 'for';
-IN : 'in';
-NOT_IN : '!in';
-NIL : 'nil';
-TRUE : 'true';
-FALSE : 'false';
-PASS : 'pass';
-BREAK : 'break';
+KEY_DEF : 'def';
+KEY_RETURN : 'return';
+KEY_IF : 'if';
+KEY_ELSE : 'else';
+KEY_FOR : 'for';
+KEY_IN : 'in';
+KEY_NOT_IN : '!in';
+KEY_NIL : 'nil';
+KEY_TRUE : 'true';
+KEY_FALSE : 'false';
+KEY_PASS : 'pass';
+KEY_BREAK : 'break';
 
 NEWLINE
- : ( { AtStartOfInput() }?   SPACES
+ : ( { AtStartOfInput() }? SPACES
    | ( '\r'? '\n' | '\r' ) SPACES?
    )
    {
@@ -377,7 +377,7 @@ NEWLINE
        }
        else if (indent > previous) {
          indents.Push(indent);
-         Emit(CommonToken(LuryParser.INDENT, spaces));
+         Emit(CommonToken(LuryParser.KEY_INDENT, spaces));
        }
        else {
          // Possibly emit more than 1 DEDENT token.
@@ -496,15 +496,15 @@ UNKNOWN_CHAR
 fragment STRING
  : '\'' ( STRING_ESCAPE_SEQ | ~[\\\r\n'] )* '\''
  | '"' ( STRING_ESCAPE_SEQ | ~[\\\r\n"] )* '"'
- | '`' STRING_ITEM*? '`'
+ | '`' STRING_ING_ITEM*? '`'
  ;
 
-fragment STRING_ITEM
- : STRING_CHAR
+fragment STRING_ING_ITEM
+ : STRING_ING_CHAR
  | STRING_ESCAPE_SEQ
  ;
 
-fragment STRING_CHAR
+fragment STRING_ING_CHAR
  : ~'\\'
  ;
 
