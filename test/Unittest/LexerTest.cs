@@ -66,5 +66,13 @@ namespace Unittest
             Assert.That("\"\"", IsTokenized.Under(STRING_LITERAL).And.Append(IsSeparated.Into("\"\"")));
             Assert.That("``", IsTokenized.Under(STRING_LITERAL).And.Append(IsSeparated.Into("``")));
         }
+
+        [Test]
+        public void EmptyContainerTest()
+        {
+            Assert.That("[]", IsTokenized.Under(OPEN_BRACK, CLOSE_BRACK).And.Append(IsSeparated.Into("[", "]")));
+            Assert.That("()", IsTokenized.Under(OPEN_PAREN, CLOSE_PAREN).And.Append(IsSeparated.Into("(", ")")));
+            Assert.That("{}", IsTokenized.Under(OPEN_BRACE, CLOSE_BRACE).And.Append(IsSeparated.Into("{", "}")));
+        }
     }
 }
