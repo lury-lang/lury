@@ -74,5 +74,25 @@ namespace Unittest
             Assert.That("()", IsTokenized.Under(OPEN_PAREN, CLOSE_PAREN).And.Append(IsSeparated.Into("(", ")")));
             Assert.That("{}", IsTokenized.Under(OPEN_BRACE, CLOSE_BRACE).And.Append(IsSeparated.Into("{", "}")));
         }
+
+        [Test]
+        public void RangeTest()
+        {
+            Assert.That("1 .. 10", IsTokenized.Under(DECIMAL_INTEGER, RANGE_OPEN, DECIMAL_INTEGER).And.Append(IsSeparated.Into("1", "..", "10")));
+            Assert.That("1.. 10", IsTokenized.Under(DECIMAL_INTEGER, RANGE_OPEN, DECIMAL_INTEGER).And.Append(IsSeparated.Into("1", "..", "10")));
+            Assert.That("1 .. 10", IsTokenized.Under(DECIMAL_INTEGER, RANGE_OPEN, DECIMAL_INTEGER).And.Append(IsSeparated.Into("1", "..", "10")));
+            Assert.That("1..10", IsTokenized.Under(DECIMAL_INTEGER, RANGE_OPEN, DECIMAL_INTEGER).And.Append(IsSeparated.Into("1", "..", "10")));
+
+            Assert.That("1 ... 10", IsTokenized.Under(DECIMAL_INTEGER, RANGE_CLOSE, DECIMAL_INTEGER).And.Append(IsSeparated.Into("1", "...", "10")));
+            Assert.That("1... 10", IsTokenized.Under(DECIMAL_INTEGER, RANGE_CLOSE, DECIMAL_INTEGER).And.Append(IsSeparated.Into("1", "...", "10")));
+            Assert.That("1 ... 10", IsTokenized.Under(DECIMAL_INTEGER, RANGE_CLOSE, DECIMAL_INTEGER).And.Append(IsSeparated.Into("1", "...", "10")));
+            Assert.That("1...10", IsTokenized.Under(DECIMAL_INTEGER, RANGE_CLOSE, DECIMAL_INTEGER).And.Append(IsSeparated.Into("1", "...", "10")));
+        }
+
+        [Test]
+        public void FloatDotTest()
+        {
+            Assert.That("1.test", IsTokenized.Under(DECIMAL_INTEGER, DOT, NAME).And.Append(IsSeparated.Into("1", ".", "test"))); 
+        }
     }
 }
