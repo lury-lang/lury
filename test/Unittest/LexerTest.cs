@@ -94,5 +94,20 @@ namespace Unittest
         {
             Assert.That("1.test", IsTokenized.Under(DECIMAL_INTEGER, DOT, NAME).And.Append(IsSeparated.Into("1", ".", "test"))); 
         }
+
+        [Test]
+        public void IdentifierTest()
+        {
+            Assert.That("_", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("_")));
+            Assert.That("a", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("a")));
+            Assert.That("az", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("az")));
+            Assert.That("_?", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("_?")));
+            Assert.That("_!", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("_!")));
+            Assert.That("_??", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("_??")));
+            Assert.That("_!!", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("_!!")));
+
+            Assert.That("あいうえお", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("あいうえお")));
+            Assert.That("🐬", IsTokenized.Under(NAME).And.Append(IsSeparated.Into("🐬")));
+        }
     }
 }
