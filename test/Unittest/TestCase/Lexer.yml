@@ -1,56 +1,85 @@
-﻿lexer:
-  single:
-    - to: DECIMAL_INTEGER
-      source:
-        - 0
-        - 1
-        - 10
-    - to: BIN_INTEGER
-      source:
-        - 0b0
-        - 0b1
-        - 0B0
-        - 0B1
-    - to: OCT_INTEGER
-      source:
-        - 0o0
-        - 0o7
-        - 0O0
-        - 0O7
-    - to: HEX_INTEGER
-      source:
-        - 0x0
-        - 0xf
-        - 0X0
-        - 0Xf
-        - 0XF
-    - to: FLOAT_NUMBER
-      source:
-        - 0.0
-        - 1.0
-        - 10.0
-        - 0.1
-        - 0.01
-        - .1
-        - 0.1e10
-        - 0.1E10
-        - 0.1e+10
-        - 0.1E+10
-        - 0.1e-10
-        - 0.1E-10
-    - to: STRING_LITERAL
-      source:
-        - ''
-        - "\"\""
-        - ``
-    - to: NAME
-      source:
-        - _
-        - a
-        - az
-        - _?
-        - _!
-        - _??
-        - _!!
-        - あいうえお
-        - 🐬
+single:
+  - token: DECIMAL_INTEGER
+    source:
+      - 0
+      - 1
+      - 10
+  - token: BIN_INTEGER
+    source:
+      - 0b0
+      - 0b1
+      - 0B0
+      - 0B1
+  - token: OCT_INTEGER
+    source:
+      - 0o0
+      - 0o7
+      - 0O0
+      - 0O7
+  - token: HEX_INTEGER
+    source:
+      - 0x0
+      - 0xf
+      - 0X0
+      - 0Xf
+      - 0XF
+  - token: FLOAT_NUMBER
+    source:
+      - 0.0
+      - 1.0
+      - 10.0
+      - 0.1
+      - 0.01
+      - .1
+      - 0.1e10
+      - 0.1E10
+      - 0.1e+10
+      - 0.1E+10
+      - 0.1e-10
+      - 0.1E-10
+  - token: STRING_LITERAL
+    source:
+      - ''
+      - "\"\""
+      - "``"
+  - token: NAME
+    source:
+      - _
+      - a
+      - az
+      - _?
+      - _!
+      - _??
+      - _!!
+      - あいうえお
+      - 🐬
+
+compound:
+  - source:
+    - "[]"
+    token: [OPEN_BRACK, CLOSE_BRACK]
+    separate: ["[", "]"]
+  - source:
+    - "()"
+    token: [OPEN_PAREN, CLOSE_PAREN]
+    separate: [(, )]
+  - source:
+    - "{}"
+    token: [OPEN_BRACE, CLOSE_BRACE]
+    separate: ["{", "}"]
+
+  - source:
+    - "1 .. 10"
+    - "1.. 10"
+    - "1 .. 10"
+    - "1..10"
+    token: [DECIMAL_INTEGER, RANGE_OPEN, DECIMAL_INTEGER]
+    separate: [1, .., 10]
+
+  - source:
+    - "1 ... 10"
+    - "1... 10"
+    - "1 ... 10"
+    - "1...10"
+    token: [DECIMAL_INTEGER, RANGE_CLOSE, DECIMAL_INTEGER]
+    separate: [1, ..., 10]
