@@ -49,7 +49,7 @@ namespace Unittest
             this.types = types;
         }
 
-        public override string Description => $"Types: <{string.Join(", ", types)}>";
+        public override string Description => $"Types: <{string.Join(", ", types.Select(TokenValue.GetTokenName))}>";
 
         public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
