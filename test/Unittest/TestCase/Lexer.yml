@@ -39,9 +39,9 @@ single:
       - 0.1E-10
   - token: STRING_LITERAL
     source:
-      - ''
-      - "\"\""
-      - "``"
+      - 'abc'
+      - "\"123\""
+      - "`ABC`"
   - token: NAME
     source:
       - _
