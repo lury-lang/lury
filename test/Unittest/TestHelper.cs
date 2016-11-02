@@ -84,7 +84,7 @@ namespace Unittest
                 throw new ArgumentNullException(nameof(actual));
 
             var actualString = actual as string;
-            
+
             if (actualString == null)
                 throw new ArgumentException(nameof(actual));
 

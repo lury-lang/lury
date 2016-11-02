@@ -77,11 +77,13 @@ namespace Unittest
 
     public class SingleTokenItem
     {
+        [YamlMember(Alias = "source")]
+        public string[] Sources { get; set; }
+
         [YamlMember(Alias = "token")]
         public TokenValue Token { get; set; }
 
-        [YamlMember(Alias = "source")]
-        public string[] Sources { get; set; }
+        public IEnumerable<TokenItem> Expand() => Sources.Select(s => new TokenItem(s, new[] { Token }, new[] { s }));
     }
 
     public class CompoundTokenItem
@@ -94,6 +96,23 @@ namespace Unittest
 
         [YamlMember(Alias = "separate")]
         public string[] SeparatedTexts { get; set; }
+
+        public IEnumerable<TokenItem> Expand() => Sources.Select(s => new TokenItem(s, Tokens, SeparatedTexts));
     }
 
+    public class TokenItem
+    {
+        public string Source { get; set; }
+
+        public TokenValue[] Tokens { get; set; }
+
+        public string[] SeparatedTexts { get; set; }
+
+        public TokenItem(string source, TokenValue[] tokens, string[] separatedTexts)
+        {
+            Source = source;
+            Tokens = tokens;
+            SeparatedTexts = separatedTexts;
+        }
+    }
 }

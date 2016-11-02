@@ -24,28 +24,22 @@ namespace Unittest
             }
         }
 
-        private static IEnumerable<SingleTokenItem> SingleTokenItems => TestCase.Single;
+        private static IEnumerable<TokenItem> SingleTokenItems => TestCase.Single.SelectMany(s => s.Expand());
 
-        private static IEnumerable<CompoundTokenItem> CompoundTokenItems => TestCase.Compound;
+        private static IEnumerable<TokenItem> CompoundTokenItems => TestCase.Compound.SelectMany(s => s.Expand());
 
         [Test]
         [TestCaseSource(typeof(LexerTest), nameof(SingleTokenItems))]
-        public void SingleTokenTest(SingleTokenItem testCase)
+        public void SingleTokenTest(TokenItem testCase)
         {
-            foreach (var source in testCase.Sources)
-            {
-                Assert.That(source, IsTokenized.Under(testCase.Token.Value).And.Append(IsSeparated.Into(source)));
-            }
+            Assert.That(testCase.Source, IsTokenized.Under(testCase.Tokens[0].Value).And.Append(IsSeparated.Into(testCase.SeparatedTexts[0])));
         }
 
         [Test]
         [TestCaseSource(typeof(LexerTest), nameof(CompoundTokenItems))]
-        public void CompoundTokenTest(CompoundTokenItem testCase)
+        public void CompoundTokenTest(TokenItem testCase)
         {
-            foreach (var source in testCase.Sources)
-            {
-                Assert.That(source, IsTokenized.Under(testCase.Tokens.Select(t => t.Value).ToArray()).And.Append(IsSeparated.Into(testCase.SeparatedTexts)));
-            }
+            Assert.That(testCase.Source, IsTokenized.Under(testCase.Tokens.Select(t => t.Value).ToArray()).And.Append(IsSeparated.Into(testCase.SeparatedTexts)));
         }
     }
 }
