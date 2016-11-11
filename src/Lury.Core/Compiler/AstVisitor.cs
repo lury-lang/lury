@@ -402,7 +402,7 @@ namespace Lury.Core.Compiler
         public override AstNode VisitLiteral(LiteralContext context)
         {
             if (context.String != null)
-                return new AstNode(LiteralHash, context.String);
+                return new AstNode(LiteralString, context.String);
 
             if (context.Real != null)
                 return new AstNode(LiteralReal, context.Real);
