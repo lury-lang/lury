@@ -29,19 +29,19 @@ namespace Lury
                 if (input == null)
                     break;
 
-                try
-                {
+                //try
+                //{
                     var obj = engine.Execute(input);
 
                     if (obj == null)
                         continue;
 
                     Console.WriteLine("{0}", obj);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: {0}", ex.Message);
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine("Error: {0}", ex.Message);
+                //}
             }
         }
 
