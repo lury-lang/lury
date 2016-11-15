@@ -903,6 +903,8 @@ fragment ID_START
  | [\uA807-\uA80A]
  | [\uA80C-\uA822]
  | [\uAC00-\uD7A3]
+ | '\uD83C' [\uDF00-\uDFFF]
+ | '\uD83D' [\uDC00-\uDDFF]
  | [\uF900-\uFA2D]
  | [\uFA30-\uFA6A]
  | [\uFA70-\uFAD9]
