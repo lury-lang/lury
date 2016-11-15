@@ -56,11 +56,9 @@ namespace Lury.Core.Runtime
             var luryParser = new LuryParser(commonTokenStream);
             var programContext = luryParser.program();
 
-            var astVisitor = new AstVisitor();
+            var pruningVisitor = new AstVisitor();
 
-            var ast = astVisitor.VisitProgram(programContext);
-
-            return null;
+            return luryVisitor.VisitProgram(programContext);
         }
 
         #endregion
